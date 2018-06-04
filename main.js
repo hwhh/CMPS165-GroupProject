@@ -1,22 +1,17 @@
 let width = 1200,
-    height = 500;
+    height = 600;
 
-//const projection = d3.geoAlbers()
-//    .center([0, 0])
-//    // .rotate([4.4, 0])
-//    // .parallels([50, 60])
-//    .scale(100)
-//    // .translate([width / 2, height / 2]);
+
 var projection = d3.geoMercator()
     .scale(100)
-    .translate([width / 2, height / 2]);
+    .translate([width / 2, height/2.5]);
 
 const path = d3.geoPath()
     .projection(projection);
 
 const svg = d3.select('body').append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height+50);
 
 const color = d3.scaleThreshold()
     .domain([1,2,3,4,5,6,7,8,9])
@@ -39,3 +34,51 @@ function renderMap() {
 }
 
 renderMap();
+
+var x = d3.scaleLinear()
+    .domain([1960, 2040])
+    .range([0, 600])
+    .clamp(true);
+
+var slider = svg.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + 300 + "," + 600  + ")");
+
+slider.append("line")
+    .attr("class", "track")
+    .attr("x1", x.range()[0])
+    .attr("x2", x.range()[1])
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-inset")
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-overlay")
+    .call(d3.drag()
+        .on("start.interrupt", function() { slider.interrupt(); })
+        .on("start drag", function() { hue(x.invert(d3.event.x)); }));
+
+slider.insert("g", ".track-overlay")
+    .attr("class", "ticks")
+    .attr("transform", "translate(0," + 18 + ")")
+    .selectAll("text")
+    .data(x.ticks(10))
+    .enter().append("text")
+    .attr("x", x)
+    .attr("text-anchor", "middle")
+    .text(function(d) { return d; });
+
+var handle = slider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 9);
+
+//slider.transition() // Gratuitous intro!
+//    .duration(750)
+//    .tween("hue", function() {
+//      var i = d3.interpolate(0, 70);
+//      return function(t) { hue(i(t)); };
+//    });
+
+//function hue(h) {
+//  handle.attr("cx", x(h));
+//  svg.style("background-color", d3.hsl(h, 0.8, 0.8));
+//}
+
