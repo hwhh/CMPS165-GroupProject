@@ -2,9 +2,9 @@ let width = 1200,
     height = 600;
 
 
-var projection = d3.geoMercator()
+const projection = d3.geoMercator()
     .scale(100)
-    .translate([width / 2, height/2.5]);
+    .translate([width / 2, height / 2.5]);
 
 const path = d3.geoPath()
     .projection(projection);
@@ -35,14 +35,15 @@ function renderMap() {
 
 renderMap();
 
-var x = d3.scaleLinear()
+const x = d3.scaleLinear()
     .domain([1960, 2040])
     .range([0, 600])
     .clamp(true);
 
-var slider = svg.append("g")
+const slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + 300 + "," + 600  + ")");
+    .attr("transform", "translate(" + 300 + "," + 600 + ")");
+
 
 slider.append("line")
     .attr("class", "track")
@@ -66,7 +67,7 @@ slider.insert("g", ".track-overlay")
     .attr("text-anchor", "middle")
     .text(function(d) { return d; });
 
-var handle = slider.insert("circle", ".track-overlay")
+const handle = slider.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 9);
 
