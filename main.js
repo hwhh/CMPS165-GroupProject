@@ -1,12 +1,15 @@
-let width = 960,
+let width = 1200,
     height = 500;
 
-const projection = d3.geoAlbers()
-    .center([0, 0])
-    // .rotate([4.4, 0])
-    // .parallels([50, 60])
+//const projection = d3.geoAlbers()
+//    .center([0, 0])
+//    // .rotate([4.4, 0])
+//    // .parallels([50, 60])
+//    .scale(100)
+//    // .translate([width / 2, height / 2]);
+var projection = d3.geoMercator()
     .scale(100)
-    // .translate([width / 2, height / 2]);
+    .translate([width / 2, height / 2]);
 
 const path = d3.geoPath()
     .projection(projection);
