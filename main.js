@@ -17,6 +17,16 @@ const color = d3.scaleThreshold()
     .domain([1,2,3,4,5,6,7,8,9])
     .range(d3.schemeBlues[7]);
 
+var padding = 40;
+
+var xScale, yScale, xAxis, yAxis;  //Empty, for now
+
+//For converting Dates to strings
+var formatTime = d3.timeFormat("%Y");
+
+//Function for converting CSV values from strings to Dates and numbers
+var parseTime = d3.timeParse("%Y");
+
 function renderMap() {
     d3.json('world.geojson', function (error, mapData) {
         const features = mapData.features;
@@ -34,6 +44,123 @@ function renderMap() {
 }
 
 renderMap();
+
+//function lineChart(){
+//    d3.csv("current.csv", function(error1, data1){
+//
+//        d3.csv("predicted.csv", function(error2, data2){
+//
+//            data1.forEach(function(d) {
+//                d.year = parseTime(d.year);
+//                d.score = +d.score;
+//            });
+//
+//            data2.forEach(function(d) {
+//                d.year = parseTime(d.year);
+//                d.pessimistic = +d.pessimistic;
+//                d.optimistic = +d.optimistic;
+//                d.bau = +d.bau;
+//            });
+//
+//            xScale = d3.scaleTime()
+//                       .domain([
+//                            d3.min(data1, function(d) { return d.year; }),
+//                            d3.max(data2, function(d) { return d.year; })
+//                        ])
+//                       .range([padding+100, width-100]);
+//
+//            yScale = d3.scaleLinear()
+//                        .domain([0,5])
+//                        .range([height-40, padding]);                
+//
+//            //Define axes
+//            xAxis = d3.axisBottom()
+//                       .scale(xScale)
+//                       .ticks(10)
+//                       .tickFormat(formatTime);
+//
+//            //Define Y axis
+//            yAxis = d3.axisLeft()
+//                       .scale(yScale)
+//                       .ticks(5);
+//
+//            //Define line generators
+//            line = d3.line()
+//                        .defined(function(d) { return d.year >= parseTime(1960) && d.year <= parseTime(2015); })
+//                        .x(function(d) { return xScale(d.year); })
+//                        .y(function(d) { return yScale(d.score); });
+//
+//            pessimisticLine = d3.line()
+//                        .defined(function(d) { return d.year >= parseTime(2015); })
+//                        .x(function(d) { return xScale(d.year); })
+//                        .y(function(d) { return yScale(d.pessimistic); });
+//
+//            optimisticLine = d3.line()
+//                        .defined(function(d) { return d.year >= parseTime(2015); })
+//                        .x(function(d) { return xScale(d.year); })
+//                        .y(function(d) { return yScale(d.optimistic); });
+//
+//            bauLine = d3.line()
+//                        .defined(function(d) { return d.year >= parseTime(2015); })
+//                        .x(function(d) { return xScale(d.year); })
+//                        .y(function(d) { return yScale(d.bau); });
+//
+//
+//            //Draw predicted line
+//            svg.append("line")
+//                .attr("class", "line predicted")
+//                .attr("x1", xScale(parseTime(2015)))
+//                .attr("x2", xScale(parseTime(2015)))
+//                .attr("y1", padding)
+//                .attr("y2", height);
+//
+//            //Label predicted line
+//            svg.append("text")
+//                .attr("class", "predictedLabel")
+//                .attr("x", xScale(parseTime(2015)))
+//                .attr("y", padding)
+//                .text("Predicted");
+//
+//
+//            //Create lines
+//            svg.append("path")
+//                .datum(data1)
+//                .attr("class", "line")
+//                .attr("d", line);
+//
+//
+//            svg.append("path")
+//                .datum(data2)
+//                .attr("class", "line pessimistic")
+//                .attr("d", pessimisticLine);
+//
+//            svg.append("path")
+//                .datum(data2)
+//                .attr("class", "line optimistic")
+//                .attr("d", optimisticLine);                    
+//
+//            svg.append("path")
+//                .datum(data2)
+//                .attr("class", "line bau")
+//                .attr("d", bauLine);
+//
+//
+//            //Create axes
+//            svg.append("g")
+//                .attr("class", "axis")
+//                .attr("transform", "translate(0," + (height - padding) + ")")
+//                .call(xAxis);
+//
+//            svg.append("g")
+//                .attr("class", "axis")
+//                .attr("transform", "translate(" + (padding+100) + ",0)")
+//                .call(yAxis);
+//
+//        });
+//    });
+//}
+//
+//lineChart();
 
 const x = d3.scaleLinear()
     .domain([1960, 2040])
