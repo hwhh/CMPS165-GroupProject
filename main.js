@@ -39,7 +39,27 @@ function renderMap() {
             .attr('d', path)
             .style('fill', function (d) {
                 return color(Math.floor(Math.random() * 10) + 1);
-            });
+            })
+            .on("mouseover", function(d){
+                let country_name = d.properties.ADMIN;
+                //console.log(country_name);
+                
+                //defines the color change on hover
+                d3.select(this)
+                    .style("fill", "orange");
+            })
+            .on("mouseout", function(d){
+                d3.select(this).style("fill", function(d){
+                        let country_name = d.properties.ADMIN;
+                        //console.log(country_name);
+                        return color(Math.floor(Math.random() * 10) +1);
+                    });
+            })
+            .on("click", function(d){
+                let country_name = d.properties.ADMIN;
+                console.log("clicked: " + country_name);
+            })
+            
     });
 }
 
