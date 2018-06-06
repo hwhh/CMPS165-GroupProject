@@ -56,11 +56,6 @@ const color = d3.scaleThreshold()
     .range(d3.schemeBlues[7]);
 
 
-const handle = slider.insert("circle", ".track-overlay")
-    .attr("class", "handle")
-    .attr("r", 9);
-
-
 // creates a group for the linegraph and creates a toggle button
 const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
 
@@ -279,37 +274,42 @@ function lineChart() {
 
 
 
-slider.append("line")
-    .attr("class", "track")
-    .attr("x1", x.range()[0])
-    .attr("x2", x.range()[1])
-    .select(function () {
-        return this.parentNode.appendChild(this.cloneNode(true));
-    })
-    .attr("class", "track-inset")
-    .select(function () {
-        return this.parentNode.appendChild(this.cloneNode(true));
-    })
-    .attr("class", "track-overlay")
-    .call(d3.drag()
-        .on("start.interrupt", function () {
-            slider.interrupt();
+function createSlider(){
+    slider.append("line")
+        .attr("class", "track")
+        .attr("x1", x.range()[0])
+        .attr("x2", x.range()[1])
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
         })
-        .on("start drag", function () {
-            hue(x.invert(d3.event.x));
-        }));
+        .attr("class", "track-inset")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "track-overlay")
+        .call(d3.drag()
+            .on("start.interrupt", function () {
+                slider.interrupt();
+            })
+            .on("start drag", function () {
+                hue(x.invert(d3.event.x));
+            }));
 
-slider.insert("g", ".track-overlay")
-    .attr("class", "ticks")
-    .attr("transform", "translate(0," + 18 + ")")
-    .selectAll("text")
-    .data(x.ticks(10))
-    .enter().append("text")
-    .attr("x", x)
-    .attr("text-anchor", "middle")
-    .text(function (d) {
-        return d;
-    });
+    slider.insert("g", ".track-overlay")
+        .attr("class", "ticks")
+        .attr("transform", "translate(0," + 18 + ")")
+        .selectAll("text")
+        .data(x.ticks(10))
+        .enter().append("text")
+        .attr("x", x)
+        .attr("text-anchor", "middle")
+        .text(function (d) {
+            return d;
+        });
+    const handle = slider.insert("circle", ".track-overlay")
+        .attr("class", "handle")
+        .attr("r", 9);
+}
 
 
 //slider.transition() // Gratuitous intro!
@@ -354,6 +354,7 @@ Promise.all([
 ]).then(values => {
     renderMap();
     lineChart();
+    createSlider();
 });
 
 
