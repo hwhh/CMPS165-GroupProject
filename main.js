@@ -30,6 +30,10 @@ const x = d3.scaleLinear()
     .range([0, 600])
     .clamp(true);
 
+const svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height + 50);
+
 const slider = svg.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + 300 + "," + 600 + ")");
@@ -40,10 +44,6 @@ const projection = d3.geoMercator()
 
 const path = d3.geoPath()
     .projection(projection);
-
-const svg = d3.select('body').append('svg')
-    .attr('width', width)
-    .attr('height', height + 50);
 
 const color = d3.scaleThreshold()
     .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
