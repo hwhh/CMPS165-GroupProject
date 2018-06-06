@@ -1,7 +1,8 @@
 let width = 1200,
     height = 600;
 
-const years = [1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,]
+// const years = [1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,]
+const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
 
 let total_internal_water = new Map();
 let total_external_water = new Map();
@@ -133,13 +134,13 @@ function calculateScore() {
     _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
         let external = total_external_water.get(key);
         let internal = total_internal_water.get(key);
-        let withdraws = total_internal_water.get(key);
+        let withdraws = total_water_used.get(key);
         if (external === undefined)
             external = {};
         if (internal === undefined)
             internal = {};
         if (withdraws === undefined)
-            internal = {};
+            withdraws = {};
         years.forEach(function (year) {
             let values = total_available_water.get(year);
             if (values === undefined) {
@@ -147,19 +148,19 @@ function calculateScore() {
             }
             let external_value = external[year];
             let internal_value = internal[year];
-            let withdrawn_value = internal[year];
+            let withdrawn_value = withdraws[year];
             if (withdrawn_value === undefined || external_value === undefined || internal_value === undefined)
                 values[key] = "No Data";
-            else
+            else {
                 values[key] = withdrawn_value / (external_value + internal_value);
-                if(values[key] > max)
+                if (values[key] > max)
                     max = values[key];
+            }
             total_available_water.set(year, values)
-
         });
     });
     Array.from(total_available_water.keys()).forEach(function (key) {
-        total_available_water.get(key)
+        total_available_water.get(key);
         _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
 
 
