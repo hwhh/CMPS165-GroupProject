@@ -1,8 +1,5 @@
-import { renderMap } from './map';
-
-const width = 1200, height = 600;
-const padding = 40;
-
+import {renderMap} from "./map";
+import {width, height} from "./variables";
 
 let total_internal_water = new Map();
 let total_external_water = new Map();
@@ -10,11 +7,9 @@ let total_available_water = new Map();
 let total_water_used = new Map();
 let water_stress_levels = new Map();
 
-
-const svg = d3.select("body").append("svg")
+export const svg = d3.select("body").append("svg")
     .attr('width', width)
     .attr('height', height + 50);
-git checkout -b old-state
 
 function toggle_lineChart_visibility() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
@@ -55,7 +50,8 @@ Promise.all([
     }),
 ]).then(values => {
     renderMap();
-    lineChart();
-    createSlider();
+    // lineChart();
+    // createSlider();
 });
+
 
