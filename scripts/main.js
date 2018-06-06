@@ -79,7 +79,7 @@ lineGraph_group.append("text")
 
 
 function renderMap() {
-    d3.json('world.geojson', function (error, mapData) {
+    d3.json('./Data/world.geojson', function (error, mapData) {
         const features = mapData.features;
         world_map = svg.append('g')
             .attr('class', 'countries')
@@ -125,9 +125,9 @@ function toggle_lineChart_visibility() {
 
 function lineChart() {
 
-    d3.csv("current.csv", function (error1, data1) {
+    d3.csv("./Data/current.csv", function (error1, data1) {
 
-        d3.csv("predicted.csv", function (error2, data2) {
+        d3.csv("./Data/predicted.csv", function (error2, data2) {
 
             data1.forEach(function (d) {
                 d.year = parseTime(d.year);
