@@ -82,7 +82,7 @@ lineGraph_group.append("text")
     .text("Back");
 
 
-function renderMap() {
+function renderMap(data) {
     d3.json('./Data/world.geojson', function (error, mapData) {
         const features = mapData.features;
         world_map = svg.append('g')
@@ -93,7 +93,7 @@ function renderMap() {
             .enter().append('path')
             .attr('d', path)
             .style('fill', function (d) {
-                return color(Math.floor(Math.random() * 10) + 1);
+                return color(data.get());
             })
             .on("mouseover", function (d) {
                 let country_name = d.properties.ADMIN;
@@ -272,8 +272,6 @@ function lineChart() {
 }
 
 
-
-
 function createSlider(){
     slider.append("line")
         .attr("class", "track")
@@ -312,20 +310,17 @@ function createSlider(){
 }
 
 
-//slider.transition() // Gratuitous intro!
-//    .duration(750)
-//    .tween("hue", function() {
-//      var i = d3.interpolate(0, 70);
-//      return function(t) { hue(i(t)); };
-//    });
+slider.transition() // Gratuitous intro!
+   .duration(750)
+   .tween("hue", function() {
+     var i = d3.interpolate(0, 70);
+     return function(t) { hue(i(t)); };
+   });
 
-//function hue(h) {
-//  handle.attr("cx", x(h));
-//  svg.style("background-color", d3.hsl(h, 0.8, 0.8));
-//}
-
-
-//Map = Country -> {Year, Value}
+function hue(h) {
+ handle.attr("cx", x(h));
+ svg.style("background-color", d3.hsl(h, 0.8, 0.8));
+}
 
 
 
