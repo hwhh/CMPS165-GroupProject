@@ -11,7 +11,7 @@ export const svg = d3.select("body").append("svg")
     .attr('width', width)
     .attr('height', height + 50);
 
-function toggle_lineChart_visibility() {
+export function toggle_lineChart_visibility() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
     d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
     lineGraph_group.attr('visibility', 'visibile');
