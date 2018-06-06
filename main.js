@@ -30,6 +30,7 @@ var back2Map_button = lineGraph_group.append("rect")
                     // toggle visibility
                     world_map.attr('visibility', 'visible');
                     slider.attr('visibility', 'visible');
+                    div_tooltip.style('opacity', 0);
                     lineGraph_group.attr('visibility', 'hidden');
                 });
 lineGraph_group.append("text")
@@ -39,6 +40,10 @@ lineGraph_group.append("text")
                 .attr("text-anchor", "middle")
                 .attr("pointer-events", "none")
                 .text("Back");
+
+var div_tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
                 
 
 var padding = 40;
@@ -71,6 +76,27 @@ function renderMap() {
                 //defines the color change on hover
                 d3.select(this)
                     .style("fill", "orange");
+            
+                
+                // ToolTip being Displayed --------
+            
+                let stressLevel = Math.round(Math.random() * 5);
+                let country_value = Math.round(Math.random() * 100) + "k";
+                let year = 2010;
+                div_tooltip.transition()//here
+                     .duration(200)
+                     .style("opacity", .9);
+                div_tooltip.html(country_name + "<br/>" + '<br/>'+
+                                 '<span class="tooltip_titles" ><p>' + "Gibberish" + '</p>'+
+                                 '<br/>'+'<p>'+'TheSecond Thing'+'</p>'+
+                                 '<br/>'+'<p>'+'TheThird Thing'+'</p>'+'</span>'+
+                                 
+                                 '<span class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                                 '<br/>'+'<p>'+ country_value + '</p>' +
+                                 '<br/>'+'<p>'+ year + '</p>'+ '</span>')
+                     .style("left", (width - 200) + "px")
+                     .style("top", (height - 50) + "px");
+            
             })
             .on("mouseout", function(d){
                 d3.select(this).style("fill", function(d){
@@ -94,6 +120,7 @@ function toggle_lineChart_visibility(){
     // Hide the world map and let the line graph be visible
     world_map.attr('visibility', 'hidden');
     slider.attr('visibility', 'hidden');
+    div_tooltip.style('opacity', 0);
     lineGraph_group.attr('visibility', 'visibile');
 }
 
