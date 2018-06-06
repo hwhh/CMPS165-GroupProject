@@ -1,9 +1,10 @@
-const width = 1200,
-    height = 600;
-
-const slider_width = 500,
-    slider_height = 100;
+const map_width = 1200,
+    map_height = 600,
+    slider_height = 100,
+    slider_width = 500;
 const padding = 40;
+
+
 /**
  * TOTAL WATER STRESS LEVEL
  * For each country Find
@@ -37,14 +38,30 @@ const x = d3.scaleLinear()
     .range([0, 600])
     .clamp(true);
 
+const svg = d3.select("body").append("svg");
 
-const svg = d3.select("body").append("svg")
-    .attr('width', width)
-    .attr('height', height + 50);
+// var circle = map_svg.append("circle").attr("id", "foo");
+// var svg2 = map_svg.insert("map_svg", "#foo");
+// svg2.attr("id", "childSVG");
+
+
+const svg_map = svg.append('svg')
+// .attr('id', 'map')
+    .attr('width', map_width)
+    .attr('height', map_height + 50);
+
+// const svg_slider = map_svg.insert('svg_slider', '#map')
+//     .attr('id', 'slider')
+//     .attr('width', slider_width)
+//     .attr('height', slider_height);
+
+const slider = svg_map.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + 300 + "," + 600 + ")");
 
 const projection = d3.geoMercator()
     .scale(100)
-    .translate([width / 2, height / 2.5]);
+    .translate([map_width / 2, map_height / 2.5]);
 
 const path = d3.geoPath()
     .projection(projection);
@@ -55,13 +72,13 @@ const color = d3.scaleThreshold()
 
 
 // creates a group for the linegraph and creates a toggle button
-const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
+const lineGraph_group = svg_map.append('g').attr('visibility', 'hidden');
 
 const back2Map_button = lineGraph_group.append("rect")
     .attr("class", "back2Map_button")
     .attr("transform", "translate(" + 1100 + "," + 0 + ")")
-    .attr('width', 100)
-    .attr('height', 50)
+    .attr('map_width', 100)
+    .attr('map_height', 50)
     .attr('fill', 'lightblue')
     .on('click', function () {
         // toggle visibility
@@ -83,7 +100,7 @@ lineGraph_group.append("text")
 function renderMap(data) {
     d3.json('./Data/world.geojson', function (error, mapData) {
         const features = mapData.features;
-        world_map = svg.append('g')
+        world_map = svg_map.append('g')
             .attr('class', 'countries')
             .style('display', 'block')
             .selectAll('path')
@@ -151,11 +168,11 @@ function lineChart() {
                         return d.year;
                     })
                 ])
-                .range([padding + 100, width - 100]);
+                .range([padding + 100, map_width - 100]);
 
             yScale = d3.scaleLinear()
                 .domain([0, 5])
-                .range([height - 40, padding]);
+                .range([map_height - 40, padding]);
 
             //Define axes
             xAxis = d3.axisBottom()
@@ -220,7 +237,7 @@ function lineChart() {
                 .attr("x1", xScale(parseTime(2015)))
                 .attr("x2", xScale(parseTime(2015)))
                 .attr("y1", padding)
-                .attr("y2", height);
+                .attr("y2", map_height);
 
             //Label predicted line
             lineGraph_group.append("text")
@@ -255,7 +272,7 @@ function lineChart() {
             //Create axes
             lineGraph_group.append("g")
                 .attr("class", "axis")
-                .attr("transform", "translate(0," + (height - padding) + ")")
+                .attr("transform", "translate(0," + (map_height - padding) + ")")
                 .call(xAxis);
 
             lineGraph_group.append("g")
@@ -269,11 +286,11 @@ function lineChart() {
 
 function createSlider() {
 
-    const data3 = d3.range(0, 10).map(function (d) {
+    var data3 = d3.range(0, 10).map(function (d) {
         return new Date(1995 + d, 10, 3);
     });
 
-    const slider3 = d3.sliderHorizontal()
+    var slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
         .step(1000 * 60 * 60 * 24 * 365)
@@ -284,18 +301,63 @@ function createSlider() {
             d3.select("p#value3").text(d3.timeFormat('%Y')(val));
         });
 
-    //transform: translate(350px, 500px);
-    svg.append('g')
-        .attr("transform", "translate(" + ((width / 2) - (slider_width / 2) + padding) + ", " + (height) + ")")
-        .attr('width', slider_width)
-        .attr('height', slider_height)
-        .call(slider3);
 
-
-    d3.select("p#value3").text(d3.timeFormat('%Y')(slider3.value()));
-    d3.select("a#setValue3").on("click", () => slider3.value(new Date(1997, 11, 17)));
-
+    svg_slider.call(slider3);
 }
+
+// d3.select("p#value3").text(d3.timeFormat('%Y')(slider3.value()));
+// d3.select("a#setValue3").on("click", () => slider3.value(new Date(1997, 11, 17)));
+
+// function createSlider(){
+//     slider.append("line")
+//         .attr("class", "track")
+//         .attr("x1", x.range()[0])
+//         .attr("x2", x.range()[1])
+//         .select(function () {
+//             return this.parentNode.appendChild(this.cloneNode(true));
+//         })
+//         .attr("class", "track-inset")
+//         .select(function () {
+//             return this.parentNode.appendChild(this.cloneNode(true));
+//         })
+//         .attr("class", "track-overlay")
+//         .call(d3.drag()
+//             .on("start.interrupt", function () {
+//                 slider.interrupt();
+//             })
+//             .on("start drag", function () {
+//                 hue(x.invert(d3.event.x));
+//             }));
+//
+//     slider.insert("g", ".track-overlay")
+//         .attr("class", "ticks")
+//         .attr("transform", "translate(0," + 18 + ")")
+//         .selectAll("text")
+//         .data(x.ticks(10))
+//         .enter().append("text")
+//         .attr("x", x)
+//         .attr("text-anchor", "middle")
+//         .text(function (d) {
+//             return d;
+//         });
+//     const handle = slider.insert("circle", ".track-overlay")
+//         .attr("class", "handle")
+//         .attr("r", 9);
+// }
+//
+//
+// slider.transition() // Gratuitous intro!
+//    .duration(750)
+//    .tween("hue", function() {
+//      var i = d3.interpolate(0, 70);
+//      return function(t) { hue(i(t)); };
+//    });
+//
+// function hue(h) {
+//  handle.attr("cx", x(h));
+//  svg_map.style("background-color", d3.hsl(h, 0.8, 0.8));
+// }
+
 
 function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
@@ -330,7 +392,7 @@ Promise.all([
 ]).then(values => {
     renderMap();
     lineChart();
-    createSlider();
+    // createSlider();
 });
 
 
