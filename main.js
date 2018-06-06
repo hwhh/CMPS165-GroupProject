@@ -82,7 +82,7 @@ function renderMap() {
             .on("click", function(d){
                 let country_name = d.properties.ADMIN;
                 console.log("clicked: " + country_name);
-                lineChart();
+                toggle_lineChart_visibility();
             })
             
     });
@@ -90,11 +90,14 @@ function renderMap() {
 
 renderMap();
 
-function lineChart(){
+function toggle_lineChart_visibility(){
     // Hide the world map and let the line graph be visible
     world_map.attr('visibility', 'hidden');
     slider.attr('visibility', 'hidden');
     lineGraph_group.attr('visibility', 'visibile');
+}
+
+function lineChart(){
     
     d3.csv("current.csv", function(error1, data1){
 
@@ -209,6 +212,8 @@ function lineChart(){
         });
     });
 }
+
+lineChart();
 //---------------------------------------------------------------
 
 const x = d3.scaleLinear()
