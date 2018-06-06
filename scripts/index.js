@@ -14,7 +14,7 @@ let water_stress_levels = new Map();
 const svg = d3.select("body").append("svg")
     .attr('width', width)
     .attr('height', height + 50);
-
+git checkout -b old-state
 
 function toggle_lineChart_visibility() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
