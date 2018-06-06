@@ -1,0 +1,1280 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Water Access, Resources &amp; Sanitation - Our World in Data</title>
+    <meta name="description"
+          content="Clean water is an essential element for human health, wellbeing and prosperity. Whether used for drinking, cleaning, food production or industrial output, access to sufficient water resources is a basic human need. Access to sufficient and safe sanitation facilities is also vital for hygiene, disease prevention, and human health."/>
+    <link rel="canonical" href="https://ourworldindata.org/water-access-resources-sanitation"/>
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml"/>
+    <meta property="fb:app_id" content="1149943818390250"/>
+    <meta property="og:url" content="https://ourworldindata.org/water-access-resources-sanitation"/>
+    <meta property="og:title" content="Water Access, Resources &amp; Sanitation"/>
+    <meta property="og:description"
+          content="Clean water is an essential element for human health, wellbeing and prosperity. Whether used for drinking, cleaning, food production or industrial output, access to sufficient water resources is a basic human need. Access to sufficient and safe sanitation facilities is also vital for hygiene, disease prevention, and human health."/>
+    <meta property="og:image"
+          content="https://ourworldindata.org/wp-content/uploads/2017/11/global-freshwater-use-over-the-long-run.png"/>
+    <meta property="og:site_name" content="Our World in Data"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@OurWorldInData"/>
+    <meta name="twitter:creator" content="@OurWorldInData"/>
+    <meta name="twitter:title" content="Water Access, Resources &amp; Sanitation"/>
+    <meta name="twitter:description"
+          content="Clean water is an essential element for human health, wellbeing and prosperity. Whether used for drinking, cleaning, food production or industrial output, access to sufficient water resources is a basic human need. Access to sufficient and safe sanitation facilities is also vital for hygiene, disease prevention, and human health."/>
+    <meta name="twitter:image"
+          content="https://ourworldindata.org/wp-content/uploads/2017/11/global-freshwater-use-over-the-long-run.png"/>
+    <link rel='stylesheet'
+          href='https://d33wubrfki0l68.cloudfront.net/css/3f21791aeda887352483255b68b3ec9d11f1ffbf/wp-content/themes/owid-theme/dist/owid.css'/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42018644-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-42018644-1');
+    </script>
+</head>
+<body>
+<header class="SiteHeader">
+    <nav id="owid-topbar"><a href="/" class="logo">Our World in Data</a>
+        <ul class="desktop">
+            <li>
+                <form id="search-nav" action="https://google.com/search" method="GET"><input type="hidden"
+                                                                                             name="sitesearch"
+                                                                                             value="ourworldindata.org"/><input
+                        type="search" name="q" placeholder="Search..."/></form>
+            </li>
+            <li><a href="https://sdg-tracker.org" title="Sustainable Development Goals">SDGs</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/support">Donate</a></li>
+        </ul>
+        <ul class="mobile">
+            <li class="nav-button"><a href="/search" data-expand="#search-dropdown"><i class="fac fac-search"></i></a>
+            </li>
+            <li class="nav-button"><a href="/" data-expand="#topics-dropdown" class="mobile"><i
+                    class="fac fac-bars"></i></a></li>
+        </ul>
+    </nav>
+    <div id="topics-dropdown" class="mobile">
+        <ul>
+            <li class="header"><h2>Entries</h2></li>
+            <li class="category"><a href="/#population"><span>Population</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Population</div>
+                    <ul>
+                        <li><a href="/world-population-growth">World Population Growth</a></li>
+                        <li><a href="/life-expectancy">Life Expectancy</a></li>
+                        <li><a href="/child-mortality">Child Mortality</a></li>
+                        <li><a href="/future-population-growth">Future Population Growth</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/fertility-rate"
+                               class="starred">Fertility Rate</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#health"><span>Health</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Health</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries." href="/cancer"
+                               class="starred">Cancer</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/mental-health"
+                               class="starred">Mental Health</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/causes-of-death"
+                               class="starred">Causes of Death</a></li>
+                        <li><a href="/substance-use">Substance Use</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/alcohol-consumption"
+                               class="starred">Alcohol consumption</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/health-meta"
+                               class="starred">Global Health</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/polio"
+                               class="starred">Polio</a></li>
+                        <li><a href="/life-expectancy">Life Expectancy</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/suicide"
+                               class="starred">Suicide</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/financing-healthcare" class="starred">Financing Healthcare</a></li>
+                        <li><a href="/maternal-mortality">Maternal Mortality</a></li>
+                        <li><a href="/eradication-of-diseases">Eradication of Diseases</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/burden-of-disease"
+                               class="starred">Burden of Disease</a></li>
+                        <li><a href="/malaria">Malaria</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/hiv-aids"
+                               class="starred">HIV / AIDS</a></li>
+                        <li><a href="/smoking">Smoking</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#food"><span>Food</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Food</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/micronutrient-deficiency" class="starred">Micronutrient Deficiency</a></li>
+                        <li><a href="/diet-compositions">Diet Compositions</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/meat-and-seafood-production-consumption" class="starred">Meat and Seafood
+                            Production &amp; Consumption</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/water-access-resources-sanitation" class="starred">Water Access, Resources &amp;
+                            Sanitation</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/alcohol-consumption"
+                               class="starred">Alcohol consumption</a></li>
+                        <li><a href="/obesity">Obesity</a></li>
+                        <li><a href="/food-per-person">Food per Person</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/hunger-and-undernourishment" class="starred">Hunger and Undernourishment</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/famines"
+                               class="starred">Famines</a></li>
+                        <li><a href="/human-height">Human Height</a></li>
+                        <li><a href="/employment-in-agriculture">Employment in Agriculture</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/yields-and-land-use-in-agriculture" class="starred">Yields and Land Use in
+                            Agriculture</a></li>
+                        <li><a href="/fertilizer-and-pesticides">Fertilizer and Pesticides</a></li>
+                        <li><a href="/food-prices">Food Prices</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#energy"><span>Energy</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Energy</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/co2-and-other-greenhouse-gas-emissions" class="starred">CO₂ and other Greenhouse
+                            Gas Emissions</a></li>
+                        <li><a href="/energy-production-and-changing-energy-sources">Energy Production &amp; Changing
+                            Energy Sources</a></li>
+                        <li><a href="/fossil-fuels">Fossil Fuels</a></li>
+                        <li><a href="/renewables">Renewables</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#environment"><span>Environment</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Environment</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/co2-and-other-greenhouse-gas-emissions" class="starred">CO₂ and other Greenhouse
+                            Gas Emissions</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/indoor-air-pollution" class="starred">Indoor Air Pollution</a></li>
+                        <li><a href="/natural-catastrophes">Natural Catastrophes</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/air-pollution"
+                               class="starred">Air Pollution</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/water-access-resources-sanitation" class="starred">Water Access, Resources &amp;
+                            Sanitation</a></li>
+                        <li><a href="/oil-spills">Oil Spills</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#technology"><span>Technology</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Technology</div>
+                    <ul>
+                        <li><a href="/technology-adoption">Technology Diffusion &amp; Adoption</a></li>
+                        <li><a href="/technological-progress">Technological Progress</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#growth-and-inequality"><span>Growth &amp; Inequality</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Growth &amp; Inequality</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/economic-inequality-by-gender" class="starred">Economic inequality by gender</a>
+                        </li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/extreme-poverty"
+                               class="starred">Global Extreme Poverty</a></li>
+                        <li><a href="/economic-growth">Economic Growth</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/income-inequality"
+                               class="starred">Income Inequality</a></li>
+                        <li><a href="/incomes-across-the-distribution">Incomes across the Distribution</a></li>
+                        <li><a href="/global-economic-inequality">Global Economic Inequality</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#work-and-life"><span>Work &amp; Life</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Work &amp; Life</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/happiness-and-life-satisfaction" class="starred">Happiness and Life
+                            Satisfaction</a></li>
+                        <li><a href="/light">Light</a></li>
+                        <li><a href="/human-development-index">Human Development Index (HDI)</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/child-labor"
+                               class="starred">Child Labor</a></li>
+                        <li><a href="/female-labor-supply">Female labor supply</a></li>
+                        <li><a href="/working-hours">Working Hours</a></li>
+                        <li><a href="/homelessness">Homelessness</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#public-sector"><span>Public Sector</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Public Sector</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries." href="/corruption"
+                               class="starred">Corruption</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/public-spending"
+                               class="starred">Public Spending</a></li>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/financing-healthcare" class="starred">Financing Healthcare</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/taxation"
+                               class="starred">Taxation</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/financing-education"
+                               class="starred">Financing Education</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#global-connections"><span>Global Connections</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Global Connections</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries." href="/international-trade"
+                               class="starred">International Trade</a></li>
+                        <li><a href="/tourism">Tourism</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#war-and-peace"><span>War &amp; Peace</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">War &amp; Peace</div>
+                    <ul>
+                        <li><a href="/war-and-peace">War and Peace</a></li>
+                        <li><a href="/nuclear-weapons">Nuclear Weapons</a></li>
+                        <li><a href="/peacekeeping">Peacekeeping</a></li>
+                        <li><a href="/terrorism">Terrorism</a></li>
+                        <li><a href="/military-spending">Military Spending</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#politics"><span>Politics</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Politics</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries." href="/corruption"
+                               class="starred">Corruption</a></li>
+                        <li><a href="/democracy">Democracy</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#violence-and-rights"><span>Violence &amp; Rights</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Violence &amp; Rights</div>
+                    <ul>
+                        <li><a href="/homicides">Homicides</a></li>
+                        <li><a href="/ethnographic-and-archaeological-evidence-on-violent-deaths">Ethnographic and
+                            Archaeological Evidence on Violent Deaths</a></li>
+                        <li><a href="/human-rights">Human Rights</a></li>
+                        <li><a href="/violence-against-rights-for-children">Violence against &amp; Rights for
+                            Children</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#education"><span>Education</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Education</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries."
+                               href="/global-rise-of-education" class="starred">Global Rise of Education</a></li>
+                        <li><a href="/pre-primary-education">Pre-Primary Education</a></li>
+                        <li><a href="/primary-and-secondary-education">Primary and Secondary Education</a></li>
+                        <li><a href="/tertiary-education">Tertiary Education</a></li>
+                        <li><a href="/quality-of-education">Quality of Education</a></li>
+                        <li><a href="/literacy">Literacy</a></li>
+                        <li><a href="/educational-mobility-inequality">Educational Mobility &amp; Inequality</a></li>
+                        <li><a href="/returns-to-education">Returns to Education</a></li>
+                        <li><a href="/teachers-and-professors">Teachers and Professors</a></li>
+                        <li><a href="/science-and-research">Science and Research</a></li>
+                        <li><a title="Starred pages are our best and most complete entries." href="/financing-education"
+                               class="starred">Financing Education</a></li>
+                        <li><a href="/projections-of-future-education">Projections of Future Education</a></li>
+                        <li><a href="/intelligence">Intelligence</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#media"><span>Media</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Media</div>
+                    <ul>
+                        <li><a href="/internet">Internet</a></li>
+                        <li><a href="/books">Books</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="category"><a href="/#culture"><span>Culture</span></a>
+                <div class="subcategory-menu">
+                    <div class="submenu-title">Culture</div>
+                    <ul>
+                        <li><a title="Starred pages are our best and most complete entries." href="/trust"
+                               class="starred">Trust</a></li>
+                        <li><a href="/optimism-pessimism">Optimism &amp; Pessimism</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="end-link"><a href="/sdgs">SDGs</a></li>
+            <li class="end-link"><a href="/blog">Blog</a></li>
+            <li class="end-link"><a href="/about">About</a></li>
+            <li class="end-link"><a href="/support">Donate</a></li>
+            <li class="end-link"><a href="/data">Browse All</a></li>
+        </ul>
+    </div>
+    <div id="search-dropdown" class="mobile">
+        <form id="search-nav" action="https://google.com/search" method="GET"><input type="hidden" name="sitesearch"
+                                                                                     value="ourworldindata.org"/><input
+                type="search" name="q" placeholder="Search..."/></form>
+    </div>
+    <div id="category-nav" class="desktop">
+        <ul>
+            <li title="Population" class="category"><a href="/#population"><span>Population</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a href="/world-population-growth">World Population Growth</a></li>
+                    <li><a href="/life-expectancy">Life Expectancy</a></li>
+                    <li><a href="/child-mortality">Child Mortality</a></li>
+                    <li><a href="/future-population-growth">Future Population Growth</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/fertility-rate"
+                           class="starred">Fertility Rate</a></li>
+                </ul>
+            </li>
+            <li title="Health" class="category"><a href="/#health"><span>Health</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/cancer" class="starred">Cancer</a>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/mental-health"
+                           class="starred">Mental Health</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/causes-of-death"
+                           class="starred">Causes of Death</a></li>
+                    <li><a href="/substance-use">Substance Use</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/alcohol-consumption"
+                           class="starred">Alcohol consumption</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/health-meta"
+                           class="starred">Global Health</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/polio" class="starred">Polio</a>
+                    </li>
+                    <li><a href="/life-expectancy">Life Expectancy</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/suicide"
+                           class="starred">Suicide</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/financing-healthcare"
+                           class="starred">Financing Healthcare</a></li>
+                    <li><a href="/maternal-mortality">Maternal Mortality</a></li>
+                    <li><a href="/eradication-of-diseases">Eradication of Diseases</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/burden-of-disease"
+                           class="starred">Burden of Disease</a></li>
+                    <li><a href="/malaria">Malaria</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/hiv-aids"
+                           class="starred">HIV / AIDS</a></li>
+                    <li><a href="/smoking">Smoking</a></li>
+                </ul>
+            </li>
+            <li title="Food" class="category active"><a href="/#food"><span>Food</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/micronutrient-deficiency" class="starred">Micronutrient Deficiency</a></li>
+                    <li><a href="/diet-compositions">Diet Compositions</a></li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/meat-and-seafood-production-consumption" class="starred">Meat and Seafood Production
+                        &amp; Consumption</a></li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/water-access-resources-sanitation" class="starred">Water Access, Resources &amp;
+                        Sanitation</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/alcohol-consumption"
+                           class="starred">Alcohol consumption</a></li>
+                    <li><a href="/obesity">Obesity</a></li>
+                    <li><a href="/food-per-person">Food per Person</a></li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/hunger-and-undernourishment" class="starred">Hunger and Undernourishment</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/famines"
+                           class="starred">Famines</a></li>
+                    <li><a href="/human-height">Human Height</a></li>
+                    <li><a href="/employment-in-agriculture">Employment in Agriculture</a></li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/yields-and-land-use-in-agriculture" class="starred">Yields and Land Use in
+                        Agriculture</a></li>
+                    <li><a href="/fertilizer-and-pesticides">Fertilizer and Pesticides</a></li>
+                    <li><a href="/food-prices">Food Prices</a></li>
+                </ul>
+            </li>
+            <li title="Energy" class="category"><a href="/#energy"><span>Energy</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/co2-and-other-greenhouse-gas-emissions" class="starred">CO₂ and other Greenhouse Gas
+                        Emissions</a></li>
+                    <li><a href="/energy-production-and-changing-energy-sources">Energy Production &amp; Changing Energy
+                        Sources</a></li>
+                    <li><a href="/fossil-fuels">Fossil Fuels</a></li>
+                    <li><a href="/renewables">Renewables</a></li>
+                </ul>
+            </li>
+            <li title="Environment" class="category active"><a href="/#environment"><span>Environment</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/co2-and-other-greenhouse-gas-emissions" class="starred">CO₂ and other Greenhouse Gas
+                        Emissions</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/indoor-air-pollution"
+                           class="starred">Indoor Air Pollution</a></li>
+                    <li><a href="/natural-catastrophes">Natural Catastrophes</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/air-pollution"
+                           class="starred">Air Pollution</a></li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/water-access-resources-sanitation" class="starred">Water Access, Resources &amp;
+                        Sanitation</a></li>
+                    <li><a href="/oil-spills">Oil Spills</a></li>
+                </ul>
+            </li>
+            <li title="Technology" class="category"><a href="/#technology"><span>Technology</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a href="/technology-adoption">Technology Diffusion &amp; Adoption</a></li>
+                    <li><a href="/technological-progress">Technological Progress</a></li>
+                </ul>
+            </li>
+            <li title="Growth &amp; Inequality" class="category"><a href="/#growth-and-inequality"><span>Growth &amp; Inequality</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/economic-inequality-by-gender" class="starred">Economic inequality by gender</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/extreme-poverty"
+                           class="starred">Global Extreme Poverty</a></li>
+                    <li><a href="/economic-growth">Economic Growth</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/income-inequality"
+                           class="starred">Income Inequality</a></li>
+                    <li><a href="/incomes-across-the-distribution">Incomes across the Distribution</a></li>
+                    <li><a href="/global-economic-inequality">Global Economic Inequality</a></li>
+                </ul>
+            </li>
+            <li title="Work &amp; Life" class="category"><a href="/#work-and-life"><span>Work &amp; Life</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/happiness-and-life-satisfaction" class="starred">Happiness and Life Satisfaction</a>
+                    </li>
+                    <li><a href="/light">Light</a></li>
+                    <li><a href="/human-development-index">Human Development Index (HDI)</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/child-labor"
+                           class="starred">Child Labor</a></li>
+                    <li><a href="/female-labor-supply">Female labor supply</a></li>
+                    <li><a href="/working-hours">Working Hours</a></li>
+                    <li><a href="/homelessness">Homelessness</a></li>
+                </ul>
+            </li>
+            <li title="Public Sector" class="category"><a href="/#public-sector"><span>Public Sector</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/corruption"
+                           class="starred">Corruption</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/public-spending"
+                           class="starred">Public Spending</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/financing-healthcare"
+                           class="starred">Financing Healthcare</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/taxation"
+                           class="starred">Taxation</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/financing-education"
+                           class="starred">Financing Education</a></li>
+                </ul>
+            </li>
+            <li title="Global Connections" class="category"><a
+                    href="/#global-connections"><span>Global Connections</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/international-trade"
+                           class="starred">International Trade</a></li>
+                    <li><a href="/tourism">Tourism</a></li>
+                </ul>
+            </li>
+            <li title="War &amp; Peace" class="category"><a href="/#war-and-peace"><span>War &amp; Peace</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a href="/war-and-peace">War and Peace</a></li>
+                    <li><a href="/nuclear-weapons">Nuclear Weapons</a></li>
+                    <li><a href="/peacekeeping">Peacekeeping</a></li>
+                    <li><a href="/terrorism">Terrorism</a></li>
+                    <li><a href="/military-spending">Military Spending</a></li>
+                </ul>
+            </li>
+            <li title="Politics" class="category"><a href="/#politics"><span>Politics</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/corruption"
+                           class="starred">Corruption</a></li>
+                    <li><a href="/democracy">Democracy</a></li>
+                </ul>
+            </li>
+            <li title="Violence &amp; Rights" class="category"><a href="/#violence-and-rights"><span>Violence &amp; Rights</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a href="/homicides">Homicides</a></li>
+                    <li><a href="/ethnographic-and-archaeological-evidence-on-violent-deaths">Ethnographic and
+                        Archaeological Evidence on Violent Deaths</a></li>
+                    <li><a href="/human-rights">Human Rights</a></li>
+                    <li><a href="/violence-against-rights-for-children">Violence against &amp; Rights for Children</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Education" class="category"><a href="/#education"><span>Education</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries."
+                           href="/global-rise-of-education" class="starred">Global Rise of Education</a></li>
+                    <li><a href="/pre-primary-education">Pre-Primary Education</a></li>
+                    <li><a href="/primary-and-secondary-education">Primary and Secondary Education</a></li>
+                    <li><a href="/tertiary-education">Tertiary Education</a></li>
+                    <li><a href="/quality-of-education">Quality of Education</a></li>
+                    <li><a href="/literacy">Literacy</a></li>
+                    <li><a href="/educational-mobility-inequality">Educational Mobility &amp; Inequality</a></li>
+                    <li><a href="/returns-to-education">Returns to Education</a></li>
+                    <li><a href="/teachers-and-professors">Teachers and Professors</a></li>
+                    <li><a href="/science-and-research">Science and Research</a></li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/financing-education"
+                           class="starred">Financing Education</a></li>
+                    <li><a href="/projections-of-future-education">Projections of Future Education</a></li>
+                    <li><a href="/intelligence">Intelligence</a></li>
+                </ul>
+            </li>
+            <li title="Media" class="category"><a href="/#media"><span>Media</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a href="/internet">Internet</a></li>
+                    <li><a href="/books">Books</a></li>
+                </ul>
+            </li>
+            <li title="Culture" class="category"><a href="/#culture"><span>Culture</span></a>
+                <ul class="entries">
+                    <li>
+                        <hr/>
+                    </li>
+                    <li><a title="Starred pages are our best and most complete entries." href="/trust" class="starred">Trust</a>
+                    </li>
+                    <li><a href="/optimism-pessimism">Optimism &amp; Pessimism</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="entries-nav" class="desktop">
+        <li>
+            <hr/>
+        </li>
+        <li><a title="Starred pages are our best and most complete entries." href="/micronutrient-deficiency"
+               class="starred">Micronutrient Deficiency</a></li>
+        <li><a href="/diet-compositions">Diet Compositions</a></li>
+        <li><a title="Starred pages are our best and most complete entries."
+               href="/meat-and-seafood-production-consumption" class="starred">Meat and Seafood Production &amp;
+            Consumption</a></li>
+        <li class="active"><a title="Starred pages are our best and most complete entries."
+                              href="/water-access-resources-sanitation" class="starred">Water Access, Resources &amp;
+            Sanitation</a></li>
+        <li><a title="Starred pages are our best and most complete entries." href="/alcohol-consumption"
+               class="starred">Alcohol consumption</a></li>
+        <li><a href="/obesity">Obesity</a></li>
+        <li><a href="/food-per-person">Food per Person</a></li>
+        <li><a title="Starred pages are our best and most complete entries." href="/hunger-and-undernourishment"
+               class="starred">Hunger and Undernourishment</a></li>
+        <li><a title="Starred pages are our best and most complete entries." href="/famines" class="starred">Famines</a>
+        </li>
+        <li><a href="/human-height">Human Height</a></li>
+        <li><a href="/employment-in-agriculture">Employment in Agriculture</a></li>
+        <li><a title="Starred pages are our best and most complete entries." href="/yields-and-land-use-in-agriculture"
+               class="starred">Yields and Land Use in Agriculture</a></li>
+        <li><a href="/fertilizer-and-pesticides">Fertilizer and Pesticides</a></li>
+        <li><a href="/food-prices">Food Prices</a></li>
+    </div>
+</header>
+<main>
+    <div class="clearfix page-with-sidebar">
+        <div class="entry-sidebar">
+            <nav class="entry-toc"><h3>Contents</h3>
+                <ol>
+                    <li class="section"><a href="#empirical-view">I. Empirical View</a></li>
+                    <li class="subsection"><a href="#access-to-improved-water-sources">I.1 Access to improved water
+                        sources</a></li>
+                    <li class="subsection"><a href="#total-freshwater-use">I.2 Total freshwater use</a></li>
+                    <li class="subsection"><a href="#water-withdrawals-per-capita">I.3 Water withdrawals per capita</a>
+                    </li>
+                    <li class="subsection"><a href="#agricultural-water-withdrawals">I.4 Agricultural water
+                        withdrawals</a></li>
+                    <li class="subsection"><a href="#irrigation">I.5 Irrigation</a></li>
+                    <li class="subsection"><a href="#industrial-water-withdrawals">I.6 Industrial water withdrawals</a>
+                    </li>
+                    <li class="subsection"><a href="#municipal-water-withdrawals">I.7 Municipal water withdrawals</a>
+                    </li>
+                    <li class="subsection"><a href="#water-stress-and-scarcity">I.8 Water stress and scarcity</a></li>
+                    <li class="subsection"><a href="#access-to-improved-sanitation">I.9 Access to improved
+                        sanitation</a></li>
+                    <li class="subsection"><a href="#open-defecation">I.10 Open defecation</a></li>
+                    <li class="section"><a href="#correlates-determinants-consequences">II. Correlates, Determinants
+                        &amp; Consequences</a></li>
+                    <li class="subsection"><a href="#access-to-improved-water-sources-increases-with-income">II.1 Access
+                        to improved water sources increases with income</a></li>
+                    <li class="subsection"><a href="#urban-rural-gap-in-access-to-improved-water-sources">II.2
+                        Urban-Rural gap in access to improved water sources</a></li>
+                    <li class="subsection"><a href="#agricultural-water-withdrawals-tend-to-be-higher-at-low-incomes">II.3
+                        Agricultural water withdrawals tend to be higher at low incomes</a></li>
+                    <li class="subsection"><a href="#water-footprint-of-food-products">II.4 Water footprint of food
+                        products</a></li>
+                    <li class="subsection"><a href="#access-to-sanitation-facilities-increases-with-income">II.5 Access
+                        to sanitation facilities increases with income</a></li>
+                    <li class="subsection"><a href="#urban-rural-gap-in-access-to-sanitation-facilities">II.6
+                        Urban-Rural gap in access to sanitation facilities</a></li>
+                    <li class="subsection"><a href="#open-defecation-is-mainly-a-rural-issue">II.7 Open defecation is
+                        mainly a rural issue</a></li>
+                    <li class="subsection"><a href="#health-impacts-of-poor-sanitation">II.8 Health impacts of poor
+                        sanitation</a></li>
+                    <li class="subsection"><a href="#stunting-links-to-sanitation-and-hygeine">II.9 Stunting links to
+                        sanitation and hygeine</a></li>
+                    <li class="section"><a href="#data-quality-definitions">III. Data Quality &amp; Definitions</a></li>
+                    <li class="subsection"><a href="#water-access-and-sanitation-facilities">III.1 Water access and
+                        sanitation facilities</a></li>
+                    <li class="subsection"><a href="#water-withdrawals">III.2 Water withdrawals</a></li>
+                    <li class="subsection"><a href="#water-stress-and-scarcity">III.3 Water stress and scarcity</a></li>
+                    <li class="section"><a href="#data-sources">IV. Data Sources</a></li>
+                </ol>
+            </nav>
+        </div>
+        <article class="page">
+            <header class="article-header"><h1 class="entry-title">Water Access, Resources &amp; Sanitation</h1>
+                <div class="authors-byline"><a href="/about/#the-team">by Hannah Ritchie and Max Roser</a><a
+                        class="citation-note js-only"><sup>[cite]</sup></a></div>
+                <div class="citation-guideline">Our articles and data visualizations rely on work from many different
+                    people and organizations. When citing this entry, please also cite the underlying data sources. This
+                    entry can be cited as:<br/><br/>Hannah Ritchie and Max Roser (2018) - &quot;Water Access, Resources
+                    &amp; Sanitation&quot;. <em>Published online at OurWorldInData.org.</em> Retrieved from:
+                    'https://ourworldindata.org/water-access-resources-sanitation' [Online Resource]
+                </div>
+            </header>
+            <div class="article-content">
+                <section><p>Clean water is an essential element for human health, wellbeing and prosperity. Whether used
+                    for drinking, cleaning, food production or industrial output, access to sufficient water resources
+                    is a basic human need. Access to sufficient and safe sanitation facilities is also vital for
+                    hygiene, disease prevention, and human health.</p>
+                    <p>The World Health Organization highlights the contribution of poor water and sanitation access to
+                        health, mortality and reduced poverty alleviation.<a id="ref-1" class="ref" href="#note-1"><sup>1</sup></a>
+                        <a id="ref-2" class="ref" href="#note-2"><sup>2</sup></a> Contaminated drinking water, poor
+                        sanitation facilities and open defecation contribute to the transmission of infectious diseases
+                        such as&#xA0;diarrhoea, cholera, dysentery, typhoid, and polio, and can also have severe impacts
+                        on malnutrition. The WHO estimates that in 2015, the deaths of 361,000 children under
+                        5-years-old could have been avoided by addressing water and sanitation risk factors.<a
+                                id="ref-3" class="ref" href="#note-3"><sup>3</sup></a></p>
+                    <p>In this entry we present data on progress on improved water access, access to sanitation
+                        facilities, and the incidence of open defecation. Freshwater &#x2014; whilst a basic human need&#xA0;&#x2014;
+                        is also a finite, and in some regions, scarce resource. This entry also presents data on levels
+                        of freshwater use, withdrawals by sector, and levels of freshwater scarcity/stress. Balancing
+                        human needs for freshwater with sustaining long-term supplies will continue to pose an important
+                        development challenge in the decades to follow.</p></section>
+
+
+                <section><h2 id="empirical-view"><a class="deep-link" href="#empirical-view"></a>I. Empirical View</h2>
+                    <h3 id="access-to-improved-water-sources"><a class="deep-link"
+                                                                 href="#access-to-improved-water-sources"></a>I.1 Access
+                        to improved water sources</h3><h4 id="share-of-total-population-with-improved-water-sources"><a
+                            class="deep-link" href="#share-of-total-population-with-improved-water-sources"></a>Share of
+                        total population with improved water sources</h4>
+                    <p>Access to improved water sources is increasing across the world, rising from 76 percent of the
+                        global population in 1990 to 91 percent in 2015.</p>
+                    <p>In the chart below we see levels of freshwater access across the world, measured as the
+                        percentage of the total population with access to improved water sources. The World Bank
+                        definition (which is covered in more detail in our section on <a
+                                href="/water-access-consumption-sanitation/#data-quality-definitions">Data Quality &amp;
+                            Definitions</a>) of an improved drinking water source includes &quot;piped water on premises
+                        (piped household water connection located inside the user&#x2019;s dwelling, plot or yard), and
+                        other improved drinking water sources (public taps or standpipes, tube wells or boreholes,
+                        protected dug wells, protected springs, and rainwater collection).&quot; Note that access to
+                        drinking water from an improved source does not ensure that the water is safe or adequate, as
+                        these characteristics are not tested at the time of survey. But improved drinking water
+                        technologies are more likely than those characterized as unimproved to provide safe drinking
+                        water and to prevent contact with human excreta. See&#xA0;<a
+                                href="/water-access-consumption-sanitation/#data-quality-definitions">Data Quality &amp;
+                            Definitions</a>&#xA0;for more details.</p>
+                    <p>In 2015, most nations had improved water access in greater than 90 percent of households. This
+                        marks significant progress since 1990 where most countries across Latin America, East and South
+                        Asia, and Sub-Saharan Africa were often well below 90 percent. Access remains lowest in
+                        Sub-Saharan Africa where rates typically range from 40 to 80 percent of households.</p>
+                    <figure data-grapher-src="/grapher/share-of-the-population-with-access-to-improved-drinking-water"
+                            class="grapherPreview"><a
+                            href="/grapher/share-of-the-population-with-access-to-improved-drinking-water"
+                            target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/1dacdd7f055469d804ab8530f4bab7221e2559ab/6de24/exports/share-of-the-population-with-access-to-improved-drinking-water_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-rural-population-with-improved-water-sources"><a class="deep-link"
+                                                                                      href="#share-of-rural-population-with-improved-water-sources"></a>Share
+                        of rural population with improved water sources</h4>
+                    <p>The share of rural households with improved water sources was lower than the total population in
+                        2015, with 85 percent access. The global distribution of improved water sources in rural
+                        populations is shown in the chart below.</p>
+                    <p>Gaining access to improved water sources can often require infrastructural investment and
+                        connection to municipal water networks; this is can be more challenging in rural areas hence we
+                        may expect access to be lower. Nonetheless, rural access has risen at a faster rate (based on
+                        the relative increase in the share of the population) than total access, increasing by 22
+                        percent since 1990.</p>
+                    <figure data-grapher-src="/grapher/rural-population-with-improved-water" class="grapherPreview"><a
+                            href="/grapher/rural-population-with-improved-water" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/cd7f253b3778e7326c656d35bd20b09126da3bd0/f3c34/exports/rural-population-with-improved-water_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-urban-population-with-improved-water-sources"><a class="deep-link"
+                                                                                      href="#share-of-urban-population-with-improved-water-sources"></a>Share
+                        of urban population with improved water sources</h4>
+                    <p>The visualisation below shows the share of urban population with access to improved water
+                        sources. Globally 97 percent of urban households had improved water access, with most nations
+                        now having close to 100 percent penetration. </p>
+                    <figure data-grapher-src="/grapher/urban-population-with-improved-water" class="grapherPreview"><a
+                            href="/grapher/urban-population-with-improved-water" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/d4a6d3745e11614a14229e21f66502ea3160dff6/3ce47/exports/urban-population-with-improved-water_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="progress-in-improved-water-access-from-1990-2015"><a class="deep-link"
+                                                                                 href="#progress-in-improved-water-access-from-1990-2015"></a>Progress
+                        in improved water access from 1990-2015</h4>
+                    <p>In 2000 as part of the Millennium Development Goals (MDGs) the world pledged to half to share of
+                        people without access to an improved water source by 2015 from 1990 levels. The world surpassed
+                        this target by 2010, increasing access to 91 percent by 2015.</p>
+                    <p>Globally, 2.6 billion people gained access over this period &#x2014; more than a third of the
+                        world&apos;s population have gained access to improved water since 1990.<a id="ref-4"
+                                                                                                   class="ref"
+                                                                                                   href="#note-4"><sup>4</sup></a>
+                        The progress over this 25-year period is shown by region in the chart below, as the share of the
+                        population who have gained access since 1990.</p>
+                    <figure data-grapher-src="/grapher/water-access-since-1990" class="grapherPreview"><a
+                            href="/grapher/water-access-since-1990" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/4541df14fe6780e447387aae7b946878f278289e/203a1/exports/water-access-since-1990_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="number-of-people-without-access-to-an-improved-water-source"><a class="deep-link"
+                                                                                            href="#number-of-people-without-access-to-an-improved-water-source"></a>Number
+                        of people without access to an improved water source</h4>
+                    <p>The chart below shows the total number of people with and without access to an improved water
+                        source from 1990 onwards. Note that these trends can be seen by countries and regions using the
+                        &quot;change country&quot; option.</p>
+                    <p>In 1990, 1.26 billion people across the world did not have access to an improved drinking water
+                        source. By 2015, this had nearly halved to 666 million.</p>
+                    <p>This improvement occurred despite strong population growth over this period. In 1990, 4 billion
+                        people had access to an improved water source; by 2015 this had increased to 6.7 billion. This
+                        means that over these 25 years the average increase of the number of people with access to
+                        improved drinking water was 107 million every year.&#xA0;These are on average 290,000 people who
+                        gained access to drinking water every single day.<a id="ref-5" class="ref"
+                                                                            href="#note-5"><sup>5</sup></a></p>
+                    <figure data-grapher-src="/grapher/number-with-without-access-to-improved-water"
+                            class="grapherPreview"><a href="/grapher/number-with-without-access-to-improved-water"
+                                                      target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/0bca226032e156135414a452b0244de6bf18775e/98392/exports/number-with-without-access-to-improved-water_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="number-of-people-without-access-to-an-improved-water-source-by-region"><a class="deep-link"
+                                                                                                      href="#number-of-people-without-access-to-an-improved-water-source-by-region"></a>Number
+                        of people without access to an improved water source by region</h4>
+                    <p>The chart below shows the total number of people without access to an improved water source by
+                        region from 1990. The regional breakdown of those without access has changed significantly over
+                        the past 25 years.</p>
+                    <p>In 1990 nearly 42 percent of those without access were in East Asia &amp; the Pacific. By 2015,
+                        this had fallen to 20 percent. In contrast, Sub-Saharan Africa was host to 22 percent of those
+                        without water access in 1990; by 2015 this had increased to nearly half of the global total. In
+                        fact, the absolute number of people without access has fallen across all regions over this
+                        25-year period with the exception of Sub-Saharan Africa. The number of people in Sub-Saharan
+                        Africa without access to an improved water source has increased from 271 million to 326 million
+                        in 2015.</p>
+                    <figure data-grapher-src="/grapher/number-without-access-water-source" class="grapherPreview"><a
+                            href="/grapher/number-without-access-water-source" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/85493f3979f1a6ef247bab6af475ccab4a18f4e6/a6a31/exports/number-without-access-water-source_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="total-freshwater-use"><a class="deep-link" href="#total-freshwater-use"></a>I.2 Total
+                        freshwater use</h3><h4 id="global-freshwater-use-over-the-long-term"><a class="deep-link"
+                                                                                                href="#global-freshwater-use-over-the-long-term"></a>Global
+                        freshwater use over the long-term</h4>
+                    <p>A growing global population and economic shift towards more resource-intensive consumption
+                        patterns means global freshwater use &#x2014; that is, freshwater withdrawals for agriculture,
+                        industry and municipal uses &#x2014; has increased nearly six-fold since 1900. This is shown in
+                        the chart below.&#xA0; Rates of global freshwater use increased sharply from the 1950s onwards,
+                        but since 2000 appears to be plateauing, or at least slowing.&#xA0;&#xA0;</p>
+                    <figure data-grapher-src="/grapher/global-freshwater-use-over-the-long-run" class="grapherPreview">
+                        <a href="/grapher/global-freshwater-use-over-the-long-run" target="_blank">
+                            <div><img
+                                    src="https://d33wubrfki0l68.cloudfront.net/894c88257690634753f42faa94d87f70704c08bd/52add/exports/global-freshwater-use-over-the-long-run_v1_850x600.svg">
+                            </div>
+                        </a></figure>
+                    <h4 id="freshwater-use-by-region"><a class="deep-link" href="#freshwater-use-by-region"></a>Freshwater
+                        use by region</h4>
+                    <p>Global freshwater use since 1900 is disaggregated by broad regional groupings &#x2014; OECD
+                        nations; BRICS countries (Brazil, Russia, India, China and South Africa); and Rest of the World
+                        (ROW) in the chart below. Although absolute freshwater use has growth over this period, the
+                        distribution of uses between these regional groupings have not changed significantly over the
+                        last century; OECD nations use approximately 20-25 percent; BRICS countries use the largest
+                        share at approximately 45 percent; and ROW at 30-33 percent.&#xA0;&#xA0;</p>
+                    <figure data-grapher-src="/grapher/freshwater-use-by-aggregated-region" class="grapherPreview"><a
+                            href="/grapher/freshwater-use-by-aggregated-region" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/bb507ce54977a31385d16584d12761f52334e211/f89e1/exports/freshwater-use-by-aggregated-region_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="freshwater-withdrawals-by-country"><a class="deep-link"
+                                                                  href="#freshwater-withdrawals-by-country"></a>Freshwater
+                        withdrawals by country</h4>
+                    <p>This breakdown of total freshwater withdrawals is shown by country in the chart below over the
+                        period from 1967. In 2014, India had the largest freshwater withdrawals at over 760 billion
+                        cubic metres per year. This was followed by China at just over 600 billion m<sup>3&#xA0;</sup>and
+                        the United States at around 480-90 billion m<sup>3</sup>.&#xA0;</p>
+                    <figure data-grapher-src="/grapher/annual-freshwater-withdrawals" class="grapherPreview"><a
+                            href="/grapher/annual-freshwater-withdrawals" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/aecdd4ef1f7e8856d7d33ebcc343bed5134412a4/2c7d0/exports/annual-freshwater-withdrawals_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="water-withdrawals-per-capita"><a class="deep-link" href="#water-withdrawals-per-capita"></a>I.3
+                        Water withdrawals per capita</h3>
+                    <p>Levels of water use vary significantly across the world. The visualisation below shows the
+                        average level of water withdrawal per capita per year. As described in detail in our&#xA0;<a
+                                href="/water-access-consumption-sanitation/#data-quality-definitions">Data Quality &amp;
+                            Definitions</a>&#xA0;section, water withdrawal is defined as the quantity of freshwater
+                        taken from groundwater or surface water sources (such as lakes or rivers) for use in
+                        agricultural, industrial or domestic purposes.</p>
+                    <p>As seen below, there is large variance in levels of water withdrawal across the world - this can
+                        depend on a range of factors, including latitude, climate, and the importance of a country&apos;s
+                        agricultural or industrial sector, as explored in the sections below.</p>
+                    <figure data-grapher-src="/grapher/water-withdrawals-per-capita" class="grapherPreview"><a
+                            href="/grapher/water-withdrawals-per-capita" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/50fef7095293281058c50e2d27449d9d3d6dfacd/d2e28/exports/water-withdrawals-per-capita_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="renewable-water-withdrawals-per-capita"><a class="deep-link"
+                                                                       href="#renewable-water-withdrawals-per-capita"></a>Renewable
+                        water withdrawals per capita</h4>
+                    <p>To maintain sustainable levels of water resources, rates of water withdrawals must be below rates
+                        of freshwater replenishment. &apos;Renewable internal freshwater flows&apos; refer to&#xA0;to
+                        internal renewable resources (internal river flows and groundwater from rainfall) in the
+                        country.</p>
+                    <p>Renewable internal flows are therefore an important indicator of water security or scarcity. If
+                        rates of freshwater withdrawal begin to exceed the renewable flows, resources begin to decline.
+                        The chart below shows the level of renewable internal freshwater resources per capita.</p>
+                    <p>Per capita renewable resources depend on two factors: the total quantity of renewable flows, and
+                        the size of the population. If renewable resources decline &#x2014; as can happen frequently in
+                        countries with large annual variability in rainfall, such as monsoon seasons &#x2014; then per
+                        capita renewable withdrawals will also fall. Similarly, if total renewable sources remain
+                        constant, per capita levels can fall if a country&apos;s population is growing.</p>
+                    <p>As we see below, per capita renewable resources are declining in many countries as a result of
+                        population increases.&#xA0;</p>
+                    <figure data-grapher-src="/grapher/renewable-water-resources-per-capita" class="grapherPreview"><a
+                            href="/grapher/renewable-water-resources-per-capita" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/fb486b8cbc809ead74da8e711e77f4ca119d37ce/2d92e/exports/renewable-water-resources-per-capita_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="per-capita-renewable-water-withdrawals-by-region"><a class="deep-link"
+                                                                                 href="#per-capita-renewable-water-withdrawals-by-region"></a>Per
+                        capita renewable water withdrawals by region</h4>
+                    <p>The chart below shows the average per capita renewable freshwater resources, measured in cubic
+                        metres per person per year.</p>
+                    <figure data-grapher-src="/grapher/per-capita-renewable-freshwater-resources"
+                            class="grapherPreview"><a href="/grapher/per-capita-renewable-freshwater-resources"
+                                                      target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/a2b60b0c4865627f2b24615de863faaf97c8769a/c831c/exports/per-capita-renewable-freshwater-resources_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="agricultural-water-withdrawals"><a class="deep-link"
+                                                               href="#agricultural-water-withdrawals"></a>I.4
+                        Agricultural water withdrawals</h3><h4 id="total-agricultural-water-withdrawals"><a
+                            class="deep-link" href="#total-agricultural-water-withdrawals"></a>Total agricultural water
+                        withdrawals</h4>
+                    <p>Water is an essential input to global agriculture, whether in the form of rainfed sources or
+                        pumped irrigation. The visualisation below shows the total quantity of freshwater withdrawals
+                        which are used in agriculture, whether in the form of food crop, livestock, biofuels, or other
+                        non-food crop production. Data on agricultural water consumption is typically not reported on an
+                        annual basis, and often gathered over several year increments.</p>
+                    <p>In 2010 India was the world&apos;s largest agricultural water consumer at nearly 700 billion
+                        m<sup>3</sup> per year. India&apos;s agricultural water consumption has been growing rapidly&#xA0;&#xA0;&#x2014;
+                        almost doubling between 1975 and 2010 &#x2014; as <a
+                                href="/grapher/population-by-country?country=IND">its population</a> and total <a
+                                href="/grapher/daily-per-capita-caloric-supply?tab=chart&amp;country=IND">food
+                            demand</a> continues to increase. China is the world&apos;s second largest user, at
+                        approximately 385 billion m<sup>3&#xA0;</sup>in 2015, although its agricultural freshwater use
+                        has approximately plateaued in the recent past. </p>
+                    <figure data-grapher-src="/grapher/agricultural-water-withdrawals" class="grapherPreview"><a
+                            href="/grapher/agricultural-water-withdrawals" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/40d037b9a85045902b922ac46d49df390d0eeeac/b169e/exports/agricultural-water-withdrawals_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="agricultural-water-withdrawals-as-a-share-of-total-withdrawals"><a class="deep-link"
+                                                                                               href="#agricultural-water-withdrawals-as-a-share-of-total-withdrawals"></a>Agricultural
+                        water withdrawals as a share of total withdrawals</h4>
+                    <p>How do agricultural freshwater withdrawals compare to industrial and domestic sources? Globally
+                        we use approximately 70 percent of freshwater withdrawals for agriculture.<a id="ref-6"
+                                                                                                     class="ref"
+                                                                                                     href="#note-6"><sup>6</sup></a>
+                    </p>
+                    <p>However, this share varies significantly by country - as shown in the chart below which measures
+                        the percentage of total freshwater withdrawals used for agriculture. Here we see large
+                        variations geographically and by income level. The average agricultural water use for low-income
+                        countries is 90 percent; 79 percent for middle income and only 41 percent at high incomes.</p>
+                    <p>There are a number of countries across South Asia, Africa and Latin America which use more than
+                        90 percent of water withdrawals for agriculture. The highest is Afghanistan at 99 percent.
+                        Countries in the global north tend to use a much lower share of water for agriculture; Germany
+                        and the Netherlands use less than one percent.&#xA0;</p>
+                    <figure data-grapher-src="/grapher/agricultural-water-as-a-share-of-total-water-withdrawals"
+                            class="grapherPreview"><a
+                            href="/grapher/agricultural-water-as-a-share-of-total-water-withdrawals" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/87d7a7ef5a379b414b5e7e2d0676a9627fee3129/cbfd6/exports/agricultural-water-as-a-share-of-total-water-withdrawals_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="irrigation"><a class="deep-link" href="#irrigation"></a>I.5 Irrigation</h3><h4
+                            id="share-of-agricultural-area-irrigated"><a class="deep-link"
+                                                                         href="#share-of-agricultural-area-irrigated"></a>Share
+                        of agricultural area irrigated</h4>
+                    <p>Irrigation &#x2014; the deliberate provision or controlled flooding of agricultural land with
+                        water &#x2014; has been an important input factor in the observed increase of <a
+                                href="/yields-and-land-use-in-agriculture">crop yields</a> across many countries in
+                        recent decades. It has also been a strong driver in the quantity of water used for agriculture.
+                    </p>
+                    <p>The share of total agricultural area (which is <a
+                            href="/yields-and-land-use-in-agriculture/#land-use-definitions-and-categories">the
+                        combination</a> of arable and grazing land)&#xA0;which is irrigated is shown in the chart below.
+                        As we see, irrigation is particularly prevalent across South &amp; East Asia and the Middle
+                        East;&#xA0; Pakistan, Bangladesh and South Korea all irrigate more than half of their
+                        agricultural area. India irrigates 35 percent of its agricultural area.</p>
+                    <p>Levels of irrigation in Sub-Saharan Africa have increased, and continue to have, lower levels&#xA0;
+                        of irrigation relative to South Asia and the Middle East &amp; North Africa. Poorer progress in
+                        increasing crop yields in recent decades in Sub-Saharan Africa has been partly attributed (among
+                        other factors including fertilizer application rates and crop varieties) to lower uptake of
+                        irrigation in Sub-Saharan Africa.<a id="ref-7" class="ref" href="#note-7"><sup>7</sup></a></p>
+                    <figure data-grapher-src="/grapher/agricultural-land-irrigation" class="grapherPreview"><a
+                            href="/grapher/agricultural-land-irrigation" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/b6f84b00c2f247b3f97ec773ab626146c49f6d42/4627d/exports/agricultural-land-irrigation_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="industrial-water-withdrawals"><a class="deep-link" href="#industrial-water-withdrawals"></a>I.6
+                        Industrial water withdrawals</h3><h4 id="total-industrial-water-withdrawals"><a
+                            class="deep-link" href="#total-industrial-water-withdrawals"></a>Total industrial water
+                        withdrawals</h4>
+                    <p>Water is used for a range of <a
+                            href="https://www.cdc.gov/healthywater/other/industrial/index.html" target="_blank"
+                            rel="noopener">industrial applications</a>, including dilution, steam generation, washing,
+                        and cooling of manufacturing equipment. Industrial water is also used as cooling water for
+                        energy generation in fossil fuel and nuclear power plants (hydropower generation is not included
+                        in this category), or as wastewater from certain industrial processes.</p>
+                    <p>The visualisation below shows the total annual water withdrawals which are used for industrial
+                        purposes. Globally, the United States is the largest user of industrial water, withdrawing over
+                        300&#xA0;billion m&#xB3; per year. This is significantly greater than China, the second largest,
+                        at 140&#xA0;billion m&#xB3;.</p>
+                    <p>Most countries across the Americas, Europe and East Asia &amp; Pacific regions use more one&#xA0;billion
+                        m&#xB3; for industrial uses per year. Rates are typically much lower across Sub-Saharan Africa
+                        and some parts of South Asia where most use less than 500 million&#xA0;m&#xB3;. </p>
+                    <figure data-grapher-src="/grapher/industrial-water-withdrawal" class="grapherPreview"><a
+                            href="/grapher/industrial-water-withdrawal" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/3f96903728fd6844efae8fbea8107fe1be1d2deb/b5fe8/exports/industrial-water-withdrawal_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="industrial-water-withdrawals-as-a-share-of-total-withdrawals"><a class="deep-link"
+                                                                                             href="#industrial-water-withdrawals-as-a-share-of-total-withdrawals"></a>Industrial
+                        water withdrawals as a share of total withdrawals</h4>
+                    <p>Globally, just under 20 percent (18-19 percent) of total water withdrawals are used for
+                        industrial purposes. The visualisation below provides an overview of industrial water
+                        withdrawals measured as the share of total water withdrawals (which is the sum of agricultural,
+                        industrial and domestic uses).</p>
+                    <p>In contrast to the global distribution for agricultural water withdrawals, industrial water tends
+                        to dominate in high-income countries (with an average of 44 percent), and is small in low-income
+                        countries on average 3 percent).</p>
+                    <p>Estonia uses the greater share of withdrawals for industrial applications at 96 percent. The
+                        share in Central and Eastern Europe tends to be greater than 70 percent; 80 percent in Canada;
+                        and approximately half in the United States. Across Sub-Saharan Africa and South Asia, this
+                        tends to contribute less than 10 percent to total withdrawals.</p>
+                    <figure data-grapher-src="/grapher/industrial-water-as-a-share-of-total-water-withdrawals"
+                            class="grapherPreview"><a
+                            href="/grapher/industrial-water-as-a-share-of-total-water-withdrawals" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/4256ccb25f1f5b74701dc37477aaf563e9136783/6491f/exports/industrial-water-as-a-share-of-total-water-withdrawals_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="municipal-water-withdrawals"><a class="deep-link" href="#municipal-water-withdrawals"></a>I.7
+                        Municipal water withdrawals</h3><h4 id="total-municipal-water-withdrawals"><a class="deep-link"
+                                                                                                      href="#total-municipal-water-withdrawals"></a>Total
+                        municipal water withdrawals</h4>
+                    <p>Municipal water is defined as the water we use for domestic, household purposes or public
+                        services. This is typically the most &apos;visible&apos; form of water: the water we use for
+                        drinking, cleaning, washing, and cooking.</p>
+                    <p>Municipal water withdrawals are shown in the chart below. With the largest <a
+                            href="/world-population-growth/">population</a>, China&apos;s domestic water demands are
+                        highest at over 70 billion m&#xB3; per year. India, the next largest populace is the third
+                        largest municipal water user. The United States, despite having a much lower population, is the
+                        second largest user as a result of higher per capita water demands.</p><h4
+                            id="municipal-water-withdrawals-as-a-share-of-total-withdrawals"><a class="deep-link"
+                                                                                                href="#municipal-water-withdrawals-as-a-share-of-total-withdrawals"></a>Municipal
+                        water withdrawals as a share of total withdrawals</h4>
+                    <p>Despite being the most visible use of freshwater, domestic demands for most countries are small
+                        relative to agricultural and industrial applications. Globally around 11 percent of withdrawals
+                        are used for municipal purposes.</p>
+                    <p>Municipal uses as a share of total water withdrawals across the world is shown in the chart
+                        below. The majority of countries use less than 30 percent of withdrawals for domestic
+                        purposes.</p>
+                    <p>The share of municipal water in some countries across Sub-Saharan Africa can be high as a result
+                        of very low demands for agricultural and industrial withdrawals. Domestic uses of water
+                        withdrawals can also dominate in some countries across Europe with high rainfall, such as the
+                        United Kingdom and Ireland where agricultural production is often largely rainfed and industrial
+                        output is low.&#xA0; &#xA0;</p>
+                    <figure data-grapher-src="/grapher/municipal-water-as-a-share-of-total-water-withdrawals"
+                            class="grapherPreview"><a
+                            href="/grapher/municipal-water-as-a-share-of-total-water-withdrawals" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/5c661daa2965456d6f0816a87f1369fec5936698/8140a/exports/municipal-water-as-a-share-of-total-water-withdrawals_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="water-stress-and-scarcity"><a class="deep-link" href="#water-stress-and-scarcity"></a>I.8
+                        Water stress and scarcity</h3>
+                    <p>As global population grows (increasing agricultural, industrial and domestic demands for water),
+                        and water demand increases, water stress and the risk of water scarcity is now a common concern.
+                        This is even more applicable for particular regions with lower water resources and/or larger
+                        population pressures.</p>
+                    <p>Water stress is defined based on the ratio of freshwater withdrawals to renewable freshwater
+                        resources. Water stress does not insinuate that a country has water shortages, but does give an
+                        indication of how close it maybe be to exceeding a water basin&apos;s renewable resources. If
+                        water withdrawals exceed available resources (i.e. greater than 100 percent) then a country is
+                        either extracting beyond the rate at which aquifers can be replenished, or has very high levels
+                        of desalinisation water generation (the conversion of seawater to freshwater using osmosis
+                        processes).</p><h4 id="internal-renewable-freshwater-resources-by-region"><a class="deep-link"
+                                                                                                     href="#internal-renewable-freshwater-resources-by-region"></a>Internal
+                        renewable freshwater resources by region</h4>
+                    <p>The chart below shows the total internal renewable freshwater resources by region.</p>
+                    <figure data-grapher-src="/grapher/internal-renewable-freshwater-resources-by-region"
+                            class="grapherPreview"><a href="/grapher/internal-renewable-freshwater-resources-by-region"
+                                                      target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/2334c78ed92cf1aff0840d4d62ca77c9d5363af7/8e92b/exports/internal-renewable-freshwater-resources-by-region_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="freshwater-withdrawals-as-a-share-of-internal-resources"><a class="deep-link"
+                                                                                        href="#freshwater-withdrawals-as-a-share-of-internal-resources"></a>Freshwater
+                        withdrawals as a share of internal resources</h4>
+                    <p>The visualisation below provides a measure of levels of water stress across the world. This is
+                        measured based on freshwater withdrawals as a share of internal (renewable) resources. The World
+                        Resources Institute categorise water stress in the following ways: if withdrawals are less than
+                        10 percent of resources then a country has low water stress; 10-20 percent is low-to-medium
+                        stress; 20-40 percent medium-to-high; 40-80 percent high stress; and greater than 80 percent is
+                        extremely high stress.<a id="ref-8" class="ref" href="#note-8"><sup>8</sup></a></p>
+                    <p>As shown, several countries across the Middle East, North Africa &amp; South Asia have extremely
+                        high levels of water stress. Many, such as Saudi Arabia, Egypt, United Arab Emirates, Syria,
+                        Pakistan, Libya have withdrawal rates well in excess of 100 percent &#x2014; this means they are
+                        either extracting unsustainably from existing aquifer sources, or produce a large share of water
+                        from desalinisation.</p>
+                    <p>Most countries across South Asia are experiencing high water stress; medium-to-high across East
+                        Asia, the United States and much of Southern and Eastern Europe. Water stress in Northern
+                        Europe, Canada, much of Latin America, Sub-Saharan Africa and Oceania is typically low or
+                        low-to-medium.</p>
+                    <figure data-grapher-src="/grapher/annual-freshwater-withdrawals-total-of-internal-resources"
+                            class="grapherPreview"><a
+                            href="/grapher/annual-freshwater-withdrawals-total-of-internal-resources" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/a38558552b400870bd01c7a1ba5a2159c1d959b8/874da/exports/annual-freshwater-withdrawals-total-of-internal-resources_v3_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="access-to-improved-sanitation"><a class="deep-link"
+                                                              href="#access-to-improved-sanitation"></a>I.9 Access to
+                        improved sanitation</h3><h4 id="progress-on-sanitation-from-1990-2015"><a class="deep-link"
+                                                                                                  href="#progress-on-sanitation-from-1990-2015"></a>Progress
+                        on sanitation from 1990-2015</h4>
+                    <p>In 2000, the world set a target as part of the Millennium Development Goals (MDGs) to half the
+                        proportion of people without access to improved sanitation facilities by 2015 from 1990 levels.
+                        Over this period, progress was made in increasing the share with access from 54 to 68 percent.
+                        However, this fell short of the 77 percent target by 2015.<a id="ref-9" class="ref"
+                                                                                     href="#note-9"><sup>9</sup></a></p>
+                    <p>Universal access to sanitation therefore remains one of the world&apos;s greatest development
+                        challenges. Over the period from 1990-2015, a further 29 percent of the global population gained
+                        access to sanitation. Although, as shown in the chart below, progress varied significantly by
+                        region.</p>
+                    <figure data-grapher-src="/grapher/sanitation-access-since-1990" class="grapherPreview"><a
+                            href="/grapher/sanitation-access-since-1990" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/c10d0098f7ea4465b0ea9b2efdae26f4ff057488/8b13c/exports/sanitation-access-since-1990_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="number-of-people-with-and-without-access-to-improved-sanitation-facilities"><a
+                            class="deep-link"
+                            href="#number-of-people-with-and-without-access-to-improved-sanitation-facilities"></a>Number
+                        of people with and without access to improved sanitation facilities</h4>
+                    <p>The chart below shows the total number of people with and without access to improved sanitation
+                        facilities from 1990 [note that this data can also be viewed by country and region using the
+                        &quot;change country&quot; function].</p>
+                    <p>Over this 25-year period, the total number of people without access to improved sanitation has
+                        remained almost constant: in 1990 this figure was 2.49 billion, and in 2015 it has reduced to
+                        2.39 billion. Total population has of course grown over this period, meaning the number with
+                        access has increased from 2.8 billion to nearly 5 billion in 2015. This means that although the
+                        total number without access has remained almost constant, the share of the population without
+                        access has fallen.</p>
+                    <figure data-grapher-src="/grapher/number-with-without-access-sanitation" class="grapherPreview"><a
+                            href="/grapher/number-with-without-access-sanitation" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/cce4ace4aa9cf8bdadb1591c132cc8831c5e6c22/e0501/exports/number-with-without-access-sanitation_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="number-of-people-without-access-to-improved-sanitation-facilities-by-region"><a
+                            class="deep-link"
+                            href="#number-of-people-without-access-to-improved-sanitation-facilities-by-region"></a>Number
+                        of people without access to improved sanitation facilities by region</h4>
+                    <p>The chart below shows the total number of people without access to improved sanitation facilities
+                        by region. Over 90 percent of those without access in 2015 resided in Asia, the Pacific or
+                        Sub-Saharan Africa. The largest region share was from South Asia, accounting for 40 percent and
+                        nearly one billion without access. This was followed by Sub-Saharan Africa with nearly 30
+                        percent (706 million), and East Asia &amp; Pacific with around 22 percent (520 million).</p>
+                    <figure data-grapher-src="/grapher/number-without-access-sanitation" class="grapherPreview"><a
+                            href="/grapher/number-without-access-sanitation" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/4302ec01900a4f467d43bd5d0e6d164e9465beba/9c3e5/exports/number-without-access-sanitation_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-total-population-with-improved-sanitation-facilities"><a class="deep-link"
+                                                                                              href="#share-of-total-population-with-improved-sanitation-facilities"></a>Share
+                        of total population with improved sanitation facilities</h4>
+                    <p>There remains large inequalities in levels of access to improved sanitation. The maps below show
+                        the total share of the population with improved sanitation facilities, as observed through time
+                        from 1990. Also shown in the maps which follow is this share for rural and urban populations of
+                        a given country.</p>
+                    <p>Access across Europe, North America, North Africa and some of Latin America is typically greater
+                        than 90 percent (and in most cases between 99 and 100 percent). Between 80 and 90 percent of
+                        households in Latin America and the Caribbean have improved sanitation. Access is slightly lower
+                        across Central and East Asia, typically between 70 and 80 percent.</p>
+                    <p>In South Asia, progress has been varied. Sri Lanka has achieved a 95 percent access rate;
+                        Pakistan and Bangladesh both have access of over 60 percent; whereas India lags behind in this
+                        regard with just under 40 percent. Regionally, access is lowest in Sub-Saharan Africa where most
+                        countries have less than 40 percent access rates. In South Sudan, only 6-7 percent of the
+                        population had improved sanitation in 2015.&#xA0; </p>
+                    <figure data-grapher-src="/grapher/share-of-population-with-improved-sanitation-faciltities"
+                            class="grapherPreview"><a
+                            href="/grapher/share-of-population-with-improved-sanitation-faciltities" target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/588e8fcb5cc5a30b61427592df2af354ee13319c/9f635/exports/share-of-population-with-improved-sanitation-faciltities_v2_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-rural-population-with-improved-sanitation-facilities"><a class="deep-link"
+                                                                                              href="#share-of-rural-population-with-improved-sanitation-facilities"></a>Share
+                        of rural population with improved sanitation facilities</h4>
+                    <figure data-grapher-src="/grapher/share-of-rural-population-with-improved-sanitation-faciltities"
+                            class="grapherPreview"><a
+                            href="/grapher/share-of-rural-population-with-improved-sanitation-faciltities"
+                            target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/4ec81c7dd3c9b2e6630e7e64b9d652c6a7d2b0cc/f1869/exports/share-of-rural-population-with-improved-sanitation-faciltities_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-urban-population-with-improved-sanitation-facilities"><a class="deep-link"
+                                                                                              href="#share-of-urban-population-with-improved-sanitation-facilities"></a>Share
+                        of urban population with improved sanitation facilities</h4>
+                    <figure data-grapher-src="/grapher/share-of-urban-population-with-improved-sanitation-faciltities"
+                            class="grapherPreview"><a
+                            href="/grapher/share-of-urban-population-with-improved-sanitation-faciltities"
+                            target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/fa8982f0cfe435554496130c5d56f774ba58f419/a8136/exports/share-of-urban-population-with-improved-sanitation-faciltities_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h3 id="open-defecation"><a class="deep-link" href="#open-defecation"></a>I.10 Open defecation</h3>
+                    <h4 id="share-of-population-practicing-open-defecation"><a class="deep-link"
+                                                                               href="#share-of-population-practicing-open-defecation"></a>Share
+                        of population practicing open defecation</h4>
+                    <p>Open defecation refers to the defecation in the open, such as in fields, forest, bushes, open
+                        bodies of water, on beaches, in other open spaces or disposed of with solid waste. Open
+                        defecation has a number of negative health and social impacts, including the spread of
+                        infectious diseases, diarrhoea (especially in children), adverse health outcomes in pregnancy,
+                        malnutrition, as well as increased vulnerability to violence &#x2014; particularly for women and
+                        girls.<a id="ref-10" class="ref" href="#note-10"><sup>10</sup></a></p>
+                    <p>The charts below detail the share of people practicing open defecation from 1990 onwards, as a
+                        percentage of the total population, rural and urban population. In 2015, 15 percent of the world&apos;s
+                        population were still practicing open defecation, presenting a reduction of approximately half
+                        since 1990. Regionally, prevalence was highest in South Asia where the average share is 36
+                        percent. India in particular still has high rates, with nearly 45 percent still using open
+                        defecation.</p>
+                    <p>In Sub-Saharan Africa, this rate was 23 percent. However, some countries in particular&#xA0;&#x2014;
+                        such as Niger, Chad, South Sudan and Eritrea&#xA0;&#x2014; still have a prevalence between 60-80
+                        percent.</p>
+                    <figure data-grapher-src="/grapher/people-practicing-open-defecation-of-population"
+                            class="grapherPreview"><a href="/grapher/people-practicing-open-defecation-of-population"
+                                                      target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/bb49a6242197e6f9ea591feef1ce19b13060213a/18cd6/exports/people-practicing-open-defecation-of-population_v2_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-rural-population-practicing-open-defecation"><a class="deep-link"
+                                                                                     href="#share-of-rural-population-practicing-open-defecation"></a>Share
+                        of rural population practicing open defecation</h4>
+                    <figure data-grapher-src="/grapher/people-practicing-open-defection-in-rural-areas-of-rural-population"
+                            class="grapherPreview"><a
+                            href="/grapher/people-practicing-open-defection-in-rural-areas-of-rural-population"
+                            target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/b9e0fb925c0739c446efc2078fa432f1e607a357/e8a34/exports/people-practicing-open-defection-in-rural-areas-of-rural-population_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                    <h4 id="share-of-urban-population-practicing-open-defecation"><a class="deep-link"
+                                                                                     href="#share-of-urban-population-practicing-open-defecation"></a>Share
+                        of urban population practicing open defecation</h4>
+                    <figure data-grapher-src="/grapher/people-practicing-open-defecation-in-urban-areas-of-urban-population"
+                            class="grapherPreview"><a
+                            href="/grapher/people-practicing-open-defecation-in-urban-areas-of-urban-population"
+                            target="_blank">
+                        <div><img
+                                src="https://d33wubrfki0l68.cloudfront.net/e01c2f45b5abca56d23d36ba0c0cfd3124febc37/81329/exports/people-practicing-open-defecation-in-urban-areas-of-urban-population_v1_850x600.svg">
+                        </div>
+                    </a></figure>
+                </section>
+
+
+
+
+
+
+
+
+
+
+
+
+

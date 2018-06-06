@@ -100,7 +100,7 @@ lineGraph_group.append("text")
 function renderMap(data) {
     d3.json('./Data/world.geojson', function (error, mapData) {
         const features = mapData.features;
-        world_map = svg.append('g')
+        svg.append('g')
             .attr('class', 'countries')
             .style('display', 'block')
             .selectAll('path')
@@ -139,12 +139,10 @@ function renderMap(data) {
 
 
 function toggle_lineChart_visibility() {
-    // Hide the world map and let the line graph be visible
-    world_map.attr('visibility', 'hidden');
-    slider.attr('visibility', 'hidden');
+    d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
+    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
     lineGraph_group.attr('visibility', 'visibile');
 }
-
 
 function lineChart() {
     d3.csv("./Data/current.csv", function (error1, data1) {
