@@ -1,14 +1,6 @@
-let width = 1200,
+const width = 1200,
     height = 600;
-
-// const years = [1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,]
-const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
-
-let total_internal_water = new Map();
-let total_external_water = new Map();
-let total_available_water = new Map();
-let total_water_used = new Map();
-let water_stress_levels = new Map();
+const padding = 40;
 
 
 /**
@@ -18,8 +10,29 @@ let water_stress_levels = new Map();
  * Find max(X)
  * Divide each country by max(X) and multiply by 5
  */
+const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
 
-var world_map, slider;
+let total_internal_water = new Map();
+let total_external_water = new Map();
+let total_available_water = new Map();
+let total_water_used = new Map();
+let water_stress_levels = new Map();
+
+let xScale, yScale, xAxis, yAxis;  //Empty, for now
+
+//For converting Dates to strings
+const formatTime = d3.timeFormat("%Y");
+//Function for converting CSV values from strings to Dates and numbers
+const parseTime = d3.timeParse("%Y");
+
+const x = d3.scaleLinear()
+    .domain([1960, 2040])
+    .range([0, 600])
+    .clamp(true);
+
+const slider = svg.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + 300 + "," + 600 + ")");
 
 const projection = d3.geoMercator()
     .scale(100)
@@ -36,38 +49,34 @@ const color = d3.scaleThreshold()
     .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
     .range(d3.schemeBlues[7]);
 
+
+const handle = slider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 9);
+
+
 // creates a group for the linegraph and creates a toggle button
-var lineGraph_group = svg.append('g').attr('visibility', 'hidden');
-var back2Map_button = lineGraph_group.append("rect")
-                .attr("class", "back2Map_button")
-                .attr("transform", "translate(" + 1100 + "," + 0 + ")")
-                .attr('width', 100)
-                .attr('height',50)
-                .attr('fill', 'lightblue')
-                .on('click', function(){
-                    // toggle visibility
-                    world_map.attr('visibility', 'visible');
-                    slider.attr('visibility', 'visible');
-                    lineGraph_group.attr('visibility', 'hidden');
-                });
+const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
+const back2Map_button = lineGraph_group.append("rect")
+    .attr("class", "back2Map_button")
+    .attr("transform", "translate(" + 1100 + "," + 0 + ")")
+    .attr('width', 100)
+    .attr('height', 50)
+    .attr('fill', 'lightblue')
+    .on('click', function () {
+        // toggle visibility
+        world_map.attr('visibility', 'visible');
+        slider.attr('visibility', 'visible');
+        lineGraph_group.attr('visibility', 'hidden');
+    });
 lineGraph_group.append("text")
-                .attr("class", "back_label")
-                .attr("transform", "translate(" + 1150 + "," + 30 + ")")
-                .attr("fill", "black")
-                .attr("text-anchor", "middle")
-                .attr("pointer-events", "none")
-                .text("Back");
+    .attr("class", "back_label")
+    .attr("transform", "translate(" + 1150 + "," + 30 + ")")
+    .attr("fill", "black")
+    .attr("text-anchor", "middle")
+    .attr("pointer-events", "none")
+    .text("Back");
 
-
-var padding = 40;
-
-var xScale, yScale, xAxis, yAxis;  //Empty, for now
-
-//For converting Dates to strings
-var formatTime = d3.timeFormat("%Y");
-
-//Function for converting CSV values from strings to Dates and numbers
-var parseTime = d3.timeParse("%Y");
 
 function renderMap() {
     d3.json('world.geojson', function (error, mapData) {
@@ -82,7 +91,7 @@ function renderMap() {
             .style('fill', function (d) {
                 return color(Math.floor(Math.random() * 10) + 1);
             })
-            .on("mouseover", function(d){
+            .on("mouseover", function (d) {
                 let country_name = d.properties.ADMIN;
                 //console.log(country_name);
 
@@ -90,14 +99,14 @@ function renderMap() {
                 d3.select(this)
                     .style("fill", "orange");
             })
-            .on("mouseout", function(d){
-                d3.select(this).style("fill", function(d){
-                        let country_name = d.properties.ADMIN;
-                        //console.log(country_name);
-                        return color(Math.floor(Math.random() * 10) +1);
-                    });
+            .on("mouseout", function (d) {
+                d3.select(this).style("fill", function (d) {
+                    let country_name = d.properties.ADMIN;
+                    //console.log(country_name);
+                    return color(Math.floor(Math.random() * 10) + 1);
+                });
             })
-            .on("click", function(d){
+            .on("click", function (d) {
                 let country_name = d.properties.ADMIN;
                 console.log("clicked: " + country_name);
                 toggle_lineChart_visibility();
@@ -107,25 +116,25 @@ function renderMap() {
 }
 
 
-function toggle_lineChart_visibility(){
+function toggle_lineChart_visibility() {
     // Hide the world map and let the line graph be visible
     world_map.attr('visibility', 'hidden');
     slider.attr('visibility', 'hidden');
     lineGraph_group.attr('visibility', 'visibile');
 }
 
-function lineChart(){
+function lineChart() {
 
-    d3.csv("current.csv", function(error1, data1){
+    d3.csv("current.csv", function (error1, data1) {
 
-        d3.csv("predicted.csv", function(error2, data2){
+        d3.csv("predicted.csv", function (error2, data2) {
 
-            data1.forEach(function(d) {
+            data1.forEach(function (d) {
                 d.year = parseTime(d.year);
                 d.score = +d.score;
             });
 
-            data2.forEach(function(d) {
+            data2.forEach(function (d) {
                 d.year = parseTime(d.year);
                 d.pessimistic = +d.pessimistic;
                 d.optimistic = +d.optimistic;
@@ -133,47 +142,75 @@ function lineChart(){
             });
 
             xScale = d3.scaleTime()
-                       .domain([
-                            d3.min(data1, function(d) { return d.year; }),
-                            d3.max(data2, function(d) { return d.year; })
-                        ])
-                       .range([padding+100, width-100]);
+                .domain([
+                    d3.min(data1, function (d) {
+                        return d.year;
+                    }),
+                    d3.max(data2, function (d) {
+                        return d.year;
+                    })
+                ])
+                .range([padding + 100, width - 100]);
 
             yScale = d3.scaleLinear()
-                        .domain([0,5])
-                        .range([height-40, padding]);
+                .domain([0, 5])
+                .range([height - 40, padding]);
 
             //Define axes
             xAxis = d3.axisBottom()
-                       .scale(xScale)
-                       .ticks(10)
-                       .tickFormat(formatTime);
+                .scale(xScale)
+                .ticks(10)
+                .tickFormat(formatTime);
 
             //Define Y axis
             yAxis = d3.axisLeft()
-                       .scale(yScale)
-                       .ticks(5);
+                .scale(yScale)
+                .ticks(5);
 
             //Define line generators
             line = d3.line()
-                        .defined(function(d) { return d.year >= parseTime(1960) && d.year <= parseTime(2015); })
-                        .x(function(d) { return xScale(d.year); })
-                        .y(function(d) { return yScale(d.score); });
+                .defined(function (d) {
+                    return d.year >= parseTime(1960) && d.year <= parseTime(2015);
+                })
+                .x(function (d) {
+                    return xScale(d.year);
+                })
+                .y(function (d) {
+                    return yScale(d.score);
+                });
 
             pessimisticLine = d3.line()
-                        .defined(function(d) { return d.year >= parseTime(2015); })
-                        .x(function(d) { return xScale(d.year); })
-                        .y(function(d) { return yScale(d.pessimistic); });
+                .defined(function (d) {
+                    return d.year >= parseTime(2015);
+                })
+                .x(function (d) {
+                    return xScale(d.year);
+                })
+                .y(function (d) {
+                    return yScale(d.pessimistic);
+                });
 
             optimisticLine = d3.line()
-                        .defined(function(d) { return d.year >= parseTime(2015); })
-                        .x(function(d) { return xScale(d.year); })
-                        .y(function(d) { return yScale(d.optimistic); });
+                .defined(function (d) {
+                    return d.year >= parseTime(2015);
+                })
+                .x(function (d) {
+                    return xScale(d.year);
+                })
+                .y(function (d) {
+                    return yScale(d.optimistic);
+                });
 
             bauLine = d3.line()
-                        .defined(function(d) { return d.year >= parseTime(2015); })
-                        .x(function(d) { return xScale(d.year); })
-                        .y(function(d) { return yScale(d.bau); });
+                .defined(function (d) {
+                    return d.year >= parseTime(2015);
+                })
+                .x(function (d) {
+                    return xScale(d.year);
+                })
+                .y(function (d) {
+                    return yScale(d.bau);
+                });
 
 
             //Draw predicted line
@@ -223,7 +260,7 @@ function lineChart(){
 
             lineGraph_group.append("g")
                 .attr("class", "axis")
-                .attr("transform", "translate(" + (padding+100) + ",0)")
+                .attr("transform", "translate(" + (padding + 100) + ",0)")
                 .call(yAxis);
 
         });
@@ -231,16 +268,6 @@ function lineChart(){
 }
 
 lineChart();
-//---------------------------------------------------------------
-
-const x = d3.scaleLinear()
-    .domain([1960, 2040])
-    .range([0, 600])
-    .clamp(true);
-
-const slider = svg.append("g")
-    .attr("class", "slider")
-    .attr("transform", "translate(" + 300 + "," + 600 + ")");
 
 
 slider.append("line")
@@ -275,9 +302,6 @@ slider.insert("g", ".track-overlay")
         return d;
     });
 
-const handle = slider.insert("circle", ".track-overlay")
-    .attr("class", "handle")
-    .attr("r", 9);
 
 //slider.transition() // Gratuitous intro!
 //    .duration(750)
