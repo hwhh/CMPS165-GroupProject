@@ -1,11 +1,11 @@
 import {renderMap} from "./map";
-import {width, height} from "./variables";
+import {createSlider} from "./slider";
+import {width, height, water_stress_levels, total_water_used, total_external_water, total_internal_water, total_available_water} from "./variables";
 
-let total_internal_water = new Map();
-let total_external_water = new Map();
-let total_available_water = new Map();
-let total_water_used = new Map();
-let water_stress_levels = new Map();
+
+export const formatTime = d3.timeFormat("%Y");
+export const parseTime = d3.timeParse("%Y");
+
 
 export const svg = d3.select("body").append("svg")
     .attr('width', width)
@@ -49,9 +49,9 @@ Promise.all([
         return val
     }),
 ]).then(values => {
-    renderMap();
+    renderMap(water_stress_levels.get('1978-1982'));
+    createSlider();
     // lineChart();
-    // createSlider();
 });
 
 
