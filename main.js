@@ -375,9 +375,9 @@ function calculateScore() {
 
 
 Promise.all([
-    loadDataset(total_external_water, 'external.csv'),
-    loadDataset(total_internal_water, 'internal.csv'),
-    loadDataset(total_water_used, 'withdrawals.csv')
+//    loadDataset(total_external_water, 'external.csv'),
+//    loadDataset(total_internal_water, 'internal.csv'),
+//    loadDataset(total_water_used, 'withdrawals.csv')
 ]).then(values => {
 
 
