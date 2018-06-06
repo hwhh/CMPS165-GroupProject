@@ -16,8 +16,25 @@ const padding = 40;
  *
  *
  */
-// const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
-const years = ['1978-1982', '1983-1987', '1988-1992', '1993-1997', '1998-2002', '2003-2007', '2008-2012', '2013-2017'];
+
+
+const years = {
+    1978: '1978-1982',
+    1983: '1983-1987',
+    1988: '1988-1992',
+    1993: '1993-1997',
+    1998: '1998-2002',
+    2003: '2003-2007',
+    2008: '2008-2012',
+    2013: '2013-2017',
+    2018: '2020',
+    2030: '2030',
+    2040: '2040',
+};
+// const years = [1978, 1983, 1988, 1993, 1998, 2003, 2008, 2013, 2017];
+// const years2 = [    ];
+// const years2 = ['1978-1982', '1983-1987', '1988-1992', '1993-1997', '1998-2002', '2003-2007', '2008-2012', '2013-2017'];
+
 
 let total_internal_water = new Map();
 let total_external_water = new Map();
@@ -91,8 +108,10 @@ function renderMap(data) {
             .enter().append('path')
             .attr('d', path)
             .style('fill', function (d) {
-                // return color(data.get());
-                return color(Math.floor(Math.random() * 10) + 1);
+                // console.log(data.get(d))
+
+                return color(data[d.properties.ADMIN]);
+                // return color(Math.floor(Math.random() * 10) + 1);
             })
             .on("mouseover", function (d) {
                 let country_name = d.properties.ADMIN;
@@ -106,7 +125,7 @@ function renderMap(data) {
                 d3.select(this).style("fill", function (d) {
                     let country_name = d.properties.ADMIN;
                     //console.log(country_name);
-                    return color(Math.floor(Math.random() * 10) + 1);
+                    return color(data[d.properties.ADMIN]);
                 });
             })
             .on("click", function (d) {
@@ -269,20 +288,41 @@ function lineChart() {
 
 function createSlider() {
 
-    const data3 = d3.range(0, 10).map(function (d) {
-        return new Date(1995 + d, 10, 3);
-    });
+    // var data3 = d3.range(0,  Object.keys(years).length)
+    // )Object.keys(years)
 
-    const slider3 = d3.sliderHorizontal()
+    var data3 =
+        d3.range(0, Object.keys(years).length).map(function (d) {
+            return new Date(Object.keys(years)[d], 10, 3);
+        });
+
+    var slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
-        .step(1000 * 60 * 60 * 24 * 365)
-        .width(400)
+        .width(450)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
-            d3.select("p#value3").text(d3.timeFormat('%Y')(val));
+            let keys = Object.keys(years);
+            let current_year = years[keys.reverse().find(e => e <= formatTime(val))];
+            const millisecondsToWait = 500;
+            setTimeout(function() {
+                renderMap(water_stress_levels.get(current_year))
+            }, millisecondsToWait);
+
+            // d3.select("p#value3").text(d3.timeFormat('%Y')(val));
         });
+
+
+    // const slider3 = d3.sliderHorizontal()
+    //     .ticks(8)
+    //     .width(400)
+    //     .tickValues([1, 2, 3, 4, 5, 6, 7, 8])
+    //     .on('onchange', val => {
+    //         current_year = val;
+    //         console.log(current_year)
+    //         // d3.select("p#value3").text(d3.timeFormat('%Y')(val));
+    //     });
 
     //transform: translate(350px, 500px);
     svg.append('g')
@@ -292,8 +332,8 @@ function createSlider() {
         .call(slider3);
 
 
-    d3.select("p#value3").text(d3.timeFormat('%Y')(slider3.value()));
-    d3.select("a#setValue3").on("click", () => slider3.value(new Date(1997, 11, 17)));
+    // d3.select("p#value3").text(d3.timeFormat('%Y')(slider3.value()));
+    // d3.select("a#setValue3").on("click", () => slider3.value(new Date(1997, 11, 17)));
 
 }
 
@@ -304,7 +344,7 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        values[key] = func(+d[key])
+                        values[key] = +d[key]
                     }
                 });
                 map.set(d.Year, values)
@@ -328,7 +368,8 @@ Promise.all([
         return val
     }),
 ]).then(values => {
-    renderMap();
+    console.log(water_stress_levels.get('1978-1982'))
+    renderMap(water_stress_levels.get('1978-1982'));
     lineChart();
     createSlider();
 });
