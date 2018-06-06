@@ -9,8 +9,14 @@ const padding = 40;
  * Water Stress as a % = X = Total Water Used / Total Water (Total Internal + Total External)
  * Find max(X)
  * Divide each country by max(X) and multiply by 5
+ *
+ * [SDG 6.4.2. Water Stress] = 100*[Total freshwater withdrawal (primary and secondary)]/([Total renewable water resources]-[Environmental Flow Requirements])
+ *
+ *
+ *
  */
-const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
+// const years = [[1978, 1982], [1983, 1987], [1988, 1992], [1993, 1997], [1998, 2002], [2003, 2007], [2008, 2012], [2013, 2017]];
+const years = ['1978-1982', '1983-1987', '1988-1992', '1993-1997', '1998-2002', '2003-2007', '2008-2012', '2013-2017'];
 
 let total_internal_water = new Map();
 let total_external_water = new Map();
@@ -57,6 +63,7 @@ const handle = slider.insert("circle", ".track-overlay")
 
 // creates a group for the linegraph and creates a toggle button
 const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
+
 const back2Map_button = lineGraph_group.append("rect")
     .attr("class", "back2Map_button")
     .attr("transform", "translate(" + 1100 + "," + 0 + ")")
@@ -69,6 +76,8 @@ const back2Map_button = lineGraph_group.append("rect")
         slider.attr('visibility', 'visible');
         lineGraph_group.attr('visibility', 'hidden');
     });
+
+
 lineGraph_group.append("text")
     .attr("class", "back_label")
     .attr("transform", "translate(" + 1150 + "," + 30 + ")")
@@ -267,7 +276,7 @@ function lineChart() {
     });
 }
 
-lineChart();
+
 
 
 slider.append("line")
@@ -318,75 +327,72 @@ slider.insert("g", ".track-overlay")
 
 //Map = Country -> {Year, Value}
 
-function loadDataset(map, file) {
+
+
+function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
         d3.csv(file, function (data) {
             data.forEach(function (d) {
-                let values = map.get(d.Area);
-                if (values === undefined) {
-                    values = {}
-                }
-                values[d.Year] = +d.Value;
-                map.set(d.Area, values)
+                let values = {};
+                Object.keys(d).forEach(function (key) {
+                    if (key !== 'Year') {
+                        values[key] = func(+d[key])
+                    }
+                });
+                map.set(d.Year, values)
             });
             resolve();
         });
     });
 }
 
-function calculateScore() {
-    let max = -1;
-    _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
-        let external = total_external_water.get(key);
-        let internal = total_internal_water.get(key);
-        let withdraws = total_water_used.get(key);
-        if (external === undefined)
-            external = {};
-        if (internal === undefined)
-            internal = {};
-        if (withdraws === undefined)
-            withdraws = {};
-        years.forEach(function (year) {
-            let values = total_available_water.get(year);
-            if (values === undefined) {
-                values = {}
-            }
-            let external_value = external[year];
-            let internal_value = internal[year];
-            let withdrawn_value = withdraws[year];
-            if (withdrawn_value === undefined || external_value === undefined || internal_value === undefined)
-                values[key] = "No Data";
-            else {
-                values[key] = withdrawn_value / (external_value + internal_value);
-                if (values[key] > max)
-                    max = values[key];
-            }
-            total_available_water.set(year, values)
-        });
-    });
-    Array.from(total_available_water.keys()).forEach(function (key) {
-        total_available_water.get(key);
-        _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
-
-
-        })
-    })
-}
-
-
 Promise.all([
-    // loadDataset(total_external_water, 'external.csv'),
-    // loadDataset(total_internal_water, 'internal.csv'),
-    // loadDataset(total_water_used, 'withdrawals.csv')
+    loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {return ((val / 100)*5)}),
+    loadDataset(total_external_water, './Data/external_water.csv', function (val) {return val}),
+    loadDataset(total_internal_water, './Data/internal_water.csv', function (val) {return val}),
+    loadDataset(total_water_used, './Data/water_withdraws.csv', function (val) {return val}),
 ]).then(values => {
-
-
-    calculateScore();
     renderMap();
+    lineChart();
 });
 
 
-
-
-
-
+//
+// function calculateScore() {
+//     let max = -1;
+//     _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
+//         let external = total_external_water.get(key);
+//         let internal = total_internal_water.get(key);
+//         let withdraws = total_water_used.get(key);
+//         if (external === undefined)
+//             external = {};
+//         if (internal === undefined)
+//             internal = {};
+//         if (withdraws === undefined)
+//             withdraws = {};
+//         years.forEach(function (year) {
+//             let values = total_available_water.get(year);
+//             if (values === undefined) {
+//                 values = {}
+//             }
+//             let external_value = external[year];
+//             let internal_value = internal[year];
+//             let withdrawn_value = withdraws[year];
+//             if (withdrawn_value === undefined || external_value === undefined || internal_value === undefined)
+//                 values[key] = "No Data";
+//             else {
+//                 values[key] = withdrawn_value / (external_value + internal_value);
+//                 if (values[key] > max)
+//                     max = values[key];
+//             }
+//             total_available_water.set(year, values)
+//         });
+//     });
+//     Array.from(total_available_water.keys()).forEach(function (key) {
+//         total_available_water.get(key);
+//         _.union(Array.from(total_internal_water.keys()), Array.from(total_external_water.keys())).forEach(function (key) {
+//
+//
+//         })
+//     })
+// }
