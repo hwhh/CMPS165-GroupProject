@@ -147,30 +147,3 @@ class FilteredList extends React.Component {
         );
     }
 }
-
-
-class List extends React.Component {
-
-    constructor(props) {
-        super(props);
-        self = this;
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(event) {
-        this.props.handleChange(event);
-    }
-
-    render() {
-        return (
-            <FormGroup style={column}>
-                <label>{this.props.type}</label>
-                {Object.keys(this.props.items).map(function (key) {
-                    if (self.props.items[key] === self.props.defChecked)
-                        return <Checkbox defaultChecked={self.props.items[key]} value={key}
-                                         onChange={self.handleChange}>{key}</Checkbox>
-                })}
-            </FormGroup>
-        )
-    }
-}
