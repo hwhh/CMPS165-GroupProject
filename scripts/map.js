@@ -114,7 +114,7 @@ export function renderMap(data) {
                                 d3.select('svg')
                                    .select('#map')
                                     .select('#'+colours[key][i])
-                                    .style("fill", "blue");
+                                    .style("fill", "#ADD8E6");
                         }
                     }
                 }
