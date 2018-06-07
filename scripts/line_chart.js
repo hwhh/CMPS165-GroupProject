@@ -366,7 +366,7 @@ function drawCheckboxes(countries) {
 
 
 export function renderLineChart() {
-
+    d3.select('svg').select('g').selectAll('#line_chart').remove();
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');

@@ -68,9 +68,9 @@ function loadDataset(map, file, func) {
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
                         if(d[key] === "")
-                            values[key] = -1;
+                            values[key.replace(' ', '-')] = -1;
                         else
-                            values[key] = func(+d[key])
+                            values[key.replace(' ', '-')] = func(+d[key])
                     }
                 });
                 map.set(d.Year, values)
