@@ -44,9 +44,6 @@ class Model extends React.Component {
         renderLineChart()
     }
 
-    static handleChange(event) {
-        display_country[event.target.value].display = !!event.target.checked;
-    }
 
     render() {
         return (
@@ -112,7 +109,6 @@ class FilteredList extends React.Component {
         display_country[event.target.value].display = !!event.target.checked;
         let dict = this.state.items;
         dict[event.target.value] = !!event.target.checked;
-
         this.setState({
             items: dict,
             initialItems: dict
