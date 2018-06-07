@@ -19,10 +19,9 @@ export function createSlider() {
         .on('onchange', val => {
             let keys = Object.keys(years);
             let current_year = years[keys.reverse().find(e => e <= utils.formatTime(val))];
-            const millisecondsToWait = 500;
-            setTimeout(function () {
-                renderMap(water_stress_levels.get(current_year))
-            }, millisecondsToWait);
+             d3.select('svg').select('#map').remove();
+             d3.select('svg').select('.key').remove();
+            renderMap(water_stress_levels.get(current_year))
         });
 
 
