@@ -112,8 +112,8 @@ Promise.all([
         water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
         water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
     });
-
     renderLineChart();
+    create_modal();
 });
 
 

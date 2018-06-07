@@ -235,7 +235,7 @@ function drawLines(g, countries) {
                 .attr('stroke-dashoffset', '' + this.getTotalLength())
         })
     paths.filter(function (d) { // only shows the lines for selected countries
-        return d.display
+        return display_country[d.id].display
     })
         .transition()
         .duration(2000)
@@ -366,10 +366,6 @@ function drawCheckboxes(countries) {
 
 
 export function renderLineChart() {
-
-
-
-    create_modal();
 
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
