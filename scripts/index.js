@@ -1,17 +1,20 @@
 import {renderMap} from "./map";
 import {createSlider} from "./slider";
-import {width, height} from "./variables";
+import {width, height, display_country} from "./variables";
 import {renderLineChart} from "./line_chart";
+import {create_modal} from "./country_search";
 
 export let total_internal_water = new Map();
 export let total_external_water = new Map();
 export let total_available_water = new Map();
 export let total_water_used = new Map();
 export let water_stress_levels = new Map();
-
 export let water_stress_levels_bau = new Map();
 export let water_stress_levels_pst = new Map();
 export let water_stress_levels_opt = new Map();
+
+export let water_stress = [], water_stress_bau = [], water_stress_opt = [], water_stress_pst = [];
+
 
 export const formatTime = d3.timeFormat("%Y");
 export const parseTime = d3.timeParse("%Y");
@@ -34,13 +37,14 @@ export function showMap() {
     d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'none');
 }
 
-export function getAllValuesForCountry(country) {
+
+export function getAllValuesForCountry(map, country) {
     let values = [];
-    water_stress_levels.forEach(function (value, key) {
+    map.forEach(function (value, key) {
         if(value[country] !== -1)
             values.push({date:key.substring(0,4), value:value[country]});
     });
-    return {id:country, values:values}
+    return {id:country, display:display_country[country].display, values:values}
 }
 
 // const back2Map_button = lineGraph_group.append("rect")
@@ -101,11 +105,15 @@ Promise.all([
 ]).then(values => {
     // renderMap(water_stress_levels.get('1978-1982'));
     // createSlider();
-    console.log(water_stress_levels_pst);
-    console.log(water_stress_levels_bau);
-    console.log(water_stress_levels_opt);
-    console.log(water_stress_levels);
-    renderLineChart("China");
+
+    Object.keys(display_country).forEach(function (d) {
+        water_stress.push(getAllValuesForCountry(water_stress_levels, d));
+        water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
+        water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
+        water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
+    });
+
+    renderLineChart();
 });
 
 

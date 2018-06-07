@@ -2,6 +2,8 @@ import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
 import {color, path} from "./map";
 
+import {create_modal} from "./country_search";
+
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
@@ -15,7 +17,10 @@ const line = d3.line()
         return x(new Date(d.date))
     })
     .y(function (d) {
-        return y(d.value)
+        if(d.value === undefined)
+            return -1
+        else
+            return y(d.value)
     });
 
 
@@ -79,7 +84,7 @@ function mouseOver(g, countries) {
         .style('fill', 'none')
         .style('stroke-width', '1px')
         .style('opacity', '0')
-        .style('visibility', 'visible')
+        .style('visibility', 'hidden')
         .filter(function (d) { //Only shows the circles for selected countries
             return d.display
         })
@@ -89,7 +94,7 @@ function mouseOver(g, countries) {
     mousePerLine.append('text')
         .attr('transform', 'translate(10,3)')
         .style('font', '12px sans-serif')
-        .style('visibility', 'visible')
+        .style('visibility', 'hidden')
         .filter(function (d) { //Only shows the values for selected countries
             return d.display
         })
@@ -130,7 +135,9 @@ function mouseOver(g, countries) {
             d3.selectAll('.mouse-per-line')
                 .attr('transform', function (d, i) {
                     const xDate = x.invert(mouse[0]),
-                        bisect = d3.bisector(function (d) { return d.date }).right;
+                        bisect = d3.bisector(function (d) {
+                            return d.date
+                        }).right;
                     idx = bisect(d.values, xDate);
 
                     let beginning = 0,
@@ -196,44 +203,43 @@ function drawLines(g, countries) {
             return z(d.id)
         });
 
-    country.append('text')
-        .datum(function (d) { //Allows the binding of country data to multiple SVG elements
-            console.log({id: d.id, value: d.values[d.values.length - 1]});
-            return {id: d.id, value: d.values[d.values.length - 1]}
-        })
-        .attr('transform', function (d) {
-            return 'translate(' + width + ',' + y(d.value.value) + ')'
-        })
-        .attr('x', 3)
-        .attr('dy', '0.35em')
-        .style('font', '10px sans-serif')
-        .text(function (d) {
-            console.log(d.id)
-            return d.id
-        })
-        .style('text-anchor', 'start')
-        // .style('opacity', 0)
-        // .filter(function (d) { //Only shows the country names for selected countries
-        //     return d.display
-        // })
-        .transition()
-        .duration(2000)
-        .style('opacity', '1');
-    //
-    //
+    // // Adds the country name at the end of the line
+    // country.append('text')
+    //     .datum(function (d) { //Allows the binding of country data to multiple SVG elements
+    //         return {id: d.id, display: d.display, value: d.values[d.values.length - 1]}
+    //     })
+    //     .attr('transform', function (d) {
+    //         return 'translate(' + x(d.value.date) + ',' + y(d.value.value) + ')'
+    //     })
+    //     .attr('x', 3)
+    //     .attr('dy', '0.35em')
+    //     .style('font', '10px sans-serif')
+    //     .text(function (d) {
+    //         return d.id
+    //     })
+    //     .style('text-anchor', 'start')
+    //     .style('opacity', 0)
+    //     .filter(function (d) { //Only shows the country names for selected countries
+    //         return d.display
+    //     })
+    //     .transition()
+    //     .duration(2000)
+    //     .style('opacity', 1);
+
+    //Adds the animations to the lines
+    //http://bl.ocks.org/duopixel/4063326
     const paths = country.select('path')
         .each(function () {
             d3.select(this)
                 .attr('stroke-dasharray', this.getTotalLength() + ',' + this.getTotalLength())
                 .attr('stroke-dashoffset', '' + this.getTotalLength())
         })
-        // paths.filter(function (d) { // only shows the lines for selected countries
-        //     return d.display
-        // })
+    paths.filter(function (d) { // only shows the lines for selected countries
+        return d.display
+    })
         .transition()
         .duration(2000)
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
-
 }
 
 function drawAxis(g) {
@@ -295,7 +301,7 @@ function checkChanged() {
             .style('opacity', 0);
         g.select('path').transition()
             .duration(2000)
-            .attrTween('stroke-dashoffset', tweenDashoffsetOff)
+            .attrTween('stroke-dashoffset', tweenDashoffsetOff);
         //Select elements deeper in the DOM
         d3.select('.mouse-over-effects').select('#' + countryID).selectAll('circle')
             .style('visibility', 'hidden');
@@ -358,17 +364,23 @@ function drawCheckboxes(countries) {
 }
 
 
-export function renderLineChart(country) {
+
+export function renderLineChart() {
+
+
+
+    create_modal();
+
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-    let data = [utils.getAllValuesForCountry(country)];
-    create_domains(data);
+    // let data = [utils.getAllValuesForCountry(country)];
+    create_domains(utils.water_stress);
     // drawGrid();
     drawAxis(g);
-    drawLines(g, data);
-    drawCheckboxes(data);
-    mouseOver(g, data);
+    drawLines(g, utils.water_stress);
+    // drawCheckboxes(utils.water_stress);
+    mouseOver(g, utils.water_stress);
 }
 
 
