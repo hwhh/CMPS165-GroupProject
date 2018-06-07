@@ -1,0 +1,33 @@
+{
+  "name": "cmps165-groupproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run webpack",
+    "webpack": "webpack -d --watch"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hwhh/CMPS165-GroupProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hwhh/CMPS165-GroupProject/issues"
+  },
+  "homepage": "https://github.com/hwhh/CMPS165-GroupProject#readme",
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.11.1",
+    "webpack-cli": "^3.0.2"
+  }
+}
