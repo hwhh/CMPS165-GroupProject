@@ -1,26 +1,42 @@
 import {renderMap} from "./map";
 import {createSlider} from "./slider";
-import {width, height, water_stress_levels, total_water_used, total_external_water, total_internal_water, total_available_water} from "./variables";
+import {width, height} from "./variables";
+import {renderLineChart} from "./line_chart";
 
+export let total_internal_water = new Map();
+export let total_external_water = new Map();
+export let total_available_water = new Map();
+export let total_water_used = new Map();
+export let water_stress_levels = new Map();
 
 export const formatTime = d3.timeFormat("%Y");
 export const parseTime = d3.timeParse("%Y");
 
 
+//TODO change this and add proper padding
 export const svg = d3.select("body").append("svg")
-    .attr('width', width)
+    .attr('width', width + 150)
     .attr('height', height + 50);
 
-export function show_line_chart() {
+export function showLineChart() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
     d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
     d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'visibile');
 }
 
-export function show_map() {
+export function showMap() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'visibile');
     d3.select('svg').select('#slider').transition().duration(1000).style('display', 'visibile');
     d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'none');
+}
+
+export function getAllValuesForCountry(country) {
+    let values = [];
+    water_stress_levels.forEach(function (value, key) {
+        if(value[country] !== -1)
+            values.push({date:key.substring(0,4), value:value[country]});
+    });
+    return {id:country, values:values}
 }
 
 // const back2Map_button = lineGraph_group.append("rect")
@@ -70,10 +86,9 @@ Promise.all([
         return val
     }),
 ]).then(values => {
-    console.log(water_stress_levels)
-    renderMap(water_stress_levels.get('1978-1982'));
-    createSlider();
-    // lineChart();
+    // renderMap(water_stress_levels.get('1978-1982'));
+    // createSlider();
+    renderLineChart("China");
 });
 
 

@@ -2,12 +2,6 @@ import * as utils from "./index";
 import {width, height} from "./variables";
 import {renderLineChart} from "./line_chart";
 
-// "#a50f15"
-// "#fee5d9"
-// "#fcae91"
-// "#fb6a4a"
-// "#de2d26"
-
 
 let colours = {};
 
@@ -32,7 +26,11 @@ export function renderMap(data) {
             .style('display', 'block')
             .selectAll('path')
             .data(features)
-            .enter().append('path')
+            .enter()
+            .append('path')
+            .attr('id', function (d) {
+                return d.properties.name
+            })
             .attr('d', path)
             .style('fill', function (d) {
                 let value = data[d.properties.name];
@@ -67,8 +65,8 @@ export function renderMap(data) {
                 if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
-                    utils.show_line_chart();
-                    renderLineChart(data)
+                    utils.showLineChart();
+                    renderLineChart(country_name)
                 }
             })
 

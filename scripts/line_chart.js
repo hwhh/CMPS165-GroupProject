@@ -4,7 +4,7 @@ import {color, path} from "./map";
 
 
 //Sets axis scales
-const x = d3.scaleTime().range([0, width]),
+const x = d3.scaleTime().range([0, width - 100]),
     y = d3.scaleLinear().range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -12,28 +12,23 @@ const x = d3.scaleTime().range([0, width]),
 const line = d3.line()
     .curve(d3.curveBasis)
     .x(function (d) {
-        return x(d.date)
+        return x(new Date(d.date))
     })
     .y(function (d) {
-        return y(d.energy)
+        return y(d.value)
     });
 
 
-//https://bl.ocks.org/d3noob/c506ac45617cf9ed39337f99f8511218
-//Gridlines in x axis function
 function make_x_gridlines() {
     return d3.axisBottom(x)
         .ticks(5)
 }
 
-//https://bl.ocks.org/d3noob/c506ac45617cf9ed39337f99f8511218
-//Gridlines in y axis function
 function make_y_gridlines() {
     return d3.axisLeft(y)
         .ticks(8)
 }
 
-//https://sureshlodha.github.io/CMPS263_Winter2018/CMPS263FinalProjects/Pres criptionDrugs/index.html
 function tweenDashoffsetOn() {
     const l = this.getTotalLength(),
         i = d3.interpolateString('' + l, '0');
@@ -50,8 +45,7 @@ function tweenDashoffsetOff() {
     }
 }
 
-//https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
-function mouseOver(countries) {
+function mouseOver(g, countries) {
     //Add new element to the DOM
     const mouseG = g.append('g')
         .attr('class', 'mouse-over-effects');
@@ -84,25 +78,25 @@ function mouseOver(countries) {
         })
         .style('fill', 'none')
         .style('stroke-width', '1px')
-        .style('opacity', '0')
-        .style('visibility', 'hidden')
-        .filter(function (d) { //Only shows the circles for selected countries
-            return d.display
-        })
-        .style('visibility', 'visible');
+    // .style('opacity', '0')
+    // .style('visibility', 'hidden')
+    // .filter(function (d) { //Only shows the circles for selected countries
+    //     return d.display
+    // })
+    // .style('visibility', 'visible');
 
     //Adds text next to the circles for visible lines which show the current value
     mousePerLine.append('text')
         .attr('transform', 'translate(10,3)')
         .style('font', '12px sans-serif')
-        .style('visibility', 'hidden')
-        .filter(function (d) { //Only shows the values for selected countries
-            return d.display
-        })
-        .style('visibility', 'visible');
+    // .style('visibility', 'hidden')
+    // .filter(function (d) { //Only shows the values for selected countries
+    //     return d.display
+    // })
+    // .style('visibility', 'visible');
 
     mouseG.append('svg:rect') //Append a rect to catch mouse movements on canvas
-        .attr('width', width) //Can't catch mouse events on a g element
+        .attr('width', width - 100) //Can't catch mouse events on a g element
         .attr('height', height)
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
@@ -201,42 +195,42 @@ function drawLines(g, countries) {
         .attr('fill', 'none')
         .style('stroke', function (d) {
             return z(d.id)
-        });
+        })
 
-    //Adds the country name at the end of the line
     country.append('text')
         .datum(function (d) { //Allows the binding of country data to multiple SVG elements
-            return {id: d.id, display: d.display, value: d.values[d.values.length - 1]}
+            console.log({id: d.id, value: d.values[d.values.length - 1]});
+            return {id: d.id, value: d.values[d.values.length - 1]}
         })
         .attr('transform', function (d) {
-            return 'translate(' + x(d.value.date) + ',' + y(d.value.energy) + ')'
+            return 'translate(' + width + ',' + y(d.value.value) + ')'
         })
         .attr('x', 3)
         .attr('dy', '0.35em')
         .style('font', '10px sans-serif')
         .text(function (d) {
+            console.log(d.id)
             return d.id
         })
         .style('text-anchor', 'start')
-        .style('opacity', 0)
-        .filter(function (d) { //Only shows the country names for selected countries
-            return d.display
-        })
+        // .style('opacity', 0)
+        // .filter(function (d) { //Only shows the country names for selected countries
+        //     return d.display
+        // })
         .transition()
         .duration(2000)
-        .style('opacity', 1);
-
-    //Adds the animations to the lines
-    //http://bl.ocks.org/duopixel/4063326
+        .style('opacity', '1');
+    //
+    //
     const paths = country.select('path')
         .each(function () {
             d3.select(this)
                 .attr('stroke-dasharray', this.getTotalLength() + ',' + this.getTotalLength())
                 .attr('stroke-dashoffset', '' + this.getTotalLength())
-        });
-    paths.filter(function (d) { // only shows the lines for selected countries
-        return d.display
-    })
+        })
+        // paths.filter(function (d) { // only shows the lines for selected countries
+        //     return d.display
+        // })
         .transition()
         .duration(2000)
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
@@ -244,14 +238,11 @@ function drawLines(g, countries) {
 }
 
 function drawAxis(g) {
-    //http://bl.ocks.org/duopixel/4063326
-
-    //Adds the x and y axis
     g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x))
         .append('text')
-        .attr('transform', 'translate(' + (width + 40) + ',' + (20) + ')')
+        .attr('transform', 'translate(' + (width - 100) + ',' + 50 + ')')
         .attr('fill', '#000')
         .text('Year');
 
@@ -269,42 +260,37 @@ function drawAxis(g) {
         .attr('font-family', 'Sans-serif')
         .attr('font-size', '0.8em')
         .attr('transform', 'rotate(-90)')
-        .attr('x', 0 - (height / 2))
+        .attr('x', 0 - (height / 2) + 30)
         .attr('dy', '1em')
         .style('text-anchor', 'middle')
         .text('Water Stress Level');
 }
 
 function create_domains(data) {
-    //Sets the domain of the axis's to appropriate values
     x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
-    //https://bl.ocks.org/mbostock/3884955
-    y.domain([0, Math.max.apply(Math, Object.values(data))]);
-
-
+    // y.domain([0, Math.max.apply(Math, Object.values(data))]);
     // z.domain(data.map(function (c) {
     //     return c.id
     // }));
+    y.domain([
+        0,
+        d3.max(data, function (c) {
+            return d3.max(c.values, function (d) {
+                return d.value
+            })
+        })
+    ]);
+    z.domain(data.map(function (c) {
+        return c.id
+    }))
+
 }
 
-// function readCSV () {
-//     d3.csv('EPC_2000_2010.csv', function (error, data) {
-//         if (error) throw error
-//         let countries = formatData(data)
-//         draw(countries)
-//     })
-//
-// }
-
-//https://sureshlodha.github.io/CMPS263_Winter2018/CMPS263FinalProjects/Pres criptionDrugs/index.html
 function checkChanged() {
     let checked = this.checked;
-
-    //Get the id and name of the selected country
     const countryID = this.getAttribute('countryID');
     const country = this.getAttribute('country');
 
-    //Selects all elements with the ID matching the selected country
     const g = d3.select('#' + countryID);
 
     if (!checked) {
@@ -341,17 +327,13 @@ function checkChanged() {
 
 }
 
-//https://sureshlodha.github.io/CMPS263_Winter2018/CMPS263FinalProjects/Pres criptionDrugs/index.html
 function drawCheckboxes(countries) {
-
-    //Selects the checkbox element from the doom and appends a new element to it for each country
     const checkboxes = d3.select('.country-list').selectAll('.country-checkbox')
         .data(countries)
         .enter()
         .append('li')
-        .attr('class', 'country-checkbox')
+        .attr('class', 'country-checkbox');
 
-    //Add a checkbox to each li element
     checkboxes.append('input')
         .attr('type', 'checkbox')
         .attr('country', function (d) {
@@ -372,7 +354,6 @@ function drawCheckboxes(countries) {
                 .attr('checked', true)
         });
 
-    //Add a label to each checkbox
     checkboxes.append('label')
         .attr('for', function (d) {
             return d.id.split(' ').join('_') + '_checkbox'
@@ -383,12 +364,17 @@ function drawCheckboxes(countries) {
 }
 
 
-export function renderLineChart(data) {
-    const g = utils.svg.append('g').attr('id', 'line_chart').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-    drawGrid();
-    drawAxis(g);
+export function renderLineChart(country) {
+    const g = utils.svg.append('g')
+        .attr('id', 'line_chart')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+    let data = [utils.getAllValuesForCountry(country)];
     create_domains(data);
-    drawLines(data);
+    // drawGrid();
+    drawAxis(g);
+    drawLines(g, data);
+    drawCheckboxes(data)
+    mouseOver(g, data)
 }
 
 
