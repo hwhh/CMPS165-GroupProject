@@ -2,10 +2,14 @@ import * as utils from "./index";
 import {width, height} from "./variables";
 import {renderLineChart} from "./line_chart";
 
-/**
- * No Data
- * @type {*|void}
- */
+// "#a50f15"
+// "#fee5d9"
+// "#fcae91"
+// "#fb6a4a"
+// "#de2d26"
+
+
+let colours = {};
 
 export const projection = d3.geoMiller()
     .scale(150)
@@ -15,8 +19,8 @@ export const path = d3.geoPath()
     .projection(projection);
 
 export const color = d3.scaleThreshold()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    .range(d3.schemeReds[7]);
+    .domain([1, 2, 3, 4, 5])
+    .range(d3.schemeReds[5]);
 
 
 export function renderMap(data) {
@@ -32,25 +36,35 @@ export function renderMap(data) {
             .attr('d', path)
             .style('fill', function (d) {
                 let value = data[d.properties.name];
-                if (value === -1)
+                if (value === -1 || value === undefined)
                     return d3.color("grey");
-                else
-                    return color(data[d.properties.name]);
+                else {
+                    let c = color(data[d.properties.name]);
+                    let country_names;
+                    if(colours[c] === undefined)
+                        country_names = [];
+                    else
+                        country_names = colours[c];
+                    country_names.push(d.properties.name);
+                    colours[c] = country_names;
+                    return c
+                }
             })
             .on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1)
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                     d3.select(this).style("fill", "orange");
             })
             .on("mouseout", function (d) {
-                if(data[d.properties.name] !== -1) {
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     d3.select(this).style("fill", function (d) {
-                        return color(data[d.properties.name]);
+                        let c = color(data[d.properties.name]);
+                        return c
                     });
                 }
             })
             .on("click", function (d) {
-                if(data[d.properties.name] !== -1) {
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
                     utils.show_line_chart();
@@ -59,5 +73,6 @@ export function renderMap(data) {
             })
 
     });
+
 }
 
