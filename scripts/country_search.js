@@ -78,13 +78,14 @@ class FilteredList extends React.Component {
             items[key] = display_country[key].display;
         });
         this.state = {
-            items: {}
+            initialItems: items,
+            items: items
         };
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.filterList = this.filterList.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
+        self = this;
     }
 
     handleOpenModal() {
@@ -92,12 +93,15 @@ class FilteredList extends React.Component {
     }
 
     filterList(event) {
-        let updatedList = this.state.items;
-        updatedList = Object.keys(updatedList).filter(function (item) {
-            return item.toLowerCase().search(
-                event.target.value.toLowerCase()) !== -1;
+        let initialItems = this.state.initialItems;
+        let updated = {};
+        Object.keys(initialItems).filter(function (item) {
+            let res = item.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+            if(res || initialItems[item]) {
+                updated[item] = initialItems[item];
+            }
         });
-        this.setState({items: updatedList});
+        this.setState({items: updated});
     }
 
     componentWillMount() {
@@ -108,50 +112,44 @@ class FilteredList extends React.Component {
         display_country[event.target.value].display = !!event.target.checked;
         let dict = this.state.items;
         dict[event.target.value] = !!event.target.checked;
-        this.setState({unChecked: dict});
 
-        // if (event.target.checked) {
-        //     let arr1 = this.state.items;
-        //     delete arr1[event.target.value];
-        //     let arr2 = this.state.checked;
-        //     arr2[event.target.value] = true;
-        //     this.setState({
-        //         checked: arr2,
-        //         items: arr1,
-        //         unChecked: arr1,
-        //     });
-        // } else {
-        //     let arr1 = this.state.checked;
-        //     delete arr1[event.target.value];
-        //     let arr2 = this.state.items;
-        //     arr2[event.target.value] = false;
-        //     this.setState({
-        //         checked: arr1,
-        //         items: arr2,
-        //         unChecked: arr2,
-        //     });
+        this.setState({
+            items: dict,
+            initialItems: dict
+        });
+
     }
-}
 
-render()
-{
-    return (
-        <div className="filter-list">
-            <form>
-                <fieldset className="form-group">
-                    <input type="text" className="form-control form-control-lg" placeholder="Search"
-                           onChange={this.filterList}/>
-                </fieldset>
-            </form>
-            <div className={"row"}>
-                <List handleChange={this.handleChange} items={this.state.items} type={"Unselected:"}
-                      defChecked={false}/>
-                <List handleChange={this.handleChange} items={this.state.items} type={"Selected:"}
-                      defChecked={true}/>
+    render() {
+        return (
+            <div className="filter-list">
+                <form>
+                    <fieldset className="form-group">
+                        <input type="text" className="form-control form-control-lg" placeholder="Search"
+                               onChange={this.filterList}/>
+                    </fieldset>
+                </form>
+                <div className={"row"}>
+                    <FormGroup style={column}>
+                        <label>{"Un-Selected"}</label>
+                        {Object.keys(this.state.items).map(function (key) {
+                            if (self.state.items[key] === false)
+                                return <Checkbox defaultChecked={false} value={key}
+                                                 onChange={self.handleChange}>{key}</Checkbox>
+                        })}
+                    </FormGroup>
+                    <FormGroup style={column}>
+                        <label>{"Selected"}</label>
+                        {Object.keys(this.state.items).map(function (key) {
+                            if (self.state.items[key] === true)
+                                return <Checkbox defaultChecked={true} value={key}
+                                                 onChange={self.handleChange}>{key}</Checkbox>
+                        })}
+                    </FormGroup>
+                </div>
             </div>
-        </div>
-    );
-}
+        );
+    }
 }
 
 
@@ -171,8 +169,8 @@ class List extends React.Component {
         return (
             <FormGroup style={column}>
                 <label>{this.props.type}</label>
-                {Object.keys(this.props.items).forEach(function (key) {
-                    if(self.props.items[key] === self.props.defChecked)
+                {Object.keys(this.props.items).map(function (key) {
+                    if (self.props.items[key] === self.props.defChecked)
                         return <Checkbox defaultChecked={self.props.items[key]} value={key}
                                          onChange={self.handleChange}>{key}</Checkbox>
                 })}
