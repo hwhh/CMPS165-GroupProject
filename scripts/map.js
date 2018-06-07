@@ -75,7 +75,10 @@ export function renderMap(data) {
             
         });
     
-    legend(colours);  
+    legend(colours);
+    bau();
+    optimistic();
+    pessimistic();
 
 }
 
@@ -85,7 +88,7 @@ function legend(c){
                         //Define legend
         var legend = utils.svg.append("g")
             .attr("id", "key")
-            .attr("transform", "translate(0,550)");
+            .attr("transform", "translate(-30,550)");
         
                 //Setting up the legend
         legend.selectAll("rect")
@@ -154,6 +157,62 @@ function legend(c){
             .tickValues(color.domain()))
             .select(".domain")
             .remove();
+    
+}
+
+function bau(){
+    
+    d3.select('#bau')
+        .on("click", function(d){
+        
+        console.log("bau");
+        
+        d3.selectAll("path")
+            .style("stroke", "white")
+            .transition().duration(1000)
+            .style("fill", function(d) {
+                //Get data value
+             });      
+        
+    })
+    
+}
+function optimistic(){
+    
+    d3.select('#optimistic')
+        .on("click", function(d){
+        
+        console.log("optimistic");
+        
+        d3.selectAll("path")
+            .style("stroke", "white")
+            .transition().duration(1000)
+            .style("fill", function(d) {
+                //Get data value
+            
+             });
+        
+    })
+    
+}
+
+function pessimistic(){
+    
+    d3.select('#pessimistic')
+        .on("click", function(d){
+        
+        console.log("pessimistic");
+        
+        d3.selectAll("path")
+            .style("stroke", "white")
+            .transition().duration(1000)
+            .style("fill", function(d) {
+                //Get data value
+            
+             });
+        
+    })
+
     
 }
 

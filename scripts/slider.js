@@ -14,7 +14,7 @@ export function createSlider() {
         .min(d3.min(data3))
         .max(d3.max(data3))
         .step(1000 * 60 * 60 * 24 * 365 * 5)
-        .width(450)
+        .width(400)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
