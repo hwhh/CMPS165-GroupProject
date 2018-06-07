@@ -2,14 +2,6 @@ import * as utils from "./index";
 import {width, height} from "./variables";
 import {renderLineChart} from "./line_chart";
 
-// "#a50f15"
-// "#fee5d9"
-// "#fcae91"
-// "#fb6a4a"
-// "#de2d26"
-
-
-
 export const projection = d3.geoMiller()
     .scale(150)
     .translate([width / 2, height / 1.8]);
@@ -25,7 +17,7 @@ var xDensity = d3.scaleSqrt()
     .domain([0, 5])
     .rangeRound([440, 810]);
 
-
+var counter = 0;
 
 export function renderMap(data) {
     let colours = {};
@@ -80,10 +72,19 @@ export function renderMap(data) {
                     renderLineChart(data)
                 }
             })
+            
+        });
     
+    legend(colours);  
+
+}
+
+function legend(c){
+        
+        var colours = c;
                         //Define legend
         var legend = utils.svg.append("g")
-            .attr("class", "key")
+            .attr("id", "key")
             .attr("transform", "translate(0,550)");
         
                 //Setting up the legend
@@ -108,11 +109,11 @@ export function renderMap(data) {
                 var previousElement = d3.select(this);
                 for( var key in colours){
                     if( previousElement.attr("fill") === key){
-                        previousElement.style("stroke", "#000");
+                        previousElement.style("stroke", "#000").style("stroke-opacity",1);
                         var i;
                         for(i = 0; i < colours[key].length; i++){
                                 d3.select('svg')
-                                   .select('#map')
+                                    .select('#map')
                                     .select('#'+colours[key][i])
                                     .style("fill", "#ADD8E6");
                         }
@@ -124,11 +125,11 @@ export function renderMap(data) {
                 var previousElement = d3.select(this);
                 for( var key in colours){
                     if( previousElement.attr("fill") === key){
-                        previousElement.style("stroke", "#FFF").style("stroke-width","0px");
+                        previousElement.style("stroke-opacity",0);
                         var i;
                         for(i = 0; i < colours[key].length; i++){
                                 d3.select('svg')
-                                   .select('#map')
+                                    .select('#map')
                                     .select('#'+colours[key][i])
                                     .style("fill", key);
                         }
@@ -153,11 +154,6 @@ export function renderMap(data) {
             .tickValues(color.domain()))
             .select(".domain")
             .remove();
-    });
-
-}
-
-function legend(){
-
+    
 }
 
