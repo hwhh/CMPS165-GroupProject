@@ -11,12 +11,30 @@ export const svg = d3.select("body").append("svg")
     .attr('width', width)
     .attr('height', height + 50);
 
-export function toggle_lineChart_visibility() {
+export function show_line_chart() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
     d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
-    lineGraph_group.attr('visibility', 'visibile');
+    d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'visibile');
 }
 
+export function show_map() {
+    d3.select('svg').select('#map').transition().duration(1000).style('display', 'visibile');
+    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'visibile');
+    d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'none');
+}
+
+// const back2Map_button = lineGraph_group.append("rect")
+//     .attr("class", "back2Map_button")
+//     .attr("transform", "translate(" + 1100 + "," + 0 + ")")
+//     .attr('width', 100)
+//     .attr('height', 50)
+//     .attr('fill', 'lightblue')
+//     .on('click', function () {
+//         // toggle visibility
+//         d3.select('svg').select('#map').transition().duration(1000).style('display', 'block');
+//         d3.select('svg').select('#slider').transition().duration(1000).style('display', 'block');
+//         lineGraph_group.attr('visibility', 'hidden');
+//     });
 
 function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
@@ -25,7 +43,10 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        values[key] = func(+d[key])
+                        if(d[key] === "")
+                            values[key] = -1;
+                        else
+                            values[key] = func(+d[key])
                     }
                 });
                 map.set(d.Year, values)

@@ -27,6 +27,7 @@ export function createSlider() {
 
 
     utils.svg.append('g')
+        .attr('id', 'slider')
         .attr("transform", "translate(" + ((width / 2) - (slider_width / 2) + padding) + ", " + (height) + ")")
         .attr('width', slider_width)
         .attr('height', slider_height)

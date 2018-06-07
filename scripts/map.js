@@ -1,6 +1,6 @@
 import * as utils from "./index";
 import {width, height} from "./variables";
-
+import {renderLineChart} from "./line_chart";
 
 /**
  * No Data
@@ -31,21 +31,31 @@ export function renderMap(data) {
             .enter().append('path')
             .attr('d', path)
             .style('fill', function (d) {
-                return color(data[d.properties.name]);
+                let value = data[d.properties.name];
+                if (value === -1)
+                    return d3.color("grey");
+                else
+                    return color(data[d.properties.name]);
             })
             .on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                d3.select(this).style("fill", "orange");
+                if(data[d.properties.name] !== -1)
+                    d3.select(this).style("fill", "orange");
             })
             .on("mouseout", function (d) {
-                d3.select(this).style("fill", function (d) {
-                    return color(data[d.properties.name]);
-                });
+                if(data[d.properties.name] !== -1) {
+                    d3.select(this).style("fill", function (d) {
+                        return color(data[d.properties.name]);
+                    });
+                }
             })
             .on("click", function (d) {
-                let country_name = d.properties.name;
-                console.log("clicked: " + country_name);
-                // utils.toggle_lineChart_visibility();
+                if(data[d.properties.name] !== -1) {
+                    let country_name = d.properties.name;
+                    console.log("clicked: " + country_name);
+                    utils.show_line_chart();
+                    renderLineChart(data)
+                }
             })
 
     });

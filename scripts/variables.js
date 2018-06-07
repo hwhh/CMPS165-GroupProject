@@ -1,7 +1,7 @@
 export const width = 1200, height = 600;
 export const slider_width = 500, slider_height = 100;
 export const padding = 40;
-
+export const margin = {top: 20, right: 80, bottom: 30, left: 70};
 
 export let total_internal_water = new Map();
 export let total_external_water = new Map();
@@ -21,4 +21,32 @@ export const years = {
     2018: '2020',
     2030: '2030',
     2040: '2040',
+};
+
+export const display_country = {
+    'India': {display: true},
+    'Brazil': {display: true},
+    'United States': {display: true},
+    'Russia': {display: true},
+    'South Africa': {display: true},
+    'China': {display: true},
+    'Bangladesh': {display: false},
+    'Canada': {display: false},
+    'Colombia': {display: false},
+    'Ethiopia': {display: false},
+    'France': {display: false},
+    'Germany': {display: false},
+    'Indonesia': {display: false},
+    'Italy': {display: false},
+    'Japan': {display: false},
+    'Mexico': {display: false},
+    'Nigeria': {display: false},
+    'Pakistan': {display: false},
+    'Philippines': {display: false},
+    'Spain': {display: false},
+    'Thailand': {display: false},
+    'Turkey': {display: false},
+    'Ukraine': {display: false},
+    'United Kingdom': {display: false},
+    'Vietnam': {display: false}
 };
