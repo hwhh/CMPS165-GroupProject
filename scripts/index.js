@@ -70,6 +70,7 @@ Promise.all([
         return val
     }),
 ]).then(values => {
+    console.log(water_stress_levels)
     renderMap(water_stress_levels.get('1978-1982'));
     createSlider();
     // lineChart();

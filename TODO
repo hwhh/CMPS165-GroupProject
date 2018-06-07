@@ -4,7 +4,7 @@ Add radio buttons pes, op, bas
 Convert the water stress level to a score between 0-5 //Y = (X-A)/(B-A) * (D-C) + C
 Add new website layout
 Fix line chart
-Add ribion charts
 Fix the slider - get rid of the lag
 Have the end of the slider a different colour
 Make sure its colour blind friendly
+Add ribion charts
