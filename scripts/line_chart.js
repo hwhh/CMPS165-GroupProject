@@ -78,25 +78,27 @@ function mouseOver(g, countries) {
         })
         .style('fill', 'none')
         .style('stroke-width', '1px')
-    // .style('opacity', '0')
-    // .style('visibility', 'hidden')
-    // .filter(function (d) { //Only shows the circles for selected countries
-    //     return d.display
-    // })
-    // .style('visibility', 'visible');
+        .style('opacity', '0')
+        .style('visibility', 'visible')
+        .filter(function (d) { //Only shows the circles for selected countries
+            return d.display
+        })
+        .style('visibility', 'visible');
 
     //Adds text next to the circles for visible lines which show the current value
     mousePerLine.append('text')
         .attr('transform', 'translate(10,3)')
         .style('font', '12px sans-serif')
-    // .style('visibility', 'hidden')
-    // .filter(function (d) { //Only shows the values for selected countries
-    //     return d.display
-    // })
-    // .style('visibility', 'visible');
+        .style('visibility', 'visible')
+        .filter(function (d) { //Only shows the values for selected countries
+            return d.display
+        })
+        .style('visibility', 'visible');
 
+    let idx = undefined;
+    let pos = undefined;
     mouseG.append('svg:rect') //Append a rect to catch mouse movements on canvas
-        .attr('width', width - 100) //Can't catch mouse events on a g element
+        .attr('width', width) //Can't catch mouse events on a g element
         .attr('height', height)
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
@@ -114,7 +116,7 @@ function mouseOver(g, countries) {
             d3.selectAll('.mouse-per-line circle')
                 .style('opacity', '1');
             d3.selectAll('.mouse-per-line text')
-                .style('opacity', '1')
+                .style('opacity', '1');
         })
         .on('mousemove', function () { //Mouse moving over canvas
             const mouse = d3.mouse(this);
@@ -128,9 +130,7 @@ function mouseOver(g, countries) {
             d3.selectAll('.mouse-per-line')
                 .attr('transform', function (d, i) {
                     const xDate = x.invert(mouse[0]),
-                        bisect = d3.bisector(function (d) {
-                            return d.date
-                        }).right;
+                        bisect = d3.bisector(function (d) { return d.date }).right;
                     idx = bisect(d.values, xDate);
 
                     let beginning = 0,
@@ -150,7 +150,6 @@ function mouseOver(g, countries) {
 
                     d3.select(this).select('text')
                         .text(y.invert(pos.y).toFixed(2));
-
                     return 'translate(' + mouse[0] + ',' + pos.y + ')'
                 })
         })
@@ -195,7 +194,7 @@ function drawLines(g, countries) {
         .attr('fill', 'none')
         .style('stroke', function (d) {
             return z(d.id)
-        })
+        });
 
     country.append('text')
         .datum(function (d) { //Allows the binding of country data to multiple SVG elements
@@ -255,7 +254,6 @@ function drawAxis(g) {
         .attr('dy', '0.71em')
         .attr('fill', '#000');
 
-    //Adds the y axis title
     utils.svg.append('text')
         .attr('font-family', 'Sans-serif')
         .attr('font-size', '0.8em')
@@ -268,10 +266,6 @@ function drawAxis(g) {
 
 function create_domains(data) {
     x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
-    // y.domain([0, Math.max.apply(Math, Object.values(data))]);
-    // z.domain(data.map(function (c) {
-    //     return c.id
-    // }));
     y.domain([
         0,
         d3.max(data, function (c) {
@@ -373,162 +367,8 @@ export function renderLineChart(country) {
     // drawGrid();
     drawAxis(g);
     drawLines(g, data);
-    drawCheckboxes(data)
-    mouseOver(g, data)
+    drawCheckboxes(data);
+    mouseOver(g, data);
 }
 
 
-// const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
-//
-
-//
-//
-// lineGraph_group.append("text")
-//     .attr("class", "back_label")
-//     .attr("transform", "translate(" + 1150 + "," + 30 + ")")
-//     .attr("fill", "black")
-//     .attr("text-anchor", "middle")
-//     .attr("pointer-events", "none")
-//     .text("Back");
-//
-//
-//
-// function lineChart() {
-//     d3.csv("./Data/current.csv", function (error1, data1) {
-//         d3.csv("./Data/predicted.csv", function (error2, data2) {
-//             data1.forEach(function (d) {
-//                 d.year = parseTime(d.year);
-//                 d.score = +d.score;
-//             });
-//
-//             data2.forEach(function (d) {
-//                 d.year = parseTime(d.year);
-//                 d.pessimistic = +d.pessimistic;
-//                 d.optimistic = +d.optimistic;
-//                 d.bau = +d.bau;
-//             });
-//
-//             xScale = d3.scaleTime()
-//                 .domain([
-//                     d3.min(data1, function (d) {
-//                         return d.year;
-//                     }),
-//                     d3.max(data2, function (d) {
-//                         return d.year;
-//                     })
-//                 ])
-//                 .range([padding + 100, width - 100]);
-//
-//             yScale = d3.scaleLinear()
-//                 .domain([0, 5])
-//                 .range([height - 40, padding]);
-//
-//             //Define axes
-//             xAxis = d3.axisBottom()
-//                 .scale(xScale)
-//                 .ticks(10)
-//                 .tickFormat(formatTime);
-//
-//             //Define Y axis
-//             yAxis = d3.axisLeft()
-//                 .scale(yScale)
-//                 .ticks(5);
-//
-//             //Define line generators
-//             line = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(1960) && d.year <= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.score);
-//                 });
-//
-//             pessimisticLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.pessimistic);
-//                 });
-//
-//             optimisticLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.optimistic);
-//                 });
-//
-//             bauLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.bau);
-//                 });
-//
-//
-//             //Draw predicted line
-//             lineGraph_group.append("line")
-//                 .attr("class", "line predicted")
-//                 .attr("x1", xScale(parseTime(2015)))
-//                 .attr("x2", xScale(parseTime(2015)))
-//                 .attr("y1", padding)
-//                 .attr("y2", height);
-//
-//             //Label predicted line
-//             lineGraph_group.append("text")
-//                 .attr("class", "predictedLabel")
-//                 .attr("x", xScale(parseTime(2015)))
-//                 .attr("y", padding)
-//                 .text("Predicted");
-//
-//
-//             //Create lines
-//             lineGraph_group.append("path")
-//                 .datum(data1)
-//                 .attr("class", "line")
-//                 .attr("d", line);
-//
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line pessimistic")
-//                 .attr("d", pessimisticLine);
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line optimistic")
-//                 .attr("d", optimisticLine);
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line bau")
-//                 .attr("d", bauLine);
-//
-//             //Create axes
-//             lineGraph_group.append("g")
-//                 .attr("class", "axis")
-//                 .attr("transform", "translate(0," + (height - padding) + ")")
-//                 .call(xAxis);
-//
-//             lineGraph_group.append("g")
-//                 .attr("class", "axis")
-//                 .attr("transform", "translate(" + (padding + 100) + ",0)")
-//                 .call(yAxis);
-//
-//         });
-//     });
-// }

@@ -9,6 +9,10 @@ export let total_available_water = new Map();
 export let total_water_used = new Map();
 export let water_stress_levels = new Map();
 
+export let water_stress_levels_bau = new Map();
+export let water_stress_levels_pst = new Map();
+export let water_stress_levels_opt = new Map();
+
 export const formatTime = d3.timeFormat("%Y");
 export const parseTime = d3.timeParse("%Y");
 
@@ -85,9 +89,22 @@ Promise.all([
     loadDataset(total_water_used, './Data/water_withdraws.csv', function (val) {
         return val
     }),
+    loadDataset(water_stress_levels_bau, './Data/bau_predictions.csv', function (val) {
+        return val
+    }),
+    loadDataset(water_stress_levels_opt, './Data/opt_predictions.csv', function (val) {
+        return val
+    }),
+    loadDataset(water_stress_levels_pst, './Data/pst_predictions.csv', function (val) {
+        return val
+    }),
 ]).then(values => {
     // renderMap(water_stress_levels.get('1978-1982'));
     // createSlider();
+    console.log(water_stress_levels_pst);
+    console.log(water_stress_levels_bau);
+    console.log(water_stress_levels_opt);
+    console.log(water_stress_levels);
     renderLineChart("China");
 });
 
