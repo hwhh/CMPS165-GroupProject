@@ -12,16 +12,16 @@ export function createSlider() {
     const slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
-        .width(450)
+        .step(1000 * 60 * 60 * 24 * 365 * 5)
+        .width(400)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
+            d3.select('svg').selectAll('#map').remove();
+            d3.select('svg').selectAll('#key').remove();
             let keys = Object.keys(years);
             let current_year = years[keys.reverse().find(e => e <= utils.formatTime(val))];
-            const millisecondsToWait = 500;
-            setTimeout(function () {
-                renderMap(water_stress_levels.get(current_year))
-            }, millisecondsToWait);
+            renderMap(water_stress_levels.get(current_year))
         });
 
 
@@ -34,3 +34,27 @@ export function createSlider() {
 
 
 }
+
+//var data3 = d3.range(0, 10).map(function (d) { return new Date(1995 + d, 10, 3); });
+//
+//  var slider3 = d3.sliderHorizontal()
+//    .min(d3.min(data3))
+//    .max(d3.max(data3))
+//    .step(1000 * 60 * 60 * 24 * 365)
+//    .width(400)
+//    .tickFormat(d3.timeFormat('%Y'))
+//    .tickValues(data3)
+//    .on('onchange', val => {
+//      d3.select("p#value3").text(d3.timeFormat('%Y')(val));
+//    });
+//
+//  var g = d3.select("div#slider3").append("svg")
+//    .attr("width", 500)
+//    .attr("height", 100)
+//    .append("g")
+//    .attr("transform", "translate(30,30)");
+//
+//  g.call(slider3);
+//
+//  d3.select("p#value3").text(d3.timeFormat('%Y')(slider3.value()));
+//  d3.select("a#setValue3").on("click", () => slider3.value(new Date(1997, 11, 17)));
