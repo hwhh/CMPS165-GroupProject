@@ -106,7 +106,6 @@ export function renderMap(data) {
             .attr("fill", function(d) { return color(d[0]); })
             .on("mouseover", function (d) {
                 var previousElement = d3.select(this);
-                console.log(previousElement.attr("fill"));
                 for( var key in colours){
                     if( previousElement.attr("fill") === key){
                         previousElement.style("stroke", "#000");
@@ -123,7 +122,6 @@ export function renderMap(data) {
             })
             .on("mouseout", function (d) {
                 var previousElement = d3.select(this);
-                console.log(previousElement.attr("fill"));
                 for( var key in colours){
                     if( previousElement.attr("fill") === key){
                         previousElement.style("stroke", "#FFF").style("stroke-width","0px");
