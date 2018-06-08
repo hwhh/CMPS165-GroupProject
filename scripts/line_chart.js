@@ -3,6 +3,7 @@ import {width, height, margin, display_country} from "./variables";
 import {color, path} from "./map";
 
 import {create_modal} from "./country_search";
+import {water_stress_levels} from "./index";
 
 
 //Sets axis scales
@@ -272,6 +273,7 @@ function drawAxis(g) {
 
 function create_domains(data) {
     x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
+    console.log(data)
     y.domain([
         0,
         d3.max(data, function (c) {
@@ -280,16 +282,6 @@ function create_domains(data) {
             })
         })
     ]);
-
-
-    d3.max(data, function (c) {
-        return d3.max(c.values, function (d) {
-            console.log(d)
-            return d.value
-        })
-    })
-
-
     z.domain(data.map(function (c) {
         return c.id
     }))
@@ -297,9 +289,12 @@ function create_domains(data) {
 }
 
 export function updateChart() {
+    let displayed_counties = [];
+    console.log(Object.keys(display_country))
     Object.keys(display_country).forEach(function (key) {
+        console.log(key);
         const g = d3.select('#' + key);
-        if (display_country[key].display) {
+        if (!display_country[key].display) {
             //Remove the text, line and circle/value of the selected country
             g.select('text')
                 .transition()
@@ -314,6 +309,7 @@ export function updateChart() {
             d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
                 .style('visibility', 'hidden');
         } else {
+            displayed_counties.push(key);
             //Add the text, line and circle/value of the selected country
             g.select('text')
                 .transition()
@@ -329,11 +325,13 @@ export function updateChart() {
                 .style('visibility', 'visible');
         }
     });
-    // create_domains();
+
+    console.log("here")
+    console.log(getAllValuesForCountry(water_stress_levels, displayed_counties));
+    create_domains(getAllValuesForCountry(water_stress_levels, displayed_counties));
 }
 
 export function renderLineChart() {
-
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
