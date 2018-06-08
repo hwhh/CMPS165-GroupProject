@@ -31,7 +31,7 @@ let colours = {};
 
 
 export function renderMap(data) {
-
+    
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -95,47 +95,49 @@ export function renderMap(data) {
 
 export function updateMap(data){
     
-        map.transition().duration(1000)
-        .style("fill", function(d) {
-            //Get data value
-            let value = data[d.properties.name];
-            if (value === -1 || value === undefined)
-                return "#ccc";
-            else {
-                let c = color(data[d.properties.name]);
-                let country_names;
-                if(colours[c] === undefined)
-                    country_names = [];
-                else
-                    country_names = colours[c];
-                    country_names.push(d.properties.name);
-                    colours[c] = country_names;
-                return c
+    colours={};
+    map.transition().duration(1000)
+    .style("fill", function(d) {
+        //Get data value
+        let value = data[d.properties.name];
+        if (value === -1 || value === undefined)
+            return "#ccc";
+        else {
+            let c = color(data[d.properties.name]);
+            let country_names;
+            if(colours[c] === undefined)
+                country_names = [];
+            else
+                country_names = colours[c];
+                country_names.push(d.properties.name);
+                colours[c] = country_names;
+            return c
+        }
+     });
+    
+    map.on("mouseover", function (d) {
+            let country_name = d.properties.name;
+            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                d3.select(this).style("fill", "orange");
+        })
+        .on("mouseout", function (d) {
+            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                d3.select(this).style("fill", function (d) {
+                    let c = color(data[d.properties.name]);
+                    return c
+                });
             }
-         });
-    
-        map.on("mouseover", function (d) {
+        })
+        .on("click", function (d) {
+            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
-                    d3.select(this).style("fill", "orange");
-            })
-            .on("mouseout", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
-                    d3.select(this).style("fill", function (d) {
-                        let c = color(data[d.properties.name]);
-                        return c
-                    });
-                }
-            })
-            .on("click", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
-                    let country_name = d.properties.name;
-                    console.log("clicked: " + country_name);
-                    utils.show_line_chart();
-                    renderLineChart(data)
-                }
-            })
+                console.log("clicked: " + country_name);
+                utils.show_line_chart();
+                renderLineChart(data)
+            }
+        })
     
+    legend(colours);
     
     
 }
@@ -151,6 +153,7 @@ function legend(c){
     var undefinedRect = utils.svg.append("g")
                                 .attr("id", "undefinedRect")
                                 .attr("transform", "translate(50,550)");
+    
 
             //Setting up the legend
     legend.selectAll("rect")

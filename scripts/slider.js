@@ -18,6 +18,7 @@ export function createSlider() {
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
+            d3.select('svg').select('#key').remove();
             let keys = Object.keys(years);
             let current_year = years[keys.reverse().find(e => e <= utils.formatTime(val))];
             if(current_year === "2020" || current_year === "2030" || current_year === "2040"){
