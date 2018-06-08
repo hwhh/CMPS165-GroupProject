@@ -24,6 +24,7 @@ var map;
 let colours = {};
 
 export function renderMap(data) {
+    colours={};
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
