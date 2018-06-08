@@ -61,13 +61,13 @@ export function getAllValuesForCountry(map, country) {
 //     });
 
 function loadDataset(map, file, func) {
-    // return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
     d3.csv(file, function (data) {
         data.forEach(function (d) {
             let values = {};
             Object.keys(d).forEach(function (key) {
                 if (key !== 'Year') {
-                    if (isNaN(d[key])) {
+                    if (isNaN(parseInt(d[key]))) {
                         values[key.split(' ').join('-')] = -1;
                     }else {
                         values[key.split(' ').join('-')] = func(+d[key])
@@ -76,54 +76,47 @@ function loadDataset(map, file, func) {
             });
             map.set(d.Year, values)
         });
-        // resolve();
+        resolve();
     });
-    console.log(water_stress_levels)
-
-    renderLineChart();
-    // });
+    });
 }
 
-loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {
-    return ((val / 100) * 5)
+
+Promise.all([
+    loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {
+        return ((val / 100) * 5)
+    }),
+    // loadDataset(total_external_water, './Data/external_water.csv', function (val) {
+    //     return val
+    // }),
+    // loadDataset(total_internal_water, './Data/internal_water.csv', function (val) {
+    //     return val
+    // }),
+    // loadDataset(total_water_used, './Data/water_withdraws.csv', function (val) {
+    //     return val
+    // }),
+    // loadDataset(water_stress_levels_bau, './Data/bau_predictions.csv', function (val) {
+    //     return val
+    // }),
+    // loadDataset(water_stress_levels_opt, './Data/opt_predictions.csv', function (val) {
+    //     return val
+    // }),
+    // loadDataset(water_stress_levels_pst, './Data/pst_predictions.csv', function (val) {
+    //     return val
+    // }),
+]).then(values => {
+    // renderMap(water_stress_levels.get('1978-1982'));
+    // createSlider();
+
+    Object.keys(display_country).forEach(function (d) {
+
+        water_stress.push(getAllValuesForCountry(water_stress_levels, d));
+        water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
+        water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
+        water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
+    });
+    renderLineChart();
+    create_modal();
 });
-
-
-// Promise.all([
-//     loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {
-//         return ((val / 100) * 5)
-//     }),
-//     // loadDataset(total_external_water, './Data/external_water.csv', function (val) {
-//     //     return val
-//     // }),
-//     // loadDataset(total_internal_water, './Data/internal_water.csv', function (val) {
-//     //     return val
-//     // }),
-//     // loadDataset(total_water_used, './Data/water_withdraws.csv', function (val) {
-//     //     return val
-//     // }),
-//     // loadDataset(water_stress_levels_bau, './Data/bau_predictions.csv', function (val) {
-//     //     return val
-//     // }),
-//     // loadDataset(water_stress_levels_opt, './Data/opt_predictions.csv', function (val) {
-//     //     return val
-//     // }),
-//     // loadDataset(water_stress_levels_pst, './Data/pst_predictions.csv', function (val) {
-//     //     return val
-//     // }),
-// ]).then(values => {
-//     // renderMap(water_stress_levels.get('1978-1982'));
-//     // createSlider();
-//
-//     Object.keys(display_country).forEach(function (d) {
-//
-//         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
-//         water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
-//         water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
-//         water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
-//     });
-//     renderLineChart();
-//     create_modal();
-// });
 
 

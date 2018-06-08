@@ -280,6 +280,16 @@ function create_domains(data) {
             })
         })
     ]);
+
+
+    d3.max(data, function (c) {
+        return d3.max(c.values, function (d) {
+            console.log(d)
+            return d.value
+        })
+    })
+
+
     z.domain(data.map(function (c) {
         return c.id
     }))
@@ -319,7 +329,7 @@ export function updateChart() {
                 .style('visibility', 'visible');
         }
     });
-    create_domains();
+    // create_domains();
 }
 
 export function renderLineChart() {
