@@ -63,25 +63,24 @@ export function getAllValuesForCountry(map, country) {
 
 function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
-    d3.csv(file, function (data) {
-        data.forEach(function (d) {
-            let values = {};
-            Object.keys(d).forEach(function (key) {
-                if (key !== 'Year') {
-                    if (isNaN(parseInt(d[key]))) {
-                        values[key.split(' ').join('-')] = -1;
-                    }else {
-                        values[key.split(' ').join('-')] = func(+d[key])
+        d3.csv(file, function (data) {
+            data.forEach(function (d) {
+                let values = {};
+                Object.keys(d).forEach(function (key) {
+                    if (key !== 'Year') {
+                        if (isNaN(parseInt(d[key]))) {
+                            values[key.split(' ').join('-')] = -1;
+                        }else {
+                            values[key.split(' ').join('-')] = func(+d[key])
+                        }
                     }
-                }
+                });
+                map.set(d.Year, values)
             });
-            map.set(d.Year, values)
+            resolve();
         });
-        resolve();
-    });
     });
 }
-
 
 Promise.all([
     loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {
