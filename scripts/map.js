@@ -19,12 +19,14 @@ var xDensity = d3.scaleSqrt()
 
 var counter = 0;
 
+var map;
+
 let colours = {};
 
 export function renderMap(data) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
-        utils.svg.append('g')
+        map = utils.svg.append('g')
             .attr('id', 'map')
             .attr('class', 'countries')
             .style('display', 'block')
@@ -76,6 +78,8 @@ export function renderMap(data) {
             
         });
     
+    console.log(colours);
+    
     legend(colours);
     bau();
     optimistic();
@@ -85,15 +89,10 @@ export function renderMap(data) {
 
 export function updateMap(data){
     
-    d3.select('svg')
-        .select('#map')
-        .selectAll('path')
-        .transition().duration(1000)
+        map.transition().duration(1000)
         .style("fill", function(d) {
-        console.log(d.properties.name);
             //Get data value
             let value = data[d.properties.name];
-        console.log(value);
             if (value === -1 || value === undefined)
                 return d3.color("grey");
             else {
@@ -108,6 +107,30 @@ export function updateMap(data){
                 return c
             }
          });
+    
+        map.on("mouseover", function (d) {
+                let country_name = d.properties.name;
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                    d3.select(this).style("fill", "orange");
+            })
+            .on("mouseout", function (d) {
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                    d3.select(this).style("fill", function (d) {
+                        let c = color(data[d.properties.name]);
+                        return c
+                    });
+                }
+            })
+            .on("click", function (d) {
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                    let country_name = d.properties.name;
+                    console.log("clicked: " + country_name);
+                    utils.show_line_chart();
+                    renderLineChart(data)
+                }
+            })
+    
+    
     
 }
 
@@ -141,7 +164,7 @@ function legend(c){
             var previousElement = d3.select(this);
             for( var key in colours){
                 if( previousElement.attr("fill") === key){
-                    previousElement.style("stroke", "#000").style("stroke-opacity",1);
+                    previousElement.style("fill", "#ADD8E6");
                     var i;
                     for(i = 0; i < colours[key].length; i++){
                             d3.select('svg')
@@ -157,7 +180,7 @@ function legend(c){
             var previousElement = d3.select(this);
             for( var key in colours){
                 if( previousElement.attr("fill") === key){
-                    previousElement.style("stroke-opacity",0);
+                    previousElement.style("fill", key);
                     var i;
                     for(i = 0; i < colours[key].length; i++){
                             d3.select('svg')
