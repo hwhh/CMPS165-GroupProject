@@ -138,6 +138,8 @@ export function updateMap(data){
 function legend(c){
         
     var colours = c;
+    
+    console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
         .attr("id", "key")
