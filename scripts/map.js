@@ -19,7 +19,7 @@ var xDensity = d3.scaleSqrt()
 
 var xPos = [440, 480, 520, 560, 600];
 
-var yScale = d3.scaleLinear()
+var scale = d3.scaleLinear()
                 .domain([0,5])
                 .range([440, 640]);
 
@@ -86,8 +86,6 @@ export function renderMap(data) {
             
         });
     
-    console.log(colours);
-    
     legend(colours);
     bau();
     optimistic();
@@ -145,12 +143,10 @@ export function updateMap(data){
 function legend(c){
         
     var colours = c;
-    
-    console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
         .attr("id", "key")
-        .attr("transform", "translate(-30,550)");
+        .attr("transform", "translate(50,550)");
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -167,8 +163,7 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { console.log(xDensity(d[0]));
-                                return xPos[d[0]]; })
+        .attr("x", function(d) { return xPos[d[0]]; })
         .attr("width", 40)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
@@ -215,8 +210,7 @@ function legend(c){
 
     //adding the value of the domain in the legend, creating the x axis using the x scale created for the data
     //tick size is 13 so all the values of the domain will appear on page
-    console.log(xDensity);
-    legend.call(d3.axisBottom(yScale)
+    legend.call(d3.axisBottom(scale)
         .tickSize(13)
         .tickValues(color.domain()))
         .select(".domain")
@@ -231,11 +225,7 @@ function bau(){
         
         console.log("bau");
         
-        d3.selectAll("path")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-             });      
+        //call updateData
         
     })
     
@@ -247,12 +237,7 @@ function optimistic(){
         
         console.log("optimistic");
         
-        d3.selectAll("path")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-            
-             });
+        //call updateData
         
     })
     
@@ -265,12 +250,7 @@ function pessimistic(){
         
         console.log("pessimistic");
         
-        d3.selectAll("path")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-            
-             });
+        //call updateData
         
     })
     

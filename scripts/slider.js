@@ -13,13 +13,29 @@ export function createSlider() {
     const slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
-        .step(1000 * 60 * 60 * 24 * 365 * 5)
+//        .step(1000 * 60 * 60 * 24 * 365 * 5)
         .width(400)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
             let keys = Object.keys(years);
             let current_year = years[keys.reverse().find(e => e <= utils.formatTime(val))];
+            if(current_year === "2020" || current_year === "2030" || current_year === "2040"){
+                d3.select('svg')
+                    .select('#slider')
+                    .select('.slider')
+                    .select('.parameter-value')
+                    .select('path')
+                    .style('fill', '#8b0000');
+            }
+            else{
+                d3.select('svg')
+                    .select('#slider')
+                    .select('.slider')
+                    .select('.parameter-value')
+                    .select('path')
+                    .style('fill', 'white');
+            }
             updateMap(water_stress_levels.get(current_year));
         });
 
