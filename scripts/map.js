@@ -78,6 +78,8 @@ export function renderMap(data) {
             
         });
     
+    console.log(colours);
+    
     legend(colours);
     bau();
     optimistic();
@@ -127,6 +129,8 @@ export function updateMap(data){
                     renderLineChart(data)
                 }
             })
+    
+    
     
 }
 
