@@ -44,7 +44,6 @@ function loadDataset(map, file, func) {
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
                         key.split(' ').join('-').split('(').join('').split(')').join('').split('\'').join('')
-                        console.log(key)
                         if (isNaN(parseInt(d[key]))) {
                             values[key.split(' ').join('-')] = -1;
                         }else {

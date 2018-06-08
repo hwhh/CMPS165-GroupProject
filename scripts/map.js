@@ -15,7 +15,13 @@ export const color = d3.scaleThreshold()
 
 var xDensity = d3.scaleSqrt()
     .domain([0, 5])
-    .rangeRound([440, 810]);
+    .rangeRound([440, 600]);
+
+var xPos = [440, 480, 520, 560, 600];
+
+var yScale = d3.scaleLinear()
+                .domain([0,5])
+                .range([440, 640]);
 
 var counter = 0;
 
@@ -23,8 +29,9 @@ var map;
 
 let colours = {};
 
+
 export function renderMap(data) {
-    colours={};
+
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -42,7 +49,7 @@ export function renderMap(data) {
             .style('fill', function (d) {
                 let value = data[d.properties.name];
                 if (value === -1 || value === undefined)
-                    return d3.color("grey");
+                    return "#ccc";
                 else {
                     let c = color(data[d.properties.name]);
                     let country_names;
@@ -95,7 +102,7 @@ export function updateMap(data){
             //Get data value
             let value = data[d.properties.name];
             if (value === -1 || value === undefined)
-                return d3.color("grey");
+                return "#ccc";
             else {
                 let c = color(data[d.properties.name]);
                 let country_names;
@@ -160,8 +167,9 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xDensity(d[0]); })
-        .attr("width", function(d) { return xDensity(d[1]) - xDensity(d[0]); })
+        .attr("x", function(d) { console.log(xDensity(d[0]));
+                                return xPos[d[0]]; })
+        .attr("width", 40)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
@@ -207,7 +215,8 @@ function legend(c){
 
     //adding the value of the domain in the legend, creating the x axis using the x scale created for the data
     //tick size is 13 so all the values of the domain will appear on page
-    legend.call(d3.axisBottom(xDensity)
+    console.log(xDensity);
+    legend.call(d3.axisBottom(yScale)
         .tickSize(13)
         .tickValues(color.domain()))
         .select(".domain")
@@ -239,7 +248,6 @@ function optimistic(){
         console.log("optimistic");
         
         d3.selectAll("path")
-            .style("stroke", "red")
             .transition().duration(1000)
             .style("fill", function(d) {
                 //Get data value
@@ -258,7 +266,6 @@ function pessimistic(){
         console.log("pessimistic");
         
         d3.selectAll("path")
-            .style("stroke", "white")
             .transition().duration(1000)
             .style("fill", function(d) {
                 //Get data value
