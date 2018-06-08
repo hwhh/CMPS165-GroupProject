@@ -145,8 +145,12 @@ function legend(c){
     var colours = c;
                     //Define legend
     var legend = utils.svg.append("g")
-        .attr("id", "key")
-        .attr("transform", "translate(50,550)");
+                            .attr("id", "key")
+                            .attr("transform", "translate(50,550)");
+    
+    var undefinedRect = utils.svg.append("g")
+                                .attr("id", "undefinedRect")
+                                .attr("transform", "translate(50,550)");
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -215,6 +219,7 @@ function legend(c){
         .tickValues(color.domain()))
         .select(".domain")
         .remove();
+
     
 }
 
