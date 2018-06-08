@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import * as ReactDOM from "react-dom";
 import ReactModal from "react-modal";
 import {display_country} from "./variables";
-import {renderLineChart} from "./line_chart";
+import {updateChart} from "./line_chart";
 import Checkbox from "react-bootstrap/es/Checkbox";
 import {FormGroup} from "react-bootstrap";
 
@@ -41,7 +41,7 @@ class Model extends React.Component {
 
     handleCloseModal() {
         this.setState({showModal: false});
-        renderLineChart()
+        updateChart()
     }
 
 

@@ -50,8 +50,7 @@ export function renderMap(data) {
                     colours[c] = country_names;
                     return c
                 }
-            })
-            .on("mouseover", function (d) {
+            }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
                 if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                     d3.select(this).style("fill", "orange");

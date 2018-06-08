@@ -286,87 +286,44 @@ function create_domains(data) {
 
 }
 
-function checkChanged() {
-    let checked = this.checked;
-    const countryID = this.getAttribute('countryID');
-    const country = this.getAttribute('country');
-
-    const g = d3.select('#' + countryID);
-
-    if (!checked) {
-        //Remove the text, line and circle/value of the selected country
-        g.select('text')
-            .transition()
-            .duration(1000)
-            .style('opacity', 0);
-        g.select('path').transition()
-            .duration(2000)
-            .attrTween('stroke-dashoffset', tweenDashoffsetOff);
-        //Select elements deeper in the DOM
-        d3.select('.mouse-over-effects').select('#' + countryID).selectAll('circle')
-            .style('visibility', 'hidden');
-        d3.select('.mouse-over-effects').select('#' + countryID).selectAll('text')
-            .style('visibility', 'hidden');
-        display_country[country].display = false
-    } else {
-        //Add the text, line and circle/value of the selected country
-        g.select('text')
-            .transition()
-            .duration(1000)
-            .style('opacity', 1);
-        g.select('path').transition()
-            .duration(2000)
-            .attrTween('stroke-dashoffset', tweenDashoffsetOn)
-        //Select elements deeper in the DOM
-        d3.select('.mouse-over-effects').select('#' + countryID).selectAll('circle')
-            .style('visibility', 'visible');
-        d3.select('.mouse-over-effects').select('#' + countryID).selectAll('text')
-            .style('visibility', 'visible');
-        display_country[country].display = true
-    }
-
+export function updateChart() {
+    Object.keys(display_country).forEach(function (key) {
+        const g = d3.select('#' + key);
+        if (display_country[key].display) {
+            //Remove the text, line and circle/value of the selected country
+            g.select('text')
+                .transition()
+                .duration(1000)
+                .style('opacity', 0);
+            g.select('path').transition()
+                .duration(2000)
+                .attrTween('stroke-dashoffset', tweenDashoffsetOff);
+            //Select elements deeper in the DOM
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+                .style('visibility', 'hidden');
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+                .style('visibility', 'hidden');
+        } else {
+            //Add the text, line and circle/value of the selected country
+            g.select('text')
+                .transition()
+                .duration(1000)
+                .style('opacity', 1);
+            g.select('path').transition()
+                .duration(2000)
+                .attrTween('stroke-dashoffset', tweenDashoffsetOn)
+            //Select elements deeper in the DOM
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+                .style('visibility', 'visible');
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+                .style('visibility', 'visible');
+        }
+    });
+    create_domains();
 }
-
-function drawCheckboxes(countries) {
-    const checkboxes = d3.select('.country-list').selectAll('.country-checkbox')
-        .data(countries)
-        .enter()
-        .append('li')
-        .attr('class', 'country-checkbox');
-
-    checkboxes.append('input')
-        .attr('type', 'checkbox')
-        .attr('country', function (d) {
-            return d.id
-        })
-        .attr('id', function (d) {
-            return d.id.split(' ').join('_') + '_checkbox'
-        })
-        .attr('countryID', function (d) {
-            return d.id.split(' ').join('_')
-        })
-        .on('change', checkChanged)// Call checkChanged when changed
-        .filter(function (d) {
-            return d.display
-        })
-        .each(function (d) {
-            d3.select(this)
-                .attr('checked', true)
-        });
-
-    checkboxes.append('label')
-        .attr('for', function (d) {
-            return d.id.split(' ').join('_') + '_checkbox'
-        })
-        .text(function (d) {
-            return d.id
-        })
-}
-
-
 
 export function renderLineChart() {
-    d3.select('svg').select('g').selectAll('#line_chart').remove();
+
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
