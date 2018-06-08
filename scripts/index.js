@@ -43,10 +43,11 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        if(d[key] === "")
-                            values[key] = -1;
-                        else
-                            values[key] = func(+d[key])
+                        if (isNaN(d[key])) {
+                            values[key.split(' ').join('-')] = -1;
+                        }else {
+                            values[key.split(' ').join('-')] = func(+d[key])
+                        }
                     }
                 });
                 map.set(d.Year, values)
