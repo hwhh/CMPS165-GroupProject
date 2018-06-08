@@ -150,9 +150,9 @@ function legend(c){
                             .attr("id", "key")
                             .attr("transform", "translate(50,550)");
     
-    var undefinedRect = utils.svg.append("g")
-                                .attr("id", "undefinedRect")
-                                .attr("transform", "translate(50,550)");
+//    var undefinedRect = utils.svg.append("g")
+//                                .attr("id", "undefinedRect")
+//                                .attr("transform", "translate(50,550)");
     
 
             //Setting up the legend
