@@ -1,14 +1,10 @@
 import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
-import {color, path} from "./map";
-
-import {create_modal} from "./country_search";
-import {water_stress_levels} from "./index";
 
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
-    y = d3.scaleLinear().range([height, 0]),
+    y = d3.scaleLog().base(Math.E).domain([0.001, 8]).range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
 //Line generator, where the lives are curved
@@ -18,8 +14,8 @@ const line = d3.line()
         return x(new Date(d.date))
     })
     .y(function (d) {
-        if(d.value === undefined)
-            return -1
+        if (d.value === undefined)
+            return -1;
         else
             return y(d.value)
     });
@@ -234,7 +230,7 @@ function drawLines(g, countries) {
             d3.select(this)
                 .attr('stroke-dasharray', this.getTotalLength() + ',' + this.getTotalLength())
                 .attr('stroke-dashoffset', '' + this.getTotalLength())
-        })
+        });
     paths.filter(function (d) { // only shows the lines for selected countries
         return display_country[d.id].display
     })
@@ -271,28 +267,20 @@ function drawAxis(g) {
         .text('Water Stress Level');
 }
 
+//TODO Update domains
 function create_domains(data) {
     x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
-    console.log(data)
-    y.domain([
-        0,
-        d3.max(data, function (c) {
-            return d3.max(c.values, function (d) {
-                return d.value
-            })
-        })
-    ]);
+    // y.domain([
+    //     0, 5
+    // ]);
     z.domain(data.map(function (c) {
         return c.id
-    }))
-
+    }));
 }
 
+//TODO  send in the countries for updting
 export function updateChart() {
-    let displayed_counties = [];
-    console.log(Object.keys(display_country))
     Object.keys(display_country).forEach(function (key) {
-        console.log(key);
         const g = d3.select('#' + key);
         if (!display_country[key].display) {
             //Remove the text, line and circle/value of the selected country
@@ -309,7 +297,6 @@ export function updateChart() {
             d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
                 .style('visibility', 'hidden');
         } else {
-            displayed_counties.push(key);
             //Add the text, line and circle/value of the selected country
             g.select('text')
                 .transition()
@@ -325,22 +312,15 @@ export function updateChart() {
                 .style('visibility', 'visible');
         }
     });
-
-    console.log("here")
-    console.log(getAllValuesForCountry(water_stress_levels, displayed_counties));
-    create_domains(getAllValuesForCountry(water_stress_levels, displayed_counties));
 }
 
 export function renderLineChart() {
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-    // let data = [utils.getAllValuesForCountry(country)];
+        // .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     create_domains(utils.water_stress);
-    // drawGrid();
     drawAxis(g);
     drawLines(g, utils.water_stress);
-    // drawCheckboxes(utils.water_stress);
     mouseOver(g, utils.water_stress);
 }
 
