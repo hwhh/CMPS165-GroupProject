@@ -108,26 +108,26 @@ svg {
     display: table;
 }
 
-//.Modal {
-//    width: 55%;
-//    position: absolute;
-//    top: 50%;
-//    left: 50%;
-//    right: auto;
-//    bottom: auto;
-//    border: 1px solid rgb(204, 204, 204);
-//    background: rgb(255, 255, 255);
-//    overflow: auto;
-//    border-radius: 4px;
-//    outline: none;
-//    padding: 20px;
-//    margin-right: -50%;
-//    transform: translate(-50%, -50%);
-//
-//    #close {
-//
-//        float: right;
-//
-//    }
-//
-//}
+/*//.Modal {*/
+/*//    width: 55%;*/
+/*//    position: absolute;*/
+/*//    top: 50%;*/
+/*//    left: 50%;*/
+/*//    right: auto;*/
+/*//    bottom: auto;*/
+/*//    border: 1px solid rgb(204, 204, 204);*/
+/*//    background: rgb(255, 255, 255);*/
+/*//    overflow: auto;*/
+/*//    border-radius: 4px;*/
+/*//    outline: none;*/
+/*//    padding: 20px;*/
+/*//    margin-right: -50%;*/
+/*//    transform: translate(-50%, -50%);*/
+/*//*/
+/*//    #close {*/
+/*//*/
+/*//        float: right;*/
+/*//*/
+/*//    }*/
+/*//*/
+/*//}*/
