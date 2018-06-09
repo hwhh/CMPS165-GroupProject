@@ -9,6 +9,7 @@ export let total_external_water = new Map();
 export let total_available_water = new Map();
 export let total_water_used = new Map();
 export let water_stress_levels = new Map();
+/////////////////////////////////////////////
 export let water_stress_levels_bau = new Map();
 export let water_stress_levels_pst = new Map();
 export let water_stress_levels_opt = new Map();
@@ -106,6 +107,8 @@ Promise.all([
         return val
     }),
 ]).then(values => {
+    // renderMap(water_stress_levels.get('1978-1982'));
+    // createSlider();
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
         water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
@@ -139,7 +142,7 @@ Promise.all([
     console.log(water_stress)
     renderMap(water_stress_levels.get('1978-1982'));
      createSlider();
-    
+
 //    renderLineChart();
 //    create_modal();
 });

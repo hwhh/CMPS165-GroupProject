@@ -24,7 +24,7 @@ var scale = d3.scaleLinear()
                 .range([440, 640]);
 
 
-var map;
+let map;
 
 let colours = {};
 

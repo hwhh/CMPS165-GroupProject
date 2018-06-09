@@ -278,7 +278,7 @@ function create_domains(data) {
     }));
 }
 
-//TODO  send in the countries for updting
+//TODO  send in the countries for updating
 export function updateChart() {
     Object.keys(display_country).forEach(function (key) {
         const g = d3.select('#' + key);
@@ -304,7 +304,7 @@ export function updateChart() {
                 .style('opacity', 1);
             g.select('path').transition()
                 .duration(2000)
-                .attrTween('stroke-dashoffset', tweenDashoffsetOn)
+                .attrTween('stroke-dashoffset', tweenDashoffsetOn);
             //Select elements deeper in the DOM
             d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
                 .style('visibility', 'visible');
@@ -317,7 +317,7 @@ export function updateChart() {
 export function renderLineChart() {
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
-        // .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     create_domains(utils.water_stress);
     drawAxis(g);
     drawLines(g, utils.water_stress);

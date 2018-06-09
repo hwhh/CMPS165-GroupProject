@@ -1,8 +1,6 @@
-Add radio buttons pes, op, bas - Hailey
 
-Convert the water stress level to a score between 0-5 //Y = (X-A)/(B-A) * (D-C) + C --Henry
 Add new website layout - Henry
-Fix line chart -Henry
+Fix line chart - Henry
 
 Have the end of the slider a different colour -- Alfredo
 Make sure its colour blind friendly -- Alfredo
@@ -10,6 +8,8 @@ Add ribion charts -- Alfredo
 
 
 ///DONE
+Add radio buttons pes, op, bas - Hailey
+Convert the water stress level to a score between 0-5 //Y = (X-A)/(B-A) * (D-C) + C --Henry
 Add interactive Legend
 Gray Out Counties that have no data
 Increase performance
