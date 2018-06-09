@@ -1,5 +1,5 @@
 import * as utils from "./index";
-import {width, height, slider_height, slider_width, years, padding, water_stress_levels} from "./variables";
+import {width, height, slider_height, slider_width, years, padding} from "./variables";
 import {updateMap} from "./map";
 
 export function createSlider() {
@@ -36,7 +36,8 @@ export function createSlider() {
                     .select('path')
                     .style('fill', 'white');
             }
-            updateMap(water_stress_levels.get(current_year));
+            console.log(utils.water_stress_levels.get(current_year));
+            updateMap(utils.water_stress_levels.get(current_year));
         });
 
 
