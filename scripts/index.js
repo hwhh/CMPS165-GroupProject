@@ -100,30 +100,6 @@ Promise.all([
         // water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
         // water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
     });
-    // let max = -Infinity, min = 0;
-    // water_stress.forEach(function (countries) {
-    //     let current_max = Math.max.apply(Math, countries.values.map(function (o) {
-    //         return o.value;
-    //     }));
-    //     if (current_max > max)
-    //         max = current_max;
-    // });
-    // let water_stress_norm = [];
-    // water_stress.forEach(function (countries) {
-    //     let norm_values = [];
-    //     countries.values.map(function (v) {
-    //         norm_values.push({
-    //             date: v.date,
-    //             value: ((v.value - min) / max) * 5
-    //         });
-    //     });
-    //     water_stress_norm.push({
-    //         id: countries.id,
-    //         display: display_country[countries.id].display,
-    //         values: norm_values
-    //     })
-    // });
-    // water_stress = water_stress_norm;
     renderLineChart();
     create_modal();
 });

@@ -282,21 +282,21 @@ function create_domains(data) {
 export function updateChart() {
     Object.keys(display_country).forEach(function (key) {
         const g = d3.select('#' + key);
-        if (!display_country[key].display) {
-            //Remove the text, line and circle/value of the selected country
-            g.select('text')
-                .transition()
-                .duration(1000)
-                .style('opacity', 0);
-            g.select('path').transition()
-                .duration(2000)
-                .attrTween('stroke-dashoffset', tweenDashoffsetOff);
-            //Select elements deeper in the DOM
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
-                .style('visibility', 'hidden');
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
-                .style('visibility', 'hidden');
-        } else {
+        // if (!display_country[key].display) {
+        //     //Remove the text, line and circle/value of the selected country
+        //     g.select('text')
+        //         .transition()
+        //         .duration(1000)
+        //         .style('opacity', 0);
+        //     g.select('path').transition()
+        //         .duration(2000)
+        //         .attrTween('stroke-dashoffset', tweenDashoffsetOff);
+        //     //Select elements deeper in the DOM
+        //     d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+        //         .style('visibility', 'hidden');
+        //     d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+        //         .style('visibility', 'hidden');
+        if (display_country[key].display) {
             //Add the text, line and circle/value of the selected country
             g.select('text')
                 .transition()
