@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.scss">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/jumbotron.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/blog.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -16,6 +16,9 @@
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
     <!--<link rel="" href="Data/" />-->
 </head>
 <body>
@@ -29,7 +32,12 @@
     <div style="display: inline-block" class="checkbox-div">
         <ul class="country-list"> </ul>
     </div>
+    <div id="root"></div>
+
     <script src="./dist/bundle.js"></script>
+
+
+    <div id="slider3"></div>
     <!--<div id="slider3"></div>-->
     <br>
     <center><b>Future variables:</b></center>
@@ -70,7 +78,7 @@
                         map.js<br>
                         slider.js<br>
                         countries.geojson<br>
-                        
+
                     </p>
             </div>
             <div class="col-md-3">
@@ -82,7 +90,7 @@
             </div>
             <div class="col-md-3">
                 <b>Relevant Visualization</b>
-                <p>                    
+                <p>
                     <a href="https://wri.org/resources/data-sets/aqueduct-projected-water-stress-country-rankings">World Resource Institute: Water Stress by Country, 2040</a>
                 </p>
             </div>

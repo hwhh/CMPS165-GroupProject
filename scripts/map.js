@@ -13,7 +13,7 @@ export const color = d3.scaleThreshold()
     .domain([1, 2, 3, 4, 5])
     .range(d3.schemeReds[5]);
 
-var xDensity = d3.scaleSqrt()
+const xDensity = d3.scaleSqrt()
     .domain([0, 5])
     .rangeRound([440, 600]);
 
@@ -23,15 +23,12 @@ var scale = d3.scaleLinear()
                 .domain([0,5])
                 .range([440, 640]);
 
-var counter = 0;
 
 var map;
 
 let colours = {};
 
-
 export function renderMap(data) {
-    
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -40,9 +37,10 @@ export function renderMap(data) {
             .style('display', 'block')
             .selectAll('path')
             .data(features)
-            .enter().append('path')
+            .enter()
+            .append('path')
             .attr('d', path)
-            .attr('id', function(d){
+            .attr('id', function (d) {
                 return d.properties.name;
             })
             .style('stroke', "#FFF")
@@ -53,7 +51,7 @@ export function renderMap(data) {
                 else {
                     let c = color(data[d.properties.name]);
                     let country_names;
-                    if(colours[c] === undefined)
+                    if (colours[c] === undefined)
                         country_names = [];
                     else
                         country_names = colours[c];
@@ -61,14 +59,13 @@ export function renderMap(data) {
                     colours[c] = country_names;
                     return c
                 }
-            })
-            .on("mouseover", function (d) {
+            }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                     d3.select(this).style("fill", "orange");
             })
             .on("mouseout", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     d3.select(this).style("fill", function (d) {
                         let c = color(data[d.properties.name]);
                         return c
@@ -76,16 +73,16 @@ export function renderMap(data) {
                 }
             })
             .on("click", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
-                    utils.show_line_chart();
-                    renderLineChart(data)
+                    utils.showLineChart();
+                    renderLineChart(country_name)
                 }
             })
-            
-        });
-    
+
+    });
+
     legend(colours);
     bau();
     optimistic();
@@ -114,7 +111,7 @@ export function updateMap(data){
             return c
         }
      });
-    
+
     map.on("mouseover", function (d) {
             let country_name = d.properties.name;
             if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
@@ -136,7 +133,7 @@ export function updateMap(data){
                 renderLineChart(data)
             }
         })
-    
+
     legend(colours);
     
     
@@ -149,11 +146,11 @@ function legend(c){
     var legend = utils.svg.append("g")
                             .attr("id", "key")
                             .attr("transform", "translate(50,550)");
-    
+
 //    var undefinedRect = utils.svg.append("g")
 //                                .attr("id", "undefinedRect")
 //                                .attr("transform", "translate(50,550)");
-    
+
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -222,7 +219,6 @@ function legend(c){
         .tickValues(color.domain()))
         .select(".domain")
         .remove();
-
     
 }
 

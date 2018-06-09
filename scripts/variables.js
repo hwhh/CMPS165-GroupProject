@@ -3,13 +3,6 @@ export const slider_width = 500, slider_height = 100;
 export const padding = 40;
 export const margin = {top: 20, right: 80, bottom: 30, left: 70};
 
-export let total_internal_water = new Map();
-export let total_external_water = new Map();
-export let total_available_water = new Map();
-export let total_water_used = new Map();
-export let water_stress_levels = new Map();
-
-
 export const years = {
     1978: '1978-1982',
     1983: '1983-1987',
@@ -68,7 +61,7 @@ export const display_country = {
     "Cuba": {display: false},
     "Cyprus": {display: false},
     "Czechia": {display: false},
-    "Democratic-People's-Republic-of-Korea": {display: false},
+    "Democratic-Peoples-Republic-of-Korea": {display: false},
     "Democratic-Republic-of-the-Congo": {display: false},
     "Denmark": {display: false},
     "Djibouti": {display: false},

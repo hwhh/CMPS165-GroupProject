@@ -1,4 +1,3 @@
-
 import * as utils from "./index";
 import {width, height, slider_height, slider_width, years, padding, water_stress_levels} from "./variables";
 import {updateMap} from "./map";
