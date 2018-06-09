@@ -19,7 +19,7 @@ const xDensity = d3.scaleSqrt()
     .rangeRound([440, 810]);
 
 
-var map;
+let map;
 
 let colours = {};
 
