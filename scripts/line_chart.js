@@ -2,12 +2,10 @@ import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
 
 
-const format = d3.format('.2f');
-
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
-        y = d3.scaleLog().base(Math.E).domain([0.000001, 8]).range([height, 0]),
-        z = d3.scaleOrdinal(d3.schemeCategory10);
+    y = d3.scaleLog().base(Math.E).domain([0.0015, 500]).range([height, 0]),
+    z = d3.scaleOrdinal(d3.schemeCategory10);
 
 //Line generator, where the lives are curved
 const line = d3.line()
@@ -241,10 +239,7 @@ function drawLines(g, countries) {
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
 }
 
-function drawAxis (g) {
-    //http://bl.ocks.org/duopixel/4063326
-
-    //Adds the x and y axis
+function drawAxis(g) {
     g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x))
@@ -255,7 +250,7 @@ function drawAxis (g) {
 
     g.append('g')
         .attr('class', 'axis axis--y')
-        .call(d3.axisLeft(y))
+        .call(d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]) )
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
@@ -357,155 +352,3 @@ export function renderLineChart() {
 }
 
 
-
-
-// / const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
-//
-
-//
-//
-// lineGraph_group.append("text")
-//     .attr("class", "back_label")
-//     .attr("transform", "translate(" + 1150 + "," + 30 + ")")
-//     .attr("fill", "black")
-//     .attr("text-anchor", "middle")
-//     .attr("pointer-events", "none")
-//     .text("Back");
-//
-//
-//
-// function lineChart() {
-//     d3.csv("./Data/current.csv", function (error1, data1) {
-//         d3.csv("./Data/predicted.csv", function (error2, data2) {
-//             data1.forEach(function (d) {
-//                 d.year = parseTime(d.year);
-//                 d.score = +d.score;
-//             });
-//
-//             data2.forEach(function (d) {
-//                 d.year = parseTime(d.year);
-//                 d.pessimistic = +d.pessimistic;
-//                 d.optimistic = +d.optimistic;
-//                 d.bau = +d.bau;
-//             });
-//
-//             xScale = d3.scaleTime()
-//                 .domain([
-//                     d3.min(data1, function (d) {
-//                         return d.year;
-//                     }),
-//                     d3.max(data2, function (d) {
-//                         return d.year;
-//                     })
-//                 ])
-//                 .range([padding + 100, width - 100]);
-//
-//             yScale = d3.scaleLinear()
-//                 .domain([0, 5])
-//                 .range([height - 40, padding]);
-//
-//             //Define axes
-//             xAxis = d3.axisBottom()
-//                 .scale(xScale)
-//                 .ticks(10)
-//                 .tickFormat(formatTime);
-//
-//             //Define Y axis
-//             yAxis = d3.axisLeft()
-//                 .scale(yScale)
-//                 .ticks(5);
-//
-//             //Define line generators
-//             line = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(1960) && d.year <= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.score);
-//                 });
-//
-//             pessimisticLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.pessimistic);
-//                 });
-//
-//             optimisticLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.optimistic);
-//                 });
-//
-//             bauLine = d3.line()
-//                 .defined(function (d) {
-//                     return d.year >= parseTime(2015);
-//                 })
-//                 .x(function (d) {
-//                     return xScale(d.year);
-//                 })
-//                 .y(function (d) {
-//                     return yScale(d.bau);
-//                 });
-//
-//
-//             //Draw predicted line
-//             lineGraph_group.append("line")
-//                 .attr("class", "line predicted")
-//                 .attr("x1", xScale(parseTime(2015)))
-//                 .attr("x2", xScale(parseTime(2015)))
-//                 .attr("y1", padding)
-//                 .attr("y2", height);
-//
-//             //Label predicted line
-
-//
-//
-//             //Create lines
-//             lineGraph_group.append("path")
-//                 .datum(data1)
-//                 .attr("class", "line")
-//                 .attr("d", line);
-//
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line pessimistic")
-//                 .attr("d", pessimisticLine);
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line optimistic")
-//                 .attr("d", optimisticLine);
-//
-//             lineGraph_group.append("path")
-//                 .datum(data2)
-//                 .attr("class", "line bau")
-//                 .attr("d", bauLine);
-//
-//             //Create axes
-//             lineGraph_group.append("g")
-//                 .attr("class", "axis")
-//                 .attr("transform", "translate(0," + (height - padding) + ")")
-//                 .call(xAxis);
-//
-//             lineGraph_group.append("g")
-//                 .attr("class", "axis")
-//                 .attr("transform", "translate(" + (padding + 100) + ",0)")
-//                 .call(yAxis);
-//
-//         });
-//     });
-// }
