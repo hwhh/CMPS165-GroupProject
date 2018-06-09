@@ -69,11 +69,10 @@ function loadDataset(map, file) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        key = key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-');
                         if ((+d[key]) === 0) {
-                            values[key] = -1;
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = -1;
                         } else {
-                            values[key] = (+d[key]);
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = (+d[key]);
                         }
                     }
                 });
