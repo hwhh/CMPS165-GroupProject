@@ -225,38 +225,41 @@ function legend(c){
     
 }
 
-function bau(){
+export function bau(data){
     
     d3.select('#bau')
         .on("click", function(d){
         futureOptions = 'bau';
         console.log("bau");
-        
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
         //call updateData
         
     })
     
 }
-function optimistic(){
+export function optimistic(data){
     
     d3.select('#optimistic')
         .on("click", function(d){
         futureOptions = 'optimistic';
         console.log("optimistic");
-        
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
         //call updateData
         
     })
     
 }
 
-function pessimistic(){
+export function pessimistic(data){
     
     d3.select('#pessimistic')
         .on("click", function(d){
         futureOptions = 'pessimistic';
         console.log("pessimistic");
-        
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
         //call updateData
         
     })

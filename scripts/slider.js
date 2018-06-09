@@ -1,6 +1,6 @@
 import * as utils from "./index";
 import {width, height, slider_height, slider_width, years, padding} from "./variables";
-import {updateMap, futureOptions} from "./map";
+import {updateMap, futureOptions, bau, optimistic, pessimistic} from "./map";
 
 export function createSlider() {
 
@@ -28,15 +28,13 @@ export function createSlider() {
                     .select('path')
                     .style('fill', '#8b0000');
                 
-                if(futureOptions === "bau"){
-                    updateMap(utils.water_stress_levels_bau.get(current_year));
-                }
-                else if(futureOptions === "optimistic"){
-                    updateMap(utils.water_stress_levels_opt.get(current_year));
-                }
-                else if(futureOptions === "pessimistic"){
-                    updateMap(utils.water_stress_levels_pst.get(current_year));
-                }
+                updateMap(utils.water_stress_levels_bau.get(current_year));
+                
+                bau(utils.water_stress_levels_bau.get(current_year));
+                optimistic(utils.water_stress_levels_opt.get(current_year));
+                pessimistic(utils.water_stress_levels_pst.get(current_year));
+                
+            
                 
             }
             else{
