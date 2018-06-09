@@ -4,7 +4,7 @@ import {width, height, margin, display_country} from "./variables";
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
-    y = d3.scaleLog().base(Math.E).domain([0.001, 8]).range([height, 0]),
+    y = d3.scaleLog().base(Math.E).domain([0.0015, 500]).range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
 //Line generator, where the lives are curved
@@ -250,7 +250,7 @@ function drawAxis(g) {
 
     g.append('g')
         .attr('class', 'axis axis--y')
-        .call(d3.axisLeft(y))
+        .call(d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]) )
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
