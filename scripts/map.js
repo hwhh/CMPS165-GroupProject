@@ -229,7 +229,7 @@ function bau(){
     
     d3.select('#bau')
         .on("click", function(d){
-        
+        futureOptions = 'bau';
         console.log("bau");
         
         //call updateData
@@ -241,7 +241,7 @@ function optimistic(){
     
     d3.select('#optimistic')
         .on("click", function(d){
-        
+        futureOptions = 'optimistic';
         console.log("optimistic");
         
         //call updateData
@@ -254,7 +254,7 @@ function pessimistic(){
     
     d3.select('#pessimistic')
         .on("click", function(d){
-        
+        futureOptions = 'pessimistic';
         console.log("pessimistic");
         
         //call updateData
