@@ -30,6 +30,7 @@ let colours = {};
 
 export function renderMap(data) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
+        console.log(mapData)
         const features = mapData.features;
         map = utils.svg.append('g')
             .attr('id', 'map')
