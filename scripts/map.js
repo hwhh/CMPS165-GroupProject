@@ -28,6 +28,8 @@ let map;
 
 let colours = {};
 
+export let futureOptions = "bau";
+
 export function renderMap(data) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
         console.log(mapData)
