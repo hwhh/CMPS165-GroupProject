@@ -44,7 +44,7 @@ export function getAllValuesForCountry(map, country) {
     let values = [];
     map.forEach(function (value, key) {
         if (value[country] !== -1)
-            values.push({date: key.substring(0, 4), value: value[country]});
+            values.push({date: key.substring(5, 9), value: value[country]});
     });
     return {id: country, display: display_country[country].display, values: values}
 }
@@ -62,7 +62,7 @@ export function getAllValuesForCountry(map, country) {
 //         lineGraph_group.attr('visibility', 'hidden');
 //     });
 
-function loadDataset(map, file) {
+function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
         d3.csv(file, function (data) {
             data.forEach(function (d) {
@@ -72,7 +72,7 @@ function loadDataset(map, file) {
                         if ((+d[key]) === 0) {
                             values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = -1;
                         } else {
-                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = (+d[key]);
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = func((+d[key]));
                         }
                     }
                 });
@@ -84,7 +84,7 @@ function loadDataset(map, file) {
 }
 
 Promise.all([
-    loadDataset(water_stress_levels, './Data/water_stress_levels.csv')
+    loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {return val * 100})
     // loadDataset(total_external_water, './Data/external_water.csv'),
     // loadDataset(total_internal_water, './Data/internal_water.csv'),
     // loadDataset(total_water_used, './Data/water_withdraws.csv'),

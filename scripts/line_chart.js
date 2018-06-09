@@ -2,10 +2,12 @@ import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
 
 
+const format = d3.format('.2f');
+
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
-    y = d3.scaleLog().base(Math.E).domain([0.001, 8]).range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+        y = d3.scaleLog().base(Math.E).domain([0.000001, 8]).range([height, 0]),
+        z = d3.scaleOrdinal(d3.schemeCategory10);
 
 //Line generator, where the lives are curved
 const line = d3.line()
@@ -239,12 +241,15 @@ function drawLines(g, countries) {
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
 }
 
-function drawAxis(g) {
+function drawAxis (g) {
+    //http://bl.ocks.org/duopixel/4063326
+
+    //Adds the x and y axis
     g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x))
         .append('text')
-        .attr('transform', 'translate(' + (width - 100) + ',' + 50 + ')')
+        .attr('transform', 'translate(' + (width + 40) + ',' + (20) + ')')
         .attr('fill', '#000')
         .text('Year');
 
@@ -257,51 +262,70 @@ function drawAxis(g) {
         .attr('dy', '0.71em')
         .attr('fill', '#000');
 
-    utils.svg.append('text')
-        .attr('font-family', 'Sans-serif')
-        .attr('font-size', '0.8em')
-        .attr('transform', 'rotate(-90)')
-        .attr('x', 0 - (height / 2) + 30)
-        .attr('dy', '1em')
-        .style('text-anchor', 'middle')
-        .text('Water Stress Level');
+
+    g.append("text")
+        .attr("class", "predictedLabel")
+        .attr("x", x(utils.parseTime(2017)))
+        .text("Predicted");
+
+    g.append("line")
+        .attr("class", "line predicted")
+        .attr("x1", x(utils.parseTime(2017)))
+        .attr("x2", x(utils.parseTime(2017)))
+        .attr("y1", 0)
+        .attr("y2", height + 10);
+
+    // //Adds the y axis title
+    // g.append('text')
+    //     .attr('font-family', 'Sans-serif')
+    //     .attr('font-size', '0.8em')
+    //     .attr('transform', 'rotate(-90)')
+    //     .attr('x', 0 - (height / 2))
+    //     .attr('dy', '1em')
+    //     .style('text-anchor', 'middle')
+    //     .text('Million BTUs Per Person')
 }
 
 //TODO Update domains
 function create_domains(data) {
-    x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
-    // y.domain([
-    //     0, 5
-    // ]);
+    // x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
+    // // y.domain([
+    // //     0, 5
+    // // ]);
+    // z.domain(data.map(function (c) {
+    //     return c.id
+    // }));
+
+    x.domain([utils.parseTime('1982'), utils.parseTime('2040')]);
+    y.domain([
+        d3.min(data, function (c) {return d3.min(c.values, function (d) { return d.value})}),
+        d3.max(data, function (c) {return d3.max(c.values, function (d) { return d.value})})
+    ]);
     z.domain(data.map(function (c) {
         return c.id
-    }));
+    }))
+
+    // x.domain([parseTime('2000'), parseTime('2010')])
+    // //https://bl.ocks.org/mbostock/3884955
+    // y.domain([
+    //     d3.min(countries, function (c) { return d3.min(c.values, function (d) { return d.energy }) }),
+    //     d3.max(countries, function (c) { return d3.max(c.values, function (d) { return d.energy }) })
+    // ])
+    // z.domain(countries.map(function (c) {
+    //     return c.id
+    // }))
 }
 
 //TODO  send in the countries for updating
 export function updateChart() {
     Object.keys(display_country).forEach(function (key) {
         const g = d3.select('#' + key);
-        // if (!display_country[key].display) {
-        //     //Remove the text, line and circle/value of the selected country
-        //     g.select('text')
-        //         .transition()
-        //         .duration(1000)
-        //         .style('opacity', 0);
-        //     g.select('path').transition()
-        //         .duration(2000)
-        //         .attrTween('stroke-dashoffset', tweenDashoffsetOff);
-        //     //Select elements deeper in the DOM
-        //     d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
-        //         .style('visibility', 'hidden');
-        //     d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
-        //         .style('visibility', 'hidden');
         if (display_country[key].display) {
-            //Add the text, line and circle/value of the selected country
             g.select('text')
                 .transition()
                 .duration(1000)
                 .style('opacity', 1);
+            g.select('path').style('opacity', '1');
             g.select('path').transition()
                 .duration(2000)
                 .attrTween('stroke-dashoffset', tweenDashoffsetOn);
@@ -309,7 +333,15 @@ export function updateChart() {
             d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
                 .style('visibility', 'visible');
             d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
-                .style('visibility', 'visible');
+                .style('visibility', 'visible')
+        }else{
+            g.select('text').style('opacity', '0');
+            g.select('path').style('opacity', '0');
+            //Select elements deeper in the DOM
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+                .style('visibility', 'hidden');
+            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+                .style('visibility', 'hidden')
         }
     });
 }
@@ -325,3 +357,155 @@ export function renderLineChart() {
 }
 
 
+
+
+// / const lineGraph_group = svg.append('g').attr('visibility', 'hidden');
+//
+
+//
+//
+// lineGraph_group.append("text")
+//     .attr("class", "back_label")
+//     .attr("transform", "translate(" + 1150 + "," + 30 + ")")
+//     .attr("fill", "black")
+//     .attr("text-anchor", "middle")
+//     .attr("pointer-events", "none")
+//     .text("Back");
+//
+//
+//
+// function lineChart() {
+//     d3.csv("./Data/current.csv", function (error1, data1) {
+//         d3.csv("./Data/predicted.csv", function (error2, data2) {
+//             data1.forEach(function (d) {
+//                 d.year = parseTime(d.year);
+//                 d.score = +d.score;
+//             });
+//
+//             data2.forEach(function (d) {
+//                 d.year = parseTime(d.year);
+//                 d.pessimistic = +d.pessimistic;
+//                 d.optimistic = +d.optimistic;
+//                 d.bau = +d.bau;
+//             });
+//
+//             xScale = d3.scaleTime()
+//                 .domain([
+//                     d3.min(data1, function (d) {
+//                         return d.year;
+//                     }),
+//                     d3.max(data2, function (d) {
+//                         return d.year;
+//                     })
+//                 ])
+//                 .range([padding + 100, width - 100]);
+//
+//             yScale = d3.scaleLinear()
+//                 .domain([0, 5])
+//                 .range([height - 40, padding]);
+//
+//             //Define axes
+//             xAxis = d3.axisBottom()
+//                 .scale(xScale)
+//                 .ticks(10)
+//                 .tickFormat(formatTime);
+//
+//             //Define Y axis
+//             yAxis = d3.axisLeft()
+//                 .scale(yScale)
+//                 .ticks(5);
+//
+//             //Define line generators
+//             line = d3.line()
+//                 .defined(function (d) {
+//                     return d.year >= parseTime(1960) && d.year <= parseTime(2015);
+//                 })
+//                 .x(function (d) {
+//                     return xScale(d.year);
+//                 })
+//                 .y(function (d) {
+//                     return yScale(d.score);
+//                 });
+//
+//             pessimisticLine = d3.line()
+//                 .defined(function (d) {
+//                     return d.year >= parseTime(2015);
+//                 })
+//                 .x(function (d) {
+//                     return xScale(d.year);
+//                 })
+//                 .y(function (d) {
+//                     return yScale(d.pessimistic);
+//                 });
+//
+//             optimisticLine = d3.line()
+//                 .defined(function (d) {
+//                     return d.year >= parseTime(2015);
+//                 })
+//                 .x(function (d) {
+//                     return xScale(d.year);
+//                 })
+//                 .y(function (d) {
+//                     return yScale(d.optimistic);
+//                 });
+//
+//             bauLine = d3.line()
+//                 .defined(function (d) {
+//                     return d.year >= parseTime(2015);
+//                 })
+//                 .x(function (d) {
+//                     return xScale(d.year);
+//                 })
+//                 .y(function (d) {
+//                     return yScale(d.bau);
+//                 });
+//
+//
+//             //Draw predicted line
+//             lineGraph_group.append("line")
+//                 .attr("class", "line predicted")
+//                 .attr("x1", xScale(parseTime(2015)))
+//                 .attr("x2", xScale(parseTime(2015)))
+//                 .attr("y1", padding)
+//                 .attr("y2", height);
+//
+//             //Label predicted line
+
+//
+//
+//             //Create lines
+//             lineGraph_group.append("path")
+//                 .datum(data1)
+//                 .attr("class", "line")
+//                 .attr("d", line);
+//
+//
+//             lineGraph_group.append("path")
+//                 .datum(data2)
+//                 .attr("class", "line pessimistic")
+//                 .attr("d", pessimisticLine);
+//
+//             lineGraph_group.append("path")
+//                 .datum(data2)
+//                 .attr("class", "line optimistic")
+//                 .attr("d", optimisticLine);
+//
+//             lineGraph_group.append("path")
+//                 .datum(data2)
+//                 .attr("class", "line bau")
+//                 .attr("d", bauLine);
+//
+//             //Create axes
+//             lineGraph_group.append("g")
+//                 .attr("class", "axis")
+//                 .attr("transform", "translate(0," + (height - padding) + ")")
+//                 .call(xAxis);
+//
+//             lineGraph_group.append("g")
+//                 .attr("class", "axis")
+//                 .attr("transform", "translate(" + (padding + 100) + ",0)")
+//                 .call(yAxis);
+//
+//         });
+//     });
+// }
