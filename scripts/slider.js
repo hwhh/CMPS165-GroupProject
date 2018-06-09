@@ -28,6 +28,10 @@ export function createSlider() {
                     .select('path')
                     .style('fill', '#8b0000');
                 
+                document.getElementById("bau").disabled=false;
+                document.getElementById("optimistic").disabled=false;
+                document.getElementById("pessimistic").disabled=false;
+                
                 updateMap(utils.water_stress_levels_bau.get(current_year));
                 
                 bau(utils.water_stress_levels_bau.get(current_year));
@@ -44,6 +48,10 @@ export function createSlider() {
                     .select('.parameter-value')
                     .select('path')
                     .style('fill', 'white');
+                
+                document.getElementById("bau").disabled=true;
+                document.getElementById("optimistic").disabled=true;
+                document.getElementById("pessimistic").disabled=true;
                 
                 updateMap(utils.water_stress_levels.get(current_year));
                 
