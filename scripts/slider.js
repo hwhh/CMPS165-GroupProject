@@ -27,6 +27,17 @@ export function createSlider() {
                     .select('.parameter-value')
                     .select('path')
                     .style('fill', '#8b0000');
+                
+                if(futureOptions === "bau"){
+                    updateMap(utils.water_stress_levels_bau.get(current_year));
+                }
+                else if(futureOptions === "optimistic"){
+                    updateMap(utils.water_stress_levels_opt.get(current_year));
+                }
+                else if(futureOptions === "pessimistic"){
+                    updateMap(utils.water_stress_levels_pst.get(current_year));
+                }
+                
             }
             else{
                 d3.select('svg')
@@ -35,10 +46,10 @@ export function createSlider() {
                     .select('.parameter-value')
                     .select('path')
                     .style('fill', 'white');
+                
+                updateMap(utils.water_stress_levels.get(current_year));
+                
             }
-            console.log(futureOptions);
-            console.log(utils.water_stress_levels.get(current_year));
-            updateMap(utils.water_stress_levels.get(current_year));
         });
 
 
