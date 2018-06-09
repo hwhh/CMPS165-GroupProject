@@ -72,7 +72,7 @@ Promise.all([
     }),
 ]).then(values => {
     console.log(water_stress_levels)
-    renderMap(water_stress_levels.get('1978-1982'));
+    renderMap(water_stress_levels.get('1978-1982'), '1978-1982');
     createSlider();
     // lineChart();
 });

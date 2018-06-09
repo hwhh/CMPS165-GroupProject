@@ -1,5 +1,5 @@
 import * as utils from "./index";
-import {width, height} from "./variables";
+import {width, height, water_stress_levels, total_available_water} from "./variables";
 import {renderLineChart} from "./line_chart";
 
 export const projection = d3.geoMiller()
@@ -21,9 +21,13 @@ var counter = 0;
 
 var map;
 
+var div_tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 let colours = {};
 
-export function renderMap(data) {
+export function renderMap(data, year) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -56,8 +60,10 @@ export function renderMap(data) {
             })
             .on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     d3.select(this).style("fill", "orange");
+                    toolTip(d, data, year);
+                }
             })
             .on("mouseout", function (d) {
                 if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
@@ -85,7 +91,7 @@ export function renderMap(data) {
 
 }
 
-export function updateMap(data){
+export function updateMap(data, year){
     
         map.transition().duration(1000)
         .style("fill", function(d) {
@@ -108,8 +114,10 @@ export function updateMap(data){
     
         map.on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     d3.select(this).style("fill", "orange");
+                    toolTip(d, data, year);
+                }
             })
             .on("mouseout", function (d) {
                 if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
@@ -127,6 +135,39 @@ export function updateMap(data){
                     renderLineChart(data)
                 }
             })
+    
+}
+
+function toolTip(d, data, year){
+    
+    let country_name = d.properties.name;
+    let stressLevel = Math.round(data[country_name] * 100) / 100;
+    let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
+    //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
+    
+    //console.log(country_value[country_name]);
+    //let val_val = country_value.country_name;
+    
+    console.log("Alfredo's --------");
+    //console.log(water_stress_levels);
+    //console.log(total_available_water);
+    console.log(country_water_stress);
+    //console.log(country_ttl_available_water);
+    console.log(year);
+    //console.log(data);
+    div_tooltip.transition()//here
+            .duration(200)
+            .style("opacity", .9);
+    div_tooltip.html(d.properties.name + "<br/>" + '<br/>'+
+                         '<span class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                         '<br/>'+'<p>'+'Total Available Water'+'</p>'+
+                         '<br/>'+'<p>'+'Year'+'</p>'+'</span>'+
+
+                         '<span class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                         '<br/>'+'<p>'+ country_water_stress + '</p>' +
+                         '<br/>'+'<p>'+ year + '</p>'+ '</span>')
+             .style("left", (20) + "px")
+             .style("top", (height - 30) + "px");
     
 }
 
