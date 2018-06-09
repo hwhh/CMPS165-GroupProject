@@ -4,4 +4,4 @@ node_modules/
 package-lock.json
 .DS_Store
 .DataSetsOld/
-bundle.js
+dist/bundle.js
