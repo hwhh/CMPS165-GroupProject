@@ -1,5 +1,5 @@
 import * as utils from "./index";
-import {width, height, water_stress_levels, total_available_water} from "./variables";
+import {width, height, water_stress_levels, total_available_water, total_water_used} from "./variables";
 import {renderLineChart} from "./line_chart";
 
 export const projection = d3.geoMiller()
@@ -27,7 +27,10 @@ var div_tooltip = d3.select("body").append("div")
 
 let colours = {};
 
+
 export function renderMap(data, year) {
+    colours={};
+    
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -84,6 +87,8 @@ export function renderMap(data, year) {
             
         });
     
+    console.log(colours);
+    
     legend(colours);
     bau();
     optimistic();
@@ -136,6 +141,8 @@ export function updateMap(data, year){
                 }
             })
     
+    
+    
 }
 
 function toolTip(d, data, year){
@@ -143,29 +150,34 @@ function toolTip(d, data, year){
     let country_name = d.properties.name;
     let stressLevel = Math.round(data[country_name] * 100) / 100;
     let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
+    let country_water_used = total_water_used.get(year)[country_name];
     //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
     
     //console.log(country_value[country_name]);
     //let val_val = country_value.country_name;
     
     console.log("Alfredo's --------");
-    //console.log(water_stress_levels);
-    //console.log(total_available_water);
-    console.log(country_water_stress);
+    console.log("Country: " + country_name);
+    console.log("Stress Level: " + stressLevel);
+    console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
+    console.log(total_water_used);
+    console.log("Year: "+ year);
+    console.log(water_stress_levels);
     //console.log(country_ttl_available_water);
-    console.log(year);
     //console.log(data);
+    
     div_tooltip.transition()//here
             .duration(200)
             .style("opacity", .9);
-    div_tooltip.html(d.properties.name + "<br/>" + '<br/>'+
-                         '<span class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
-                         '<br/>'+'<p>'+'Total Available Water'+'</p>'+
-                         '<br/>'+'<p>'+'Year'+'</p>'+'</span>'+
+    div_tooltip.html(country_name + "<br/>"+ '<div class="tooltip_info_box" >' +
+                         '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                         '<br/>'+'<p>'+'Total Water Used'+'</p>'+
+                         '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
 
-                         '<span class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                         '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
                          '<br/>'+'<p>'+ country_water_stress + '</p>' +
-                         '<br/>'+'<p>'+ year + '</p>'+ '</span>')
+                         '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                         '</div>')
              .style("left", (20) + "px")
              .style("top", (height - 30) + "px");
     
@@ -174,6 +186,8 @@ function toolTip(d, data, year){
 function legend(c){
         
     var colours = c;
+    
+    console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
         .attr("id", "key")
