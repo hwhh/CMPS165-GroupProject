@@ -107,16 +107,16 @@ Promise.all([
         return val * 100
     }),
 ]).then(values => {
-    // renderMap(water_stress_levels.get('1978-1982'));
-    // createSlider();
+    renderMap(water_stress_levels.get('1978-1982'));
+    createSlider();
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
         // water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
         // water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
         // water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
     });
-    renderLineChart();
-    create_modal();
-});
+    // renderLineChart();
+    // create_modal();
+}); 
 
 
