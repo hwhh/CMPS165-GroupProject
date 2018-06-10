@@ -69,11 +69,11 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        key = key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-');
+                        console.log(key);
                         if (isNaN(parseInt(d[key]))) {
-                            values[key.split(' ').join('-')] = -1;
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = -1;
                         } else {
-                            values[key.split(' ').join('-')] = func(+d[key])
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = func(+d[key])
                         }
                     }
                 });
