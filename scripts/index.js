@@ -44,7 +44,7 @@ export function getAllValuesForCountry(map, country) {
     let values = [];
     map.forEach(function (value, key) {
         if (value[country] !== -1)
-            values.push({date: key.substring(0, 4), value: value[country]});
+            values.push({date: key.substring(5, 9), value: value[country]});
     });
     return {id: country, display: display_country[country].display, values: values}
 }
@@ -69,14 +69,13 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        if (isNaN(parseInt(d[key]))) {
+                        if ((+d[key]) === 0) {
                             values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = -1;
                         } else {
-                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = func(+d[key])
+                            values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = func((+d[key]));
                         }
                     }
                 });
-                console.log(values);
                 map.set(d.Year, values)
             });
             resolve();
@@ -85,8 +84,9 @@ function loadDataset(map, file, func) {
 }
 
 Promise.all([
+
     loadDataset(water_stress_levels, './Data/water_stress_levels_copy.csv', function (val) {
-        return val
+        return val * 100
     }),
     loadDataset(total_external_water, './Data/external_water.csv', function (val) {
         return val
@@ -98,53 +98,25 @@ Promise.all([
         return val
     }),
     loadDataset(water_stress_levels_bau, './Data/bau_predictions_copy.csv', function (val) {
-        return val
+        return val * 100
     }),
     loadDataset(water_stress_levels_opt, './Data/opt_predictions_copy.csv', function (val) {
-        return val
+        return val * 100
     }),
     loadDataset(water_stress_levels_pst, './Data/pst_predictions_copy.csv', function (val) {
-        return val
+        return val * 100
     }),
 ]).then(values => {
     // renderMap(water_stress_levels.get('1978-1982'));
     // createSlider();
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
-        water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
-        water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
-        water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
+        // water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
+        // water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
+        // water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
     });
-    let max = -Infinity, min = 0;
-    water_stress.forEach(function (countries) {
-        let current_max = Math.max.apply(Math, countries.values.map(function (o) {
-            return o.value;
-        }));
-        if (current_max > max)
-            max = current_max;
-    });
-    let water_stress_norm = [];
-    water_stress.forEach(function (countries) {
-        let norm_values = [];
-        countries.values.map(function (v) {
-            norm_values.push({
-                date: v.date,
-                value: ((v.value - min) / max) * 5
-            });
-        });
-        water_stress_norm.push({
-            id: countries.id,
-            display: display_country[countries.id].display,
-            values: norm_values
-        })
-    });
-    water_stress = water_stress_norm;
-    console.log(water_stress)
-    renderMap(water_stress_levels.get('1978-1982'));
-     createSlider();
-
-//    renderLineChart();
-//    create_modal();
+    renderLineChart();
+    create_modal();
 });
 
 
