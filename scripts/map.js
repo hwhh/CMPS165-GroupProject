@@ -49,8 +49,6 @@ export function renderMap(data) {
             .style('stroke', "#FFF")
             .style('fill', function (d) {
                 let value = data[d.properties.name];
-//                console.log(d.properties.name);
-//                console.log(data[d.properties.name]);
                 if (value === -1 || value === undefined)
                     return "#ccc";
                 else {
