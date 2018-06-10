@@ -4,7 +4,8 @@ import {width, height, margin, display_country} from "./variables";
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
-    y = d3.scaleLog().base(Math.E).domain([0.0015, 500]).range([height, 0]),
+    y = d3.scaleLog().base(Math.E).domain([0.0015, 1000]).range([height, 0]),
+    // y = d3.scaleLinear().range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
 //Line generator, where the lives are curved
@@ -47,7 +48,10 @@ function tweenDashoffsetOff() {
     }
 }
 
-function mouseOver(g, countries) {
+//https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
+function mouseOver (g, countries) {
+
+    console.log(countries)
     //Add new element to the DOM
     const mouseG = g.append('g')
         .attr('class', 'mouse-over-effects');
@@ -57,6 +61,8 @@ function mouseOver(g, countries) {
         .attr('class', 'mouse-line')
         .style('stroke', 'black')
         .style('stroke-width', '1px')
+        // .attr('transform', 'translate(' + (width + 40) + ',' + (20) + ')')
+        // .attr('dy', '0.71em')
         .style('opacity', '0');
 
     //Get all the lines in the DOM
@@ -68,6 +74,7 @@ function mouseOver(g, countries) {
         .enter()
         .append('g')
         .attr('class', 'country mouse-per-line')
+        // .attr('transform', 'translate(' + 0 + ',' +  + ')')
         .attr('id', function (d) {
             return d.id.split(' ').join('_')
         });
@@ -78,6 +85,7 @@ function mouseOver(g, countries) {
         .style('stroke', function (d) {
             return z(d.id)
         })
+        // .attr('transform', 'translate(' + 0 + ',' + 175+ ')')
         .style('fill', 'none')
         .style('stroke-width', '1px')
         .style('opacity', '0')
@@ -97,8 +105,6 @@ function mouseOver(g, countries) {
         })
         .style('visibility', 'visible');
 
-    let idx = undefined;
-    let pos = undefined;
     mouseG.append('svg:rect') //Append a rect to catch mouse movements on canvas
         .attr('width', width) //Can't catch mouse events on a g element
         .attr('height', height)
@@ -118,7 +124,7 @@ function mouseOver(g, countries) {
             d3.selectAll('.mouse-per-line circle')
                 .style('opacity', '1');
             d3.selectAll('.mouse-per-line text')
-                .style('opacity', '1');
+                .style('opacity', '1')
         })
         .on('mousemove', function () { //Mouse moving over canvas
             const mouse = d3.mouse(this);
@@ -131,11 +137,10 @@ function mouseOver(g, countries) {
 
             d3.selectAll('.mouse-per-line')
                 .attr('transform', function (d, i) {
+                    let pos = -1;
                     const xDate = x.invert(mouse[0]),
-                        bisect = d3.bisector(function (d) {
-                            return d.date
-                        }).right;
-                    idx = bisect(d.values, xDate);
+                        bisect = d3.bisector(function (d) { return d.date }).right;
+                    bisect(d.values, xDate);
 
                     let beginning = 0,
                         end = lines[i].getTotalLength(),
@@ -154,6 +159,7 @@ function mouseOver(g, countries) {
 
                     d3.select(this).select('text')
                         .text(y.invert(pos.y).toFixed(2));
+
                     return 'translate(' + mouse[0] + ',' + pos.y + ')'
                 })
         })
