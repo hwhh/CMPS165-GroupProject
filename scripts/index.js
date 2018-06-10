@@ -85,7 +85,7 @@ function loadDataset(map, file, func) {
 }
 
 Promise.all([
-    loadDataset(water_stress_levels, './Data/water_stress_levels.csv', function (val) {
+    loadDataset(water_stress_levels, './Data/water_stress_levels copy.csv', function (val) {
         return val
     }),
     loadDataset(total_external_water, './Data/external_water.csv', function (val) {
@@ -97,13 +97,13 @@ Promise.all([
     loadDataset(total_water_used, './Data/water_withdraws.csv', function (val) {
         return val
     }),
-    loadDataset(water_stress_levels_bau, './Data/bau_predictions.csv', function (val) {
+    loadDataset(water_stress_levels_bau, './Data/bau_predictions copy.csv', function (val) {
         return val
     }),
-    loadDataset(water_stress_levels_opt, './Data/opt_predictions.csv', function (val) {
+    loadDataset(water_stress_levels_opt, './Data/opt_predictions copy.csv', function (val) {
         return val
     }),
-    loadDataset(water_stress_levels_pst, './Data/pst_predictions.csv', function (val) {
+    loadDataset(water_stress_levels_pst, './Data/pst_predictions copy.csv', function (val) {
         return val
     }),
 ]).then(values => {
