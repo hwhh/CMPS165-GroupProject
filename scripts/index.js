@@ -76,6 +76,7 @@ function loadDataset(map, file, func) {
                         }
                     }
                 });
+                console.log(values);
                 map.set(d.Year, values)
             });
             resolve();

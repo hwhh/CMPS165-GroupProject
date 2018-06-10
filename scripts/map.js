@@ -49,7 +49,7 @@ export function renderMap(data) {
             .style('stroke', "#FFF")
             .style('fill', function (d) {
                 let value = data[d.properties.name];
-                if (value === -1 || value === undefined)
+                if (value === 0 || value === -1 || value === undefined)
                     return "#ccc";
                 else {
                     let c = color(data[d.properties.name]);
@@ -64,11 +64,11 @@ export function renderMap(data) {
                 }
             }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                     d3.select(this).style("fill", "orange");
             })
             .on("mouseout", function (d) {
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     d3.select(this).style("fill", function (d) {
                         let c = color(data[d.properties.name]);
                         return c
@@ -76,7 +76,7 @@ export function renderMap(data) {
                 }
             })
             .on("click", function (d) {
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
                     utils.showLineChart();
@@ -100,7 +100,7 @@ export function updateMap(data){
     .style("fill", function(d) {
         //Get data value
         let value = data[d.properties.name];
-        if (value === -1 || value === undefined)
+        if (value === 0 || value === -1 || value === undefined)
             return "#ccc";
         else {
             let c = color(data[d.properties.name]);
@@ -117,11 +117,11 @@ export function updateMap(data){
 
     map.on("mouseover", function (d) {
             let country_name = d.properties.name;
-            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                 d3.select(this).style("fill", "orange");
         })
         .on("mouseout", function (d) {
-            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 d3.select(this).style("fill", function (d) {
                     let c = color(data[d.properties.name]);
                     return c
@@ -129,7 +129,7 @@ export function updateMap(data){
             }
         })
         .on("click", function (d) {
-            if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 let country_name = d.properties.name;
                 console.log("clicked: " + country_name);
                 utils.show_line_chart();
