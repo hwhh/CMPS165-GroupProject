@@ -104,7 +104,6 @@ export const display_country = {
     "Jordan": {display: false},
     "Kazakhstan": {display: false},
     "Kenya": {display: false},
-    "Kuwait": {display: false},
     "Kyrgyzstan": {display: false},
     "Lao-Peoples-Democratic-Republic": {display: false},
     "Latvia": {display: false},
@@ -178,7 +177,7 @@ export const display_country = {
     "The-former-Yugoslav-Republic-of-Macedonia": {display: false},
     "Timor-Leste": {display: false},
     "Togo": {display: false},
-    "Trinidad and Tobago": {display: false},
+    "Trinidad-and-Tobago": {display: false},
     "Tunisia": {display: false},
     "Turkey": {display: false},
     "Turkmenistan": {display: false},
@@ -195,6 +194,5 @@ export const display_country = {
     "Yemen": {display: false},
     "Zambia": {display: false},
     "Zimbabwe": {display: false},
-    "Greenland": {display: false}
 };
 

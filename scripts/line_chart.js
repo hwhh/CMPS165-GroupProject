@@ -10,7 +10,7 @@ const x = d3.scaleTime().range([0, width - 100]),
 
 //Line generator, where the lives are curved
 const line = d3.line()
-    .curve(d3.curveBasis)
+// .curve(d3.curveBasis)
     .x(function (d) {
         return x(new Date(d.date))
     })
@@ -20,6 +20,11 @@ const line = d3.line()
         else
             return y(d.value)
     });
+
+// Define the div for the tooltip
+const div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 
 function make_x_gridlines() {
@@ -49,7 +54,7 @@ function tweenDashoffsetOff() {
 }
 
 //https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
-function mouseOver (g, countries) {
+function mouseOver(g, countries) {
 
     console.log(countries)
     //Add new element to the DOM
@@ -139,7 +144,9 @@ function mouseOver (g, countries) {
                 .attr('transform', function (d, i) {
                     let pos = -1;
                     const xDate = x.invert(mouse[0]),
-                        bisect = d3.bisector(function (d) { return d.date }).right;
+                        bisect = d3.bisector(function (d) {
+                            return d.date
+                        }).right;
                     bisect(d.values, xDate);
 
                     let beginning = 0,
@@ -206,31 +213,49 @@ function drawLines(g, countries) {
             return z(d.id)
         });
 
-    // // Adds the country name at the end of the line
-    // country.append('text')
-    //     .datum(function (d) { //Allows the binding of country data to multiple SVG elements
-    //         return {id: d.id, display: d.display, value: d.values[d.values.length - 1]}
-    //     })
-    //     .attr('transform', function (d) {
-    //         return 'translate(' + x(d.value.date) + ',' + y(d.value.value) + ')'
-    //     })
-    //     .attr('x', 3)
-    //     .attr('dy', '0.35em')
-    //     .style('font', '10px sans-serif')
-    //     .text(function (d) {
-    //         return d.id
-    //     })
-    //     .style('text-anchor', 'start')
-    //     .style('opacity', 0)
-    //     .filter(function (d) { //Only shows the country names for selected countries
-    //         return d.display
-    //     })
-    //     .transition()
-    //     .duration(2000)
-    //     .style('opacity', 1);
 
-    //Adds the animations to the lines
-    //http://bl.ocks.org/duopixel/4063326
+    country.selectAll(".dot")
+        .data(function (d) {
+            return d.values
+        })
+        .enter()
+        .append("circle")
+        .attr("r", 4)
+        .attr("cx", function (d, i) {
+            return x(new Date(d.date));
+        })
+        .attr("cy", function (d) {
+            return y(d.value);
+        })
+        .attr("fill", function (d) {
+            return z(d3.select(this.parentNode).datum().id);
+        })
+        .attr("date", function (d) {
+            return(d.date)
+        })
+        .attr("val", function (d) {
+            return(d.value)
+        })
+        .on("mouseover", function (d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+
+            div.html(d3.select(this).attr("date") + "<br/>" + d3.select(this).attr("val"))
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function (d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        })
+        .style('opacity', '0')
+        .filter(function (d) { //Only shows the circles for selected countries
+            return display_country[d3.select(this.parentNode).datum().id].display
+        })
+        .style('opacity', '1');
+
     const paths = country.select('path')
         .each(function () {
             d3.select(this)
@@ -256,7 +281,7 @@ function drawAxis(g) {
 
     g.append('g')
         .attr('class', 'axis axis--y')
-        .call(d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]) )
+        .call(d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]))
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
@@ -299,8 +324,16 @@ function create_domains(data) {
 
     x.domain([utils.parseTime('1982'), utils.parseTime('2040')]);
     y.domain([
-        d3.min(data, function (c) {return d3.min(c.values, function (d) { return d.value})}),
-        d3.max(data, function (c) {return d3.max(c.values, function (d) { return d.value})})
+        d3.min(data, function (c) {
+            return d3.min(c.values, function (d) {
+                return d.value
+            })
+        }),
+        d3.max(data, function (c) {
+            return d3.max(c.values, function (d) {
+                return d.value
+            })
+        })
     ]);
     z.domain(data.map(function (c) {
         return c.id
@@ -330,19 +363,27 @@ export function updateChart() {
             g.select('path').transition()
                 .duration(2000)
                 .attrTween('stroke-dashoffset', tweenDashoffsetOn);
-            //Select elements deeper in the DOM
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
-                .style('visibility', 'visible');
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
-                .style('visibility', 'visible')
-        }else{
+
+            g.select('circle').transition()
+                .duration(2000)
+                .attrTween('stroke-dashoffset', tweenDashoffsetOn);
+
+            g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
+
+            // //Select elements deeper in the DOM
+            // d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+            //     .style('visibility', 'visible');
+            // d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+            //     .style('visibility', 'visible')
+        } else {
+            g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
             g.select('text').style('opacity', '0');
             g.select('path').style('opacity', '0');
             //Select elements deeper in the DOM
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
-                .style('visibility', 'hidden');
-            d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
-                .style('visibility', 'hidden')
+            // d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
+            //     .style('visibility', 'hidden');
+            // d3.select('.mouse-over-effects').select('#' + key).selectAll('text')
+            //     .style('visibility', 'hidden')
         }
     });
 }
@@ -354,7 +395,7 @@ export function renderLineChart() {
     create_domains(utils.water_stress);
     drawAxis(g);
     drawLines(g, utils.water_stress);
-    mouseOver(g, utils.water_stress);
+    // mouseOver(g, utils.water_stress);
 }
 
 
