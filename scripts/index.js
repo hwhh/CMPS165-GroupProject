@@ -69,7 +69,7 @@ function loadDataset(map, file, func) {
                 let values = {};
                 Object.keys(d).forEach(function (key) {
                     if (key !== 'Year') {
-                        if ((+d[key]) === 0) {
+                        if ((+d[key]) === 0 || (+d[key]) === -1) {
                             values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = -1;
                         } else {
                             values[key.replace(/\(/g, '').replace(/\)/g, '').replace(/'/g, '').replace(/ /g, '-')] = func((+d[key]));
@@ -84,7 +84,6 @@ function loadDataset(map, file, func) {
 }
 
 Promise.all([
-
     loadDataset(water_stress_levels, './Data/stress_levels/water_stress_levels.csv', function (val) {
         return val * 100
     }),
@@ -97,26 +96,35 @@ Promise.all([
     loadDataset(total_water_used, './Data/water_use/total_withdrawn.csv', function (val) {
         return val
     }),
-    loadDataset(water_stress_levels_bau, './Data/stress_levels/bau_predictions_copy.csv', function (val) {
+    loadDataset(water_stress_levels_bau, './Data/stress_levels/bau_predictions.csv', function (val) {
         return val * 100
     }),
-    loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions_copy.csv', function (val) {
+    loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions.csv', function (val) {
         return val * 100
     }),
-    loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions_copy.csv', function (val) {
+    loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions.csv', function (val) {
         return val * 100
     }),
 ]).then(values => {
     // renderMap(water_stress_levels.get('1978-1982'));
     // createSlider();
+    console.log("here")
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
         water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
         water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
         water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
     });
-    renderLineChart();
-    create_modal();
+
+    console.log(water_stress_levels)
+    console.log(water_stress_levels_pst)
+
+    Object.keys(water_stress_levels.get('1978-1982')).forEach(function (key) {
+        console.log('\"' + key + '\": {display: false},')
+    });
+
+    // renderLineChart();
+    // create_modal();
 }); 
 
 
