@@ -2,7 +2,6 @@ import * as utils from "./index";
 import {width, height} from "./variables";
 import {renderLineChart} from "./line_chart";
 
-
 export const projection = d3.geoMiller()
     .scale(150)
     .translate([width / 2, height / 1.8]);
@@ -16,15 +15,24 @@ export const color = d3.scaleThreshold()
 
 const xDensity = d3.scaleSqrt()
     .domain([0, 5])
-    .rangeRound([440, 810]);
+    .rangeRound([440, 600]);
+
+var xPos = [440, 480, 520, 560, 600];
+
+var scale = d3.scaleLinear()
+                .domain([0,5])
+                .range([440, 640]);
 
 
 let map;
 
 let colours = {};
 
+export let futureOptions = "bau";
+
 export function renderMap(data) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
+        console.log(mapData)
         const features = mapData.features;
         map = utils.svg.append('g')
             .attr('id', 'map')
@@ -41,8 +49,8 @@ export function renderMap(data) {
             .style('stroke', "#FFF")
             .style('fill', function (d) {
                 let value = data[d.properties.name];
-                if (value === -1 || value === undefined)
-                    return d3.color("grey");
+                if (value === 0 || value === -1 || value === undefined)
+                    return "#ccc";
                 else {
                     let c = color(data[d.properties.name]);
                     let country_names;
@@ -56,11 +64,11 @@ export function renderMap(data) {
                 }
             }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
                     d3.select(this).style("fill", "orange");
             })
             .on("mouseout", function (d) {
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     d3.select(this).style("fill", function (d) {
                         let c = color(data[d.properties.name]);
                         return c
@@ -68,7 +76,7 @@ export function renderMap(data) {
                 }
             })
             .on("click", function (d) {
-                if (data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
                     utils.showLineChart();
@@ -86,59 +94,66 @@ export function renderMap(data) {
 }
 
 export function updateMap(data){
+    
+    colours={};
+    map.transition().duration(1000)
+    .style("fill", function(d) {
+        //Get data value
+        let value = data[d.properties.name];
+        if (value === 0 || value === -1 || value === undefined)
+            return "#ccc";
+        else {
+            let c = color(data[d.properties.name]);
+            let country_names;
+            if(colours[c] === undefined)
+                country_names = [];
+            else
+                country_names = colours[c];
+                country_names.push(d.properties.name);
+                colours[c] = country_names;
+            return c
+        }
+     });
 
-        map.transition().duration(1000)
-        .style("fill", function(d) {
-            //Get data value
-            let value = data[d.properties.name];
-            if (value === -1 || value === undefined)
-                return d3.color("grey");
-            else {
-                let c = color(data[d.properties.name]);
-                let country_names;
-                if(colours[c] === undefined)
-                    country_names = [];
-                else
-                    country_names = colours[c];
-                    country_names.push(d.properties.name);
-                    colours[c] = country_names;
-                return c
+    map.on("mouseover", function (d) {
+            let country_name = d.properties.name;
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                d3.select(this).style("fill", "orange");
+        })
+        .on("mouseout", function (d) {
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                d3.select(this).style("fill", function (d) {
+                    let c = color(data[d.properties.name]);
+                    return c
+                });
             }
-         });
-
-        map.on("mouseover", function (d) {
+        })
+        .on("click", function (d) {
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 let country_name = d.properties.name;
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
-                    d3.select(this).style("fill", "orange");
-            })
-            .on("mouseout", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
-                    d3.select(this).style("fill", function (d) {
-                        let c = color(data[d.properties.name]);
-                        return c
-                    });
-                }
-            })
-            .on("click", function (d) {
-                if(data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
-                    let country_name = d.properties.name;
-                    console.log("clicked: " + country_name);
-                    utils.show_line_chart();
-                    renderLineChart(data)
-                }
-            })
+                console.log("clicked: " + country_name);
+                utils.show_line_chart();
+                renderLineChart(data)
+            }
+        })
 
-
-
+    legend(colours);
+    
+    
 }
 
 function legend(c){
-
+        
     var colours = c;
                     //Define legend
     var legend = utils.svg.append("g")
-        .attr("id", "key")
-        .attr("transform", "translate(-30,550)");
+                            .attr("id", "key")
+                            .attr("transform", "translate(50,550)");
+
+//    var undefinedRect = utils.svg.append("g")
+//                                .attr("id", "undefinedRect")
+//                                .attr("transform", "translate(50,550)");
+
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -155,8 +170,8 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xDensity(d[0]); })
-        .attr("width", function(d) { return xDensity(d[1]) - xDensity(d[0]); })
+        .attr("x", function(d) { return xPos[d[0]]; })
+        .attr("width", 40)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
@@ -202,7 +217,7 @@ function legend(c){
 
     //adding the value of the domain in the legend, creating the x axis using the x scale created for the data
     //tick size is 13 so all the values of the domain will appear on page
-    legend.call(d3.axisBottom(xDensity)
+    legend.call(d3.axisBottom(scale)
         .tickSize(13)
         .tickValues(color.domain()))
         .select(".domain")
@@ -210,57 +225,44 @@ function legend(c){
     
 }
 
-function bau(){
+export function bau(data){
     
     d3.select('#bau')
         .on("click", function(d){
-        
+        futureOptions = 'bau';
         console.log("bau");
-        
-        d3.selectAll("path")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-             });      
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
+        //call updateData
         
     })
     
 }
-function optimistic(){
+export function optimistic(data){
     
     d3.select('#optimistic')
         .on("click", function(d){
-        
+        futureOptions = 'optimistic';
         console.log("optimistic");
-        
-        d3.selectAll("path")
-            .style("stroke", "red")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-            
-             });
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
+        //call updateData
         
     })
     
 }
 
-function pessimistic(){
+export function pessimistic(data){
     
     d3.select('#pessimistic')
         .on("click", function(d){
-        
+        futureOptions = 'pessimistic';
         console.log("pessimistic");
-        
-        d3.selectAll("path")
-            .style("stroke", "white")
-            .transition().duration(1000)
-            .style("fill", function(d) {
-                //Get data value
-            
-             });
+        d3.select('svg').select('#key').remove();
+        updateMap(data);
+        //call updateData
         
     })
-
+    
 }
 

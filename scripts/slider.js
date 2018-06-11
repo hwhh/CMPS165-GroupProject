@@ -1,6 +1,6 @@
 import * as utils from "./index";
-import {width, height, slider_height, slider_width, years, padding, water_stress_levels} from "./variables";
-import {updateMap} from "./map";
+import {width, height, slider_height, slider_width, years, padding} from "./variables";
+import {updateMap, futureOptions, bau, optimistic, pessimistic} from "./map";
 
 export function createSlider() {
 
@@ -12,14 +12,50 @@ export function createSlider() {
     const slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
-        .step(1000 * 60 * 60 * 24 * 365 * 5)
+//        .step(1000 * 60 * 60 * 24 * 365 * 5)
         .width(400)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
         .on('onchange', val => {
+            d3.select('svg').select('#key').remove();
             let keys = Object.keys(years);
             let current_year = years[keys.reverse().find(e => e <= utils.formatTime(val))];
-            updateMap(water_stress_levels.get(current_year));
+            if(current_year === "2020" || current_year === "2030" || current_year === "2040"){
+                d3.select('svg')
+                    .select('#slider')
+                    .select('.slider')
+                    .select('.parameter-value')
+                    .select('path')
+                    .style('fill', '#8b0000');
+                
+                document.getElementById("bau").disabled=false;
+                document.getElementById("optimistic").disabled=false;
+                document.getElementById("pessimistic").disabled=false;
+                
+                updateMap(utils.water_stress_levels_bau.get(current_year));
+                
+                bau(utils.water_stress_levels_bau.get(current_year));
+                optimistic(utils.water_stress_levels_opt.get(current_year));
+                pessimistic(utils.water_stress_levels_pst.get(current_year));
+                
+            
+                
+            }
+            else{
+                d3.select('svg')
+                    .select('#slider')
+                    .select('.slider')
+                    .select('.parameter-value')
+                    .select('path')
+                    .style('fill', 'white');
+                
+                document.getElementById("bau").disabled=true;
+                document.getElementById("optimistic").disabled=true;
+                document.getElementById("pessimistic").disabled=true;
+                
+                updateMap(utils.water_stress_levels.get(current_year));
+                
+            }
         });
 
 
