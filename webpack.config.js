@@ -1,4 +1,3 @@
-
 module.exports = {
     entry: './scripts/index.js',
     output: {
@@ -17,7 +16,17 @@ module.exports = {
                     }
 
                 }
+            },
+            {
+                // For all .css files in node_modules
+                test: /\.css$/,
+                include: /node_modules/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     },
+    resolve: {
+        extensions: ['.js', '.jsx', 'scss', 'css'],
+    }
+
 };

@@ -275,7 +275,7 @@ function drawAxis(g) {
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x))
         .append('text')
-        .attr('transform', 'translate(' + (width + 40) + ',' + (20) + ')')
+        .attr('transform', 'translate(' + (width - 60) + ',' + (30) + ')')
         .attr('fill', '#000')
         .text('Year');
 

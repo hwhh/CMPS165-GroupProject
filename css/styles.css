@@ -69,22 +69,22 @@ svg {
 .line {
     fill: none;
     stroke: teal;
-    stroke-width: 1;
+    stroke-width: 1px;
 }
 
 .pessimistic {
     stroke: red;
-    stroke-width: 1;
+    stroke-width: 1px;
 }
 
 .optimistic{
     stroke: blue;
-    stroke-width: 1;
+    stroke-width: 1px;
 }
 
 .bau{
     stroke: green;
-    stroke-width: 1;
+    stroke-width: 1px;
 }
 
 .predicted {
@@ -123,26 +123,133 @@ svg {
     display: table;
 }
 
-/*.Modal {*/
-    /*width: 55%;*/
+.Modal {
     /*position: absolute;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*right: auto;*/
-    /*bottom: auto;*/
-    /*border: 1px solid rgb(204, 204, 204);*/
-    /*background: rgb(255, 255, 255);*/
-    /*overflow: auto;*/
-    /*border-radius: 4px;*/
-    /*outline: none;*/
-    /*padding: 20px;*/
-    /*margin-right: -50%;*/
-    /*transform: translate(-50%, -50%);*/
-
+    /*margin-top: 10%;*/
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15%;
+    width: 40%;
+    height: 45%;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
     /*#close {*/
 
         /*float: right;*/
 
     /*}*/
 
+}
+/* The container */
+.container {
+    /*display: block;*/
+    position: relative;
+    padding-left: 25px !important;
+    /*padding-left: 50px;*/
+    /*margin-bottom: 12px;*/
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.close-classic{
+    color: #777;
+    font: 14px/100% arial, sans-serif;
+    /* position: inherit; */
+    float: right;
+    padding-left: 10px;
+    right: 5px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    top: 5px;
+    font-size: 18px;
+    padding-top: 8px;
+    /* font-family: inherit; */
+    /* font-size: inherit; */
+    /* line-height: inherit; */
+}
+
+.close-classic:after {
+    content: 'X'; /* ANSI X letter */
+}
+
+
+
+
+
+
+
+
+/*!* Style the checkmark/indicator *!*/
+/*.container .checkmark:after {*/
+    /*left: 9px;*/
+    /*top: 5px;*/
+    /*width: 5px;*/
+    /*height: 10px;*/
+    /*border: solid white;*/
+    /*border-width: 0 3px 3px 0;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
 /*}*/
+/*height="650"*/
+/*1350*/
+
+
+
+/*!* margin: auto; *!*/
+/*width: 40%;*/
+/*height: 50%;*/
+/*position: fixed;*/
+/*top: 0px;*/
+/*left: 0px;*/
+/*right: 0px;*/
+/*bottom: 0px;*/
+/*background-color: rgba(255, 255, 255, 0.75);*/
