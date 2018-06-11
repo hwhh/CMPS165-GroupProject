@@ -1,5 +1,6 @@
 import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
+import {water_stress_bau} from "./index";
 
 
 //Sets axis scales
@@ -191,18 +192,24 @@ function drawGrid() {
         )
 }
 
-function drawLines(g, countries) {
+function drawLines(g, countries, key) {
 
     //Add new element to the DOM for each country
-    const country = g.selectAll('.country')
+    const country = g.selectAll(key)
         .data(countries)
         .enter().append('g')
-        .attr('class', 'country')
+        // .attr('class', 'country')
         .attr('id', function (d) {
             return d.id.split(' ').join('_')
-        });
+        }).on("mouseover", function (d) {
+            console.log(d)
+            // d3.selectAll('path').style('opacity', '0.3');
+            // d3.selectAll('path').selectAll('#'+d.id).style('opacity', '1');
+        }).on("mouseout", function (d) {
+            // d3.selectAll('path').style('opacity', '1');
+            // d3.selectAll('#' + d.id).style('opacity', '1');
+        }).style('pointer-events', 'none');
 
-    //Adds new path elements to the DOM for each country
     country.append('path')
         .attr('class', 'line')
         .attr('d', function (d) {
@@ -212,6 +219,69 @@ function drawLines(g, countries) {
         .style('stroke', function (d) {
             return z(d.id)
         });
+
+    country.append('path')
+        .attr('class', 'fat_line')
+        .attr('d', function (d) {
+            return line(d.values) // uses the line generator
+        })
+    // .style('fill', 'transparent')
+    // .style('stroke', 'invisible')
+        .style('stroke-width', 10);
+    // .attr('fill', 'none')
+
+
+    // gEnter = link.enter()
+    //     .append('g')
+    //     .attr('class', 'link')
+    //     .on('mouseover', function(d) {
+    //         //alert(JSON.stringify(d));
+    //         alert('mouseover');
+    //     }).on('mouseout', function(d) {
+    //         alert('mouseout');
+    //     });
+    //
+    // // Instead of 1 line, append 2 lines inside the g, and make
+    // // one of them transparent and "fat", which will enlarge the
+    // // hit area
+    // let lines = country
+    //     .selectAll('.path').data(['visible', 'invisible']);
+    // lines.enter()
+    //     .append('line')
+    //     .attr('class', 'path')
+    //     .attr('marker-end', function (d, i, j) {
+    //         // j is the parent's i
+    //         if (j === 2) {
+    //             return 'url(#arrow)';
+    //         } else {
+    //             return null;
+    //         }
+    //     })
+    //     .attr({
+    //         // returning null from these functions simply defaults to whatever the
+    //         // .path class's CSS props are doing
+    //         'stroke-width': function (d, i) {
+    //             return d == 'invisible' ? 10 : null
+    //         },
+    //         'stroke': function (d, i) {
+    //             return d == 'invisible' ? 'transparent' : null
+    //         }
+    //     })
+
+    // lineGraph_group.append("path")
+    //     .datum(data2)
+    //     .attr("class", "line pessimistic")
+    //     .attr("d", pessimisticLine);
+    //
+    // lineGraph_group.append("path")
+    //     .datum(data2)
+    //     .attr("class", "line optimistic")
+    //     .attr("d", optimisticLine);
+    //
+    // lineGraph_group.append("path")
+    //     .datum(data2)
+    //     .attr("class", "line bau")
+    //     .attr("d", bauLine);
 
 
     country.selectAll(".dot")
@@ -231,10 +301,10 @@ function drawLines(g, countries) {
             return z(d3.select(this.parentNode).datum().id);
         })
         .attr("date", function (d) {
-            return(d.date)
+            return (d.date)
         })
         .attr("val", function (d) {
-            return(d.value)
+            return (d.value)
         })
         .on("mouseover", function (d) {
             div.transition()
@@ -256,11 +326,36 @@ function drawLines(g, countries) {
         })
         .style('opacity', '1');
 
+    // //Adds the country name at the end of the line
+    // country.append('text')
+    //     .datum(function (d) { //Allows the binding of country data to multiple SVG elements
+    //         return {id: d.id, display: d.display, value: d.values[d.values.length - 1]}
+    //     })
+    //     .attr('transform', function (d) {
+    //         return 'translate(' + x(d.value.date) + ',' + y(d.value.energy) + ')'
+    //     })
+    //     .attr('x', 3)
+    //     .attr('dy', '0.35em')
+    //     .style('font', '10px sans-serif')
+    //     .text(function (d) {
+    //         return d.id
+    //     })
+    //     .style('text-anchor', 'start')
+    //     .style('opacity', 0)
+    //     .filter(function (d) { //Only shows the country names for selected countries
+    //         return d.display
+    //     })
+    //     .transition()
+    //     .duration(2000)
+    //     .style('opacity', 1);
+    //
+
     const paths = country.select('path')
         .each(function () {
             d3.select(this)
                 .attr('stroke-dasharray', this.getTotalLength() + ',' + this.getTotalLength())
                 .attr('stroke-dashoffset', '' + this.getTotalLength())
+
         });
     paths.filter(function (d) { // only shows the lines for selected countries
         return display_country[d.id].display
@@ -268,6 +363,7 @@ function drawLines(g, countries) {
         .transition()
         .duration(2000)
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
+
 }
 
 function drawAxis(g) {
@@ -314,14 +410,6 @@ function drawAxis(g) {
 
 //TODO Update domains
 function create_domains(data) {
-    // x.domain([utils.parseTime('1978'), utils.parseTime('2040')]);
-    // // y.domain([
-    // //     0, 5
-    // // ]);
-    // z.domain(data.map(function (c) {
-    //     return c.id
-    // }));
-
     x.domain([utils.parseTime('1982'), utils.parseTime('2040')]);
     y.domain([
         d3.min(data, function (c) {
@@ -353,7 +441,7 @@ function create_domains(data) {
 //TODO  send in the countries for updating
 export function updateChart() {
     Object.keys(display_country).forEach(function (key) {
-        const g = d3.select('#' + key);
+        const g = d3.selectAll('#' + key);
         if (display_country[key].display) {
             g.select('text')
                 .transition()
@@ -369,6 +457,7 @@ export function updateChart() {
                 .attrTween('stroke-dashoffset', tweenDashoffsetOn);
 
             g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
+            g.style('pointer-events', 'auto');
 
             // //Select elements deeper in the DOM
             // d3.select('.mouse-over-effects').select('#' + key).selectAll('circle')
@@ -377,6 +466,7 @@ export function updateChart() {
             //     .style('visibility', 'visible')
         } else {
             g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
+            g.style('pointer-events', 'none');
             g.select('text').style('opacity', '0');
             g.select('path').style('opacity', '0');
             //Select elements deeper in the DOM
@@ -388,13 +478,31 @@ export function updateChart() {
     });
 }
 
+// function mouseOverEffect() {
+//     this.classList.add("bar-highlight");
+// }
+// function mouseOutEffect() {
+//     this.classList.remove("bar-highlight");
+// }
+
 export function renderLineChart() {
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     create_domains(utils.water_stress);
     drawAxis(g);
-    drawLines(g, utils.water_stress);
+    console.log(utils.water_stress);
+    drawLines(g, utils.water_stress, '.country');
+    drawLines(g, utils.water_stress_bau, '.country_bau');
+    drawLines(g, utils.water_stress_opt, '.country_opt');
+    drawLines(g, utils.water_stress_pst, '.country_pst');
+
+    // const lines = document.getElementsByClassName('path');
+    // for (let i = 0; i < lines.length; i++) {
+    //     lines[i].addEventListener('mouseover', mouseOverEffect);
+    //     lines[i].addEventListener('mouseout', mouseOutEffect);
+    // }
+
     // mouseOver(g, utils.water_stress);
 }
 

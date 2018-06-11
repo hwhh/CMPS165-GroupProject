@@ -42,11 +42,11 @@ export function showMap() {
 }
 
 
-export function getAllValuesForCountry(map, country) {
+export function getAllValuesForCountry(map, country, index_1, index_2) {
     let values = [];
     map.forEach(function (value, key) {
         if (value[country] !== -1)
-            values.push({date: key.substring(5, 9), value: value[country]});
+            values.push({date: key.substring(index_1, index_2), value: value[country]});
     });
     return {id: country, display: display_country[country].display, values: values}
 }
@@ -111,10 +111,10 @@ Promise.all([
     // renderMap(water_stress_levels.get('1978-1982'));
     // createSlider();
     Object.keys(display_country).forEach(function (d) {
-        water_stress.push(getAllValuesForCountry(water_stress_levels, d));
-        water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d));
-        water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d));
-        water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d));
+        water_stress.push(getAllValuesForCountry(water_stress_levels, d, 5, 9));
+        water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d, 0, 4));
+        water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d, 0, 4));
+        water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d, 0, 4));
     });
     renderLineChart();
     create_modal();

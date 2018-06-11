@@ -110,7 +110,6 @@ class FilteredList extends React.Component {
     }
 
     handleChange(event) {
-        console.log(event)
         display_country[event.target.value].display = !!event.target.checked;
         let dict = this.state.items;
         dict[event.target.value] = !!event.target.checked;
