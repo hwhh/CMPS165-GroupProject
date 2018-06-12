@@ -7,17 +7,38 @@ h1 {
     color: darkslategray;
 }
 
-div.tooltip {
+.tooltip {
     position: absolute;
     text-align: center;
     width: 60px;
-    height: 28px;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
+    height: 12px;
+    padding: 8px;
+    margin-top: -20px;
+    font: 10px sans-serif;
+    background: #ddd;
     pointer-events: none;
+}
+
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+.focus circle {
+    fill: none;
+    stroke: steelblue;
+}
+
+
+
+
+.overlay {
+    fill: none;
+    pointer-events: all;
 }
 
 #source, #insight {
@@ -30,9 +51,6 @@ svg {
     margin: 0 auto;
 }
 
-/*.countries {*/
-/*transform: translate(-300px);*/
-/*}*/
 .ticks {
     font: 10px sans-serif;
 }
@@ -132,8 +150,6 @@ svg {
 }
 
 .Modal {
-    /*position: absolute;*/
-    /*margin-top: 10%;*/
     margin-right: auto;
     margin-left: auto;
     margin-top: 15%;
@@ -145,21 +161,12 @@ svg {
     border-radius: 4px;
     outline: none;
     padding: 20px;
-    /*#close {*/
-
-    /*float: right;*/
-
-    /*}*/
 
 }
 
-/* The container */
 .container {
-    /*display: block;*/
     position: relative;
     padding-left: 25px !important;
-    /*padding-left: 50px;*/
-    /*margin-bottom: 12px;*/
     cursor: pointer;
     font-size: 12px;
     font-weight: normal;
@@ -211,7 +218,6 @@ svg {
 .close-classic {
     color: #777;
     font: 14px/100% arial, sans-serif;
-    /* position: inherit; */
     float: right;
     padding-left: 10px;
     right: 5px;
@@ -220,9 +226,6 @@ svg {
     top: 5px;
     font-size: 18px;
     padding-top: 8px;
-    /* font-family: inherit; */
-    /* font-size: inherit; */
-    /* line-height: inherit; */
 }
 
 .close-classic:after {
@@ -234,27 +237,3 @@ svg {
     opacity: 1;
 }
 
-/*!* Style the checkmark/indicator *!*/
-/*.container .checkmark:after {*/
-/*left: 9px;*/
-/*top: 5px;*/
-/*width: 5px;*/
-/*height: 10px;*/
-/*border: solid white;*/
-/*border-width: 0 3px 3px 0;*/
-/*-webkit-transform: rotate(45deg);*/
-/*-ms-transform: rotate(45deg);*/
-/*transform: rotate(45deg);*/
-/*}*/
-/*height="650"*/
-/*1350*/
-
-/*!* margin: auto; *!*/
-/*width: 40%;*/
-/*height: 50%;*/
-/*position: fixed;*/
-/*top: 0px;*/
-/*left: 0px;*/
-/*right: 0px;*/
-/*bottom: 0px;*/
-/*background-color: rgba(255, 255, 255, 0.75);*/

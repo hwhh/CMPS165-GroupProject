@@ -36,6 +36,8 @@
     "babel-preset-stage-2": "^6.24.1",
     "create-react-class": "^15.6.3",
     "css-loader": "^0.28.11",
+    "d3-tip": "^0.9.1",
+    "d3scription": "^1.0.1",
     "rc-checkbox": "^2.1.5",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",

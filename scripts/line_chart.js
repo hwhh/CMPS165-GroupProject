@@ -1,6 +1,14 @@
 import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
-import {water_stress_bau} from "./index";
+
+
+const formatDecimal = d3.format(".3f");
+
+const bisectDate = d3.bisector(function (d) {
+    console.log(d);
+
+    return d.date;
+}).left;
 
 
 //Sets axis scales
@@ -8,6 +16,19 @@ const x = d3.scaleTime().range([0, width - 100]),
     y = d3.scaleLog().base(Math.E).domain([0.0015, 1000]).range([height, 0]),
     // y = d3.scaleLinear().range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
+// bisectDate = d3.bisector(function(d) {
+//     console.log(d)
+//     return d.date;
+// }).left;
+
+// const tip = d3.tip()
+//     .attr('class', 'd3-tip')
+//     .offset([-10, 0])
+//     .html(function (d) {
+//         console.log(d)
+//         return "<label>Hello</label>";
+//     });
+
 
 //Line generator, where the lives are curved
 const line = d3.line()
@@ -28,16 +49,6 @@ const div = d3.select("body").append("div")
     .style("opacity", 0);
 
 
-function make_x_gridlines() {
-    return d3.axisBottom(x)
-        .ticks(5)
-}
-
-function make_y_gridlines() {
-    return d3.axisLeft(y)
-        .ticks(8)
-}
-
 function tweenDashoffsetOn() {
     const l = this.getTotalLength(),
         i = d3.interpolateString('' + l, '0');
@@ -45,6 +56,8 @@ function tweenDashoffsetOn() {
         return i(t)
     }
 }
+
+
 
 function tweenDashoffsetOff() {
     const l = this.getTotalLength(),
@@ -61,21 +74,80 @@ function drawLines(g, countries, key) {
         .attr('class', 'country')
         .attr('id', function (d) {
             return d.id.split(' ').join('_')
-        }).on("mouseover", function (d) {
+        }).on("mouseover", function (data) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
             const circleUnderMouse = this;
-            d3.selectAll('.country').style('opacity', function () {return (this.id === circleUnderMouse.id) ? 1.0 : 0.2;});
-            // d3.selectAll('.country').select('.line').style('stroke-width', '4px')
-            // d3.selectAll('.country').select('.line').style('stroke-width', function () {return (this.id === circleUnderMouse.id) ? "4px" : "1px";})
+            d3.selectAll('.country').style('opacity', function () {
+                return (this.id === circleUnderMouse.id) ? 1.0 : 0.2;
+            });
             d3.selectAll('.country').select('.line')
                 .style('stroke-width', '1px')
                 .filter(function (d) {
                     return d.id === circleUnderMouse.id
                 })
-                .style('stroke-width', '3px')
+                .style('stroke-width', '2px')
         }).on("mouseout", function (d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
             d3.selectAll('.country').style('opacity', '1');
             d3.selectAll('.country').select('.line').style('stroke-width', '1px')
-        }).style('pointer-events', 'none');
+
+        }).on("mousemove", function (data) {
+            div.html("hello")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .style('pointer-events', 'none');
+
+    //
+    // var focus = g.append("g")
+    //     .attr("class", "focus")
+    //     .style("display", "none");
+    //
+    // focus.append("circle")
+    //     .attr("r", 4.5);
+    //
+    // focus.append("text")
+    //     .attr("x", 9)
+    //     .attr("dy", ".35em")
+    //     .style('')
+    //
+    //
+    // g.append("rect")
+    //     .attr("class", "overlay")
+    //     .attr("width", width)
+    //     .attr("height", height)
+    //     .on("mouseover", function () {
+    //         focus.style("display", null);
+    //     })
+    //     .on("mouseout", function () {
+    //         focus.style("display", "none");
+    //     })
+    //     .on("mousemove", mousemove);
+    //
+    // var tickPos = x.range();
+    //
+    // function mousemove(d) {
+    //     var m = d3.mouse(this),
+    //         lowDiff = 1e99,
+    //         xI = null;
+    //     for (var i = 0; i < tickPos.length; i++) {
+    //         var diff = Math.abs(m[0] - tickPos[i]);
+    //         if (diff < lowDiff) {
+    //             lowDiff = diff;
+    //             xI = i;
+    //         }
+    //     }
+    //     focus
+    //         .select('text')
+    //         .text("hello");
+    //     focus
+    //         .attr("transform", "translate(" + tickPos[xI] + "," + y(data[xI].y) + ")");
+    // }
+
 
     country.append('path')
         .attr('class', 'line')
@@ -117,20 +189,26 @@ function drawLines(g, countries, key) {
         .attr("val", function (d) {
             return (d.value)
         })
-        .on("mouseover", function (d) {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-
-            div.html(d3.select(this).attr("date") + "<br/>" + d3.select(this).attr("val"))
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", function (d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        })
+        // .on('mouseover', tip.show)
+        // .on('mouseout', tip.hide)
+        // .on("mouseover", function (d) {
+        //    div.transition()
+        //         .duration(200)
+        //         .style("opacity", .9);
+        //
+        //     div.html(
+        //             'Country: ' + (d3.select(this.parentNode).datum().id) + '<br/>' +
+        //             'Year: $' + d3.select(this).attr("date") + '<br/>' +
+        //             'Water Stress Level: ' + formatDecimal(d3.select(this).attr("val")) + '<br/>'
+        //     )
+        //         .style("left", (d3.event.pageX) + "px")
+        //         .style("top", (d3.event.pageY - 28) + "px");
+        // })
+        // .on("mouseout", function (d) {
+        //     div.transition()
+        //         .duration(500)
+        //         .style("opacity", 0);
+        // })
         .style('opacity', '0')
         .filter(function (d) { //Only shows the circles for selected countries
             return display_country[d3.select(this.parentNode).datum().id].display
@@ -151,6 +229,7 @@ function drawLines(g, countries, key) {
         .transition()
         .duration(2000)
         .attrTween('stroke-dashoffset', tweenDashoffsetOn)
+
 
 }
 
@@ -242,11 +321,12 @@ export function renderLineChart() {
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     create_domains(utils.water_stress);
     drawAxis(g);
-    console.log(utils.water_stress);
     drawLines(g, utils.water_stress, '.country');
     drawLines(g, utils.water_stress_bau, '.country_bau');
     drawLines(g, utils.water_stress_opt, '.country_opt');
     drawLines(g, utils.water_stress_pst, '.country_pst');
+
+
     updateChart();
 }
 
