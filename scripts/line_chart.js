@@ -4,9 +4,7 @@ import {width, height, margin, display_country} from "./variables";
 
 const formatDecimal = d3.format(".3f");
 
-const bisectDate = d3.bisector(function (d) {
-    console.log(d);
-
+var bisectDate = d3.bisector(function (d) {
     return d.date;
 }).left;
 
@@ -14,25 +12,11 @@ const bisectDate = d3.bisector(function (d) {
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
     y = d3.scaleLog().base(Math.E).domain([0.0015, 1000]).range([height, 0]),
-    // y = d3.scaleLinear().range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
-// bisectDate = d3.bisector(function(d) {
-//     console.log(d)
-//     return d.date;
-// }).left;
-
-// const tip = d3.tip()
-//     .attr('class', 'd3-tip')
-//     .offset([-10, 0])
-//     .html(function (d) {
-//         console.log(d)
-//         return "<label>Hello</label>";
-//     });
 
 
 //Line generator, where the lives are curved
 const line = d3.line()
-// .curve(d3.curveBasis)
     .x(function (d) {
         return x(new Date(d.date))
     })
@@ -57,15 +41,6 @@ function tweenDashoffsetOn() {
     }
 }
 
-
-
-function tweenDashoffsetOff() {
-    const l = this.getTotalLength(),
-        i = d3.interpolateString('0', '' + l);
-    return function (t) {
-        return i(t)
-    }
-}
 
 function drawLines(g, countries, key) {
     const country = g.selectAll(key)
@@ -96,57 +71,17 @@ function drawLines(g, countries, key) {
             d3.selectAll('.country').select('.line').style('stroke-width', '1px')
 
         }).on("mousemove", function (data) {
-            div.html("hello")
+            // console.log(data);
+            // console.log((y.invert(d3.mouse(this)[1] - 2)));
+            // console.log(utils.formatTime((x.invert(d3.mouse(this)[0]))));
+            div.html('Country: ' +data.id + '<br/>' +
+                'Year: ' + utils.formatTime(x.invert(d3.mouse(this)[0])) + '<br/>' +
+                'Value:' + formatDecimal(y.invert(d3.mouse(this)[1] - 2)) + '<br/>'
+            )
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         })
         .style('pointer-events', 'none');
-
-    //
-    // var focus = g.append("g")
-    //     .attr("class", "focus")
-    //     .style("display", "none");
-    //
-    // focus.append("circle")
-    //     .attr("r", 4.5);
-    //
-    // focus.append("text")
-    //     .attr("x", 9)
-    //     .attr("dy", ".35em")
-    //     .style('')
-    //
-    //
-    // g.append("rect")
-    //     .attr("class", "overlay")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .on("mouseover", function () {
-    //         focus.style("display", null);
-    //     })
-    //     .on("mouseout", function () {
-    //         focus.style("display", "none");
-    //     })
-    //     .on("mousemove", mousemove);
-    //
-    // var tickPos = x.range();
-    //
-    // function mousemove(d) {
-    //     var m = d3.mouse(this),
-    //         lowDiff = 1e99,
-    //         xI = null;
-    //     for (var i = 0; i < tickPos.length; i++) {
-    //         var diff = Math.abs(m[0] - tickPos[i]);
-    //         if (diff < lowDiff) {
-    //             lowDiff = diff;
-    //             xI = i;
-    //         }
-    //     }
-    //     focus
-    //         .select('text')
-    //         .text("hello");
-    //     focus
-    //         .attr("transform", "translate(" + tickPos[xI] + "," + y(data[xI].y) + ")");
-    // }
 
 
     country.append('path')
@@ -189,26 +124,6 @@ function drawLines(g, countries, key) {
         .attr("val", function (d) {
             return (d.value)
         })
-        // .on('mouseover', tip.show)
-        // .on('mouseout', tip.hide)
-        // .on("mouseover", function (d) {
-        //    div.transition()
-        //         .duration(200)
-        //         .style("opacity", .9);
-        //
-        //     div.html(
-        //             'Country: ' + (d3.select(this.parentNode).datum().id) + '<br/>' +
-        //             'Year: $' + d3.select(this).attr("date") + '<br/>' +
-        //             'Water Stress Level: ' + formatDecimal(d3.select(this).attr("val")) + '<br/>'
-        //     )
-        //         .style("left", (d3.event.pageX) + "px")
-        //         .style("top", (d3.event.pageY - 28) + "px");
-        // })
-        // .on("mouseout", function (d) {
-        //     div.transition()
-        //         .duration(500)
-        //         .style("opacity", 0);
-        // })
         .style('opacity', '0')
         .filter(function (d) { //Only shows the circles for selected countries
             return display_country[d3.select(this.parentNode).datum().id].display
