@@ -1,18 +1,46 @@
 import * as utils from "./index";
 import {width, height, margin, display_country} from "./variables";
 
-
-const formatDecimal = d3.format(".3f");
-
-var bisectDate = d3.bisector(function (d) {
-    return d.date;
-}).left;
-
+const zoom = d3.zoom().scaleExtent([1 / 4, 9]).on('zoom', zoomFunction);
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
     y = d3.scaleLog().base(Math.E).domain([0.0015, 1000]).range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+// //Define Scales
+// const xScale = d3.scaleLinear() //scaleLinear() - scale with a continuous domain
+//     .domain([0, 16]) //axis goes from 0 to 16
+//     .range([0, width]);
+//
+// const yScale = d3.scaleLinear() ////scaleLinear() - scale with a continuous domain
+//     .domain([0, 450])//axis goes from 0 to 450
+//     .range([height, 0]);
+
+
+
+//Define Axis
+const xAxis = d3.axisBottom(x).tickPadding(2);
+const yAxis = d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]);
+
+const formatDecimal = d3.format(".3f"),
+        bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+
+function zoomFunction() {
+    //Returns a copy of the continuous scales x and y whose domain is transformed.
+    const new_xScale = d3.event.transform.rescaleX(x);
+    const new_yScale = d3.event.transform.rescaleY(y);
+    //Gets the x and y axis elements in the DOM and invokes a callback function by calling .scale
+    d3.select('g').select('.axis axis--y').call(y.scale(new_yScale));
+    d3.select('g').select('.x-axis').call(x.scale(new_xScale));
+    //Gets all of the circles on the DOM excluding ones in the key
+    d3.select('g').selectAll('.country').attr('transform', d3.event.transform)
+
+}
+
+
 
 
 //Line generator, where the lives are curved
@@ -71,9 +99,6 @@ function drawLines(g, countries, key) {
             d3.selectAll('.country').select('.line').style('stroke-width', '1px')
 
         }).on("mousemove", function (data) {
-            // console.log(data);
-            // console.log((y.invert(d3.mouse(this)[1] - 2)));
-            // console.log(utils.formatTime((x.invert(d3.mouse(this)[0]))));
             div.html('Country: ' +data.id + '<br/>' +
                 'Year: ' + utils.formatTime(x.invert(d3.mouse(this)[0])) + '<br/>' +
                 'Value:' + formatDecimal(y.invert(d3.mouse(this)[1] - 2)) + '<br/>'
@@ -99,7 +124,7 @@ function drawLines(g, countries, key) {
         .attr('d', function (d) {
             return line(d.values)
         })
-        .style('stroke-width', 20);
+        .style('stroke-width', 25);
 
 
     country.selectAll(".dot")
@@ -149,17 +174,22 @@ function drawLines(g, countries, key) {
 }
 
 function drawAxis(g) {
+
+    //x-axis
     g.append('g')
+        .attr('class', 'x-axis')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x))
+        .call(xAxis)
         .append('text')
+        .attr('class', 'label')
         .attr('transform', 'translate(' + (width - 60) + ',' + (30) + ')')
         .attr('fill', '#000')
         .text('Year');
 
+    //Y-axis
     g.append('g')
-        .attr('class', 'axis axis--y')
-        .call(d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]))
+        .attr('class', 'y-axis')
+        .call(yAxis)
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
@@ -233,15 +263,14 @@ export function updateChart() {
 export function renderLineChart() {
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+        .call(zoom);
     create_domains(utils.water_stress);
     drawAxis(g);
     drawLines(g, utils.water_stress, '.country');
     drawLines(g, utils.water_stress_bau, '.country_bau');
     drawLines(g, utils.water_stress_opt, '.country_opt');
     drawLines(g, utils.water_stress_pst, '.country_pst');
-
-
     updateChart();
 }
 
