@@ -32,13 +32,16 @@ export const svg = d3.select("body").append("svg")
 export function showLineChart() {
     d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
     d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
-    d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'visibile');
+    d3.select('svg').select('#key').transition().duration(1000).style('display', 'none');
+    d3.select('svg').select('#line_chart').style('display', 'visible');
+    // d3.select('svg').select('#line_chart').style('display', 'visible');
 }
 
 export function showMap() {
-    d3.select('svg').select('#map').transition().duration(1000).style('display', 'visibile');
-    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'visibile');
-    d3.select('g').select('#line_chart').transition().duration(1000).style('display', 'none');
+    d3.select('svg').select('#map').transition().duration(1000).style('display', 'visible');
+    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'visible');
+    d3.select('svg').select('#key').transition().duration(1000).style('display', 'visible');
+    d3.select('svg').selectAll('g').select('#line_chart').transition().duration(1000).style('display', 'none');
 }
 
 
@@ -51,18 +54,7 @@ export function getAllValuesForCountry(map, country, index_1, index_2) {
     return {id: country, display: display_country[country].display, values: values}
 }
 
-// const back2Map_button = lineGraph_group.append("rect")
-//     .attr("class", "back2Map_button")
-//     .attr("transform", "translate(" + 1100 + "," + 0 + ")")
-//     .attr('width', 100)
-//     .attr('height', 50)
-//     .attr('fill', 'lightblue')
-//     .on('click', function () {
-//         // toggle visibility
-//         d3.select('svg').select('#map').transition().duration(1000).style('display', 'block');
-//         d3.select('svg').select('#slider').transition().duration(1000).style('display', 'block');
-//         lineGraph_group.attr('visibility', 'hidden');
-//     });
+
 
 function loadDataset(map, file, func) {
     return new Promise((resolve, reject) => {
@@ -108,8 +100,8 @@ Promise.all([
         return val * 100
     }),
 ]).then(values => {
-    // renderMap(water_stress_levels.get('1978-1982'));
-    // createSlider();
+    renderMap(water_stress_levels.get('1978-1982'));
+    createSlider();
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d, 5, 9));
         water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d, 0, 4));

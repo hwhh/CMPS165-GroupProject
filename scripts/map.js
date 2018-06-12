@@ -1,6 +1,6 @@
 import * as utils from "./index";
-import {width, height} from "./variables";
-import {renderLineChart} from "./line_chart";
+import {width, height, display_country} from "./variables";
+import {updateChart} from "./line_chart";
 
 export const projection = d3.geoMiller()
     .scale(150)
@@ -10,7 +10,7 @@ export const path = d3.geoPath()
     .projection(projection);
 
 export const color = d3.scaleThreshold()
-    .domain([1, 2, 3, 4, 5])
+    .domain([1, 100, 200, 300, 400, 5000])
     .range(d3.schemeReds[5]);
 
 const xDensity = d3.scaleSqrt()
@@ -79,8 +79,9 @@ export function renderMap(data) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
+                    display_country[country_name].display = true;
+                    updateChart();
                     utils.showLineChart();
-                    renderLineChart(country_name)
                 }
             })
 
@@ -132,10 +133,11 @@ export function updateMap(data){
             if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 let country_name = d.properties.name;
                 console.log("clicked: " + country_name);
-                utils.show_line_chart();
-                renderLineChart(data)
+                display_country[country_name].display = true;
+                updateChart();
+                utils.showLineChart();
             }
-        })
+        });
 
     legend(colours);
     

@@ -8,18 +8,6 @@ const x = d3.scaleTime().range([0, width - 100]),
     y = d3.scaleLog().base(Math.E).domain([0.0015, 1000]).range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
-
-// //Define Scales
-// const xScale = d3.scaleLinear() //scaleLinear() - scale with a continuous domain
-//     .domain([0, 16]) //axis goes from 0 to 16
-//     .range([0, width]);
-//
-// const yScale = d3.scaleLinear() ////scaleLinear() - scale with a continuous domain
-//     .domain([0, 450])//axis goes from 0 to 450
-//     .range([height, 0]);
-
-
-
 //Define Axis
 const xAxis = d3.axisBottom(x).tickPadding(2);
 const yAxis = d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]);
@@ -33,11 +21,15 @@ function zoomFunction() {
     const new_xScale = d3.event.transform.rescaleX(x);
     const new_yScale = d3.event.transform.rescaleY(y);
     //Gets the x and y axis elements in the DOM and invokes a callback function by calling .scale
-    d3.select('g').select('.axis axis--y').call(y.scale(new_yScale));
-    d3.select('g').select('.x-axis').call(x.scale(new_xScale));
+    d3.select('g').select('.y-axis').call(yAxis.scale(new_yScale));
+    d3.select('g').select('.x-axis').call(xAxis.scale(new_xScale));
     //Gets all of the circles on the DOM excluding ones in the key
-    d3.select('g').selectAll('.country').attr('transform', d3.event.transform)
 
+    console.log(d3.event.transform)
+    d3.select('g').selectAll('.country').attr('transform', d3.event.transform)
+    d3.select('g').selectAll('.predictedLabel').attr('x', new_xScale(utils.parseTime(2017)))
+    d3.select('g').selectAll('.predicted').attr('x1', new_xScale(utils.parseTime(2017))).attr('x2', new_xScale(utils.parseTime(2017)))
+    d3.select('g').selectAll('circle').filter('.dot').attr('r', (4/d3.event.transform.k))
 }
 
 
@@ -181,9 +173,9 @@ function drawAxis(g) {
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis)
         .append('text')
-        .attr('class', 'label')
         .attr('transform', 'translate(' + (width - 60) + ',' + (30) + ')')
         .attr('fill', '#000')
+        .attr('font-size', '12px')
         .text('Year');
 
     //Y-axis
@@ -192,22 +184,22 @@ function drawAxis(g) {
         .call(yAxis)
         .append('text')
         .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
+        .attr('y', 10)
+        .attr('dy', '0.80em')
         .attr('fill', '#000');
 
 
     g.append("text")
         .attr("class", "predictedLabel")
-        .attr("x", x(utils.parseTime(2017)))
+        .attr("x", x(utils.parseTime(2017)) - 25)
         .text("Predicted");
 
     g.append("line")
-        .attr("class", "line predicted")
+        .attr("class", "predicted")
         .attr("x1", x(utils.parseTime(2017)))
         .attr("x2", x(utils.parseTime(2017)))
         .attr("y1", 0)
-        .attr("y2", height + 10);
+        .attr("y2", height);
 
 }
 
@@ -261,10 +253,27 @@ export function updateChart() {
 
 
 export function renderLineChart() {
+
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-        .call(zoom);
+        .style('display', 'none');
+        // .call(zoom);
+
+    g.append("rect")
+        .attr("class", "back2Map_button")
+        .attr("transform", "translate(" + 1100 + "," + 0 + ")")
+        .attr('width', 100)
+        .attr('height', 50)
+        .attr('fill', 'lightblue')
+        .on('click', function () {
+            // toggle visibility
+            Object.keys(display_country).forEach(function (key) {
+                display_country[key].display = false
+            });
+          utils.showMap();
+        });
+
     create_domains(utils.water_stress);
     drawAxis(g);
     drawLines(g, utils.water_stress, '.country');

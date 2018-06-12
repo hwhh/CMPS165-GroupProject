@@ -118,9 +118,15 @@ svg {
     stroke-dasharray: 2, 3;
 }
 
-.predictedLabel {
+.label{
     font-family: Helvetica, sans-serif;
     font-size: 12px;
+    fill: #000000;
+}
+
+.predictedLabel {
+    font-family: Helvetica, sans-serif;
+    font-size: 12px!important;
     fill: red;
 }
 

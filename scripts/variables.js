@@ -18,8 +18,8 @@ export const years = {
 };
 
 export const display_country = {
-    "Afghanistan": {display: true},
-    "Albania": {display: true},
+    "Afghanistan": {display: false},
+    "Albania": {display: false},
     "Algeria": {display: false},
     "Angola": {display: false},
     "Argentina": {display: false},
