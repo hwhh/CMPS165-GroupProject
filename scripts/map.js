@@ -10,7 +10,7 @@ export const path = d3.geoPath()
     .projection(projection);
 
 export const color = d3.scaleThreshold()
-    .domain([1, 100, 200, 300, 400, 5000])
+    .domain([0, 5])
     .range(d3.schemeReds[5]);
 
 const xDensity = d3.scaleSqrt()
@@ -147,15 +147,12 @@ export function updateMap(data){
 function legend(c){
         
     var colours = c;
+    
+    console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
-                            .attr("id", "key")
-                            .attr("transform", "translate(50,550)");
-
-//    var undefinedRect = utils.svg.append("g")
-//                                .attr("id", "undefinedRect")
-//                                .attr("transform", "translate(50,550)");
-
+        .attr("id", "key")
+        .attr("transform", "translate(-30,550)");
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -172,8 +169,8 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xPos[d[0]]; })
-        .attr("width", 40)
+        .attr("x", function(d) { return xDensity(d[0]); })
+        .attr("width", function(d) { return xDensity(d[1]) - xDensity(d[0]); })
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
@@ -219,13 +216,14 @@ function legend(c){
 
     //adding the value of the domain in the legend, creating the x axis using the x scale created for the data
     //tick size is 13 so all the values of the domain will appear on page
-    legend.call(d3.axisBottom(scale)
+    legend.call(d3.axisBottom(xDensity)
         .tickSize(13)
         .tickValues(color.domain()))
         .select(".domain")
         .remove();
     
 }
+
 
 export function bau(data){
     
