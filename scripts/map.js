@@ -241,7 +241,7 @@ function legend(c){
             return color(d[0]);
         })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { console.log(d[0]); return xPos[d[0]/100]; })
+        .attr("x", function(d) { return xPos[d[0]/100]; })
         .attr("width", 80)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {

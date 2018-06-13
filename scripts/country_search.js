@@ -10,7 +10,8 @@ import {FormGroup} from "react-bootstrap";
 
 const button_style = {
     transform: 'translate(200, 680)',
-    position: 'relative'
+    position: 'relative',
+    visibility: 'hidden'
 };
 
 
@@ -52,7 +53,7 @@ class Model extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id={"react-code"}>
                 <button id="add_button" style={button_style} onClick={this.handleOpenModal}>Add countries</button>
                 <ReactModal
                     className="Modal"
