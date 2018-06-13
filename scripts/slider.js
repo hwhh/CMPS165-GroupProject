@@ -31,7 +31,7 @@ export function createSlider() {
                 document.getElementById("optimistic").disabled=false;
                 document.getElementById("pessimistic").disabled=false;
                 
-                updateMap(utils.water_stress_levels_bau.get(current_year));
+                updateMap(utils.water_stress_levels_bau.get(current_year), current_year);
                 
                 bau(utils.water_stress_levels_bau.get(current_year));
                 optimistic(utils.water_stress_levels_opt.get(current_year));
@@ -53,7 +53,7 @@ export function createSlider() {
                 document.getElementById("pessimistic").disabled=true;
                 current_year_global = current_year;
                 
-                updateMap(utils.water_stress_levels.get(current_year));
+                updateMap(utils.water_stress_levels.get(current_year), current_year);
                 
             }
         });

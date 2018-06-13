@@ -26,11 +26,15 @@ var xDensity = d3.scaleSqrt()
 
 let map;
 
+var div_tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 let colours = {};
 
 export let futureOptions = "bau";
 
-export function renderMap(data) {
+export function renderMap(data, year) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
         const features = mapData.features;
         map = utils.svg.append('g')
@@ -63,11 +67,15 @@ export function renderMap(data) {
                 }
             }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     d3.select(this).style("fill", "orange");
+                    toolTip(d, data, year);
+                }
+
             })
             .on("mouseout", function (d) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                    tooltip_go_invisible();
                     d3.select(this).style("fill", function (d) {
                         let c = color(data[d.properties.name]);
                         return c
@@ -93,9 +101,9 @@ export function renderMap(data) {
 
 }
 
-export function updateMap(data) {
-
-    colours = {};
+export function updateMap(data, year){
+    
+    colours={};
     map.transition().duration(1000)
         .style("fill", function (d) {
             //Get data value
@@ -116,12 +124,15 @@ export function updateMap(data) {
         });
 
     map.on("mouseover", function (d) {
-        let country_name = d.properties.name;
-        if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
-            d3.select(this).style("fill", "orange");
-    })
+            let country_name = d.properties.name;
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                d3.select(this).style("fill", "orange");
+                toolTip(d, data, year);
+            }
+        })
         .on("mouseout", function (d) {
-            if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                tooltip_go_invisible();
                 d3.select(this).style("fill", function (d) {
                     let c = color(data[d.properties.name]);
                     return c
@@ -144,6 +155,99 @@ export function updateMap(data) {
 }
 
 function legend(c) {
+
+function toolTip(d, data, year){
+    //console.log("Year");
+    //console.log(year);
+    //console.log(utils);
+    console.log("Data");
+    //console.log(utils.water_stress_levels);
+    console.log(data);
+    let water_stress_levels = utils.water_stress_levels;
+    let total_water_used = utils.total_water_used;
+    let total_internal_water = utils.total_internal_water;
+    let total_external_water = utils.total_external_water
+
+    let water_stress_levels_bau = utils.water_stress_levels_bau;
+    let water_stress_levels_pst = utils.water_stress_levels_pst;
+    let water_stress_levels_opt = utils.water_stress_levels_opt;
+
+    console.log("Here--------------");
+    console.log(year);
+    console.log(water_stress_levels);
+    console.log(water_stress_levels.get(year));
+    console.log("-------------------");
+
+    if( year != 2020 && year != 2030 && year != 2040){
+
+        let country_name = d.properties.name;
+        let stressLevel = (Math.round(data[country_name] * 100) / 100);
+        let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
+        let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
+        let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
+        let country_external_water = Math.round(total_external_water.get(year)[country_name] * 100) / 100;
+        //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
+
+        //console.log(country_value[country_name]);
+        //let val_val = country_value.country_name;
+
+//        console.log("Alfredo's --------");
+//        console.log("Country: " + country_name);
+//        console.log("Stress Level: " + stressLevel);
+//        console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
+//        console.log(total_water_used);
+//        console.log(total_internal_water);
+//        console.log("Year: "+ year);
+//        console.log(water_stress_levels);
+
+        //console.log(country_ttl_available_water);
+        //console.log(data);
+
+        div_tooltip.transition()//here
+                .duration(200)
+                .style("opacity", .9);
+        div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
+                             '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                             '<br/>'+'<p>'+'Total Water Used'+'</p>'+
+                             '<br/>'+'<p>'+'Total Internal Water'+'</p>'+
+                             '<br/>'+'<p>'+'Total External Water'+'</p>'+
+                             '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+
+                             '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                             '<br/>'+'<p>'+ country_water_used +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ country_internal_water +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ country_external_water +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                             '</div>')
+                 .style("left", (20) + "px")
+                 .style("top", (height - 30) + "px");
+    }else{
+        let country_name = d.properties.name;
+        let stressLevel = (Math.round(data[country_name] * 100) / 100);
+
+        div_tooltip.transition()//here
+                .duration(200)
+                .style("opacity", .9);
+        div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
+                             '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                             '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+
+                             '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                             '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                             '</div>')
+                 .style("left", (20) + "px")
+                 .style("top", (height - 30) + "px");
+    }
+
+}
+
+function tooltip_go_invisible(){
+    div_tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.0);
+}
+
+function legend(c){
 
     var colours = c;
     //Define legend
@@ -172,12 +276,11 @@ function legend(c) {
         .attr("width", 80)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
-            var previousElement = d3.select(this);
-            for (var key in colours) {
+            const previousElement = d3.select(this);
+            for (let key in colours) {
                 if (previousElement.attr("fill") === key) {
                     previousElement.style("fill", "#ADD8E6");
-                    var i;
-                    for (i = 0; i < colours[key].length; i++) {
+                    for (let i = 0; i < colours[key].length; i++) {
                         d3.select('svg')
                             .select('#map')
                             .select('#' + colours[key][i])
@@ -188,12 +291,11 @@ function legend(c) {
 
         })
         .on("mouseout", function (d) {
-            var previousElement = d3.select(this);
-            for (var key in colours) {
+            const previousElement = d3.select(this);
+            for (let key in colours) {
                 if (previousElement.attr("fill") === key) {
                     previousElement.style("fill", key);
-                    var i;
-                    for (i = 0; i < colours[key].length; i++) {
+                    for (let i = 0; i < colours[key].length; i++) {
                         d3.select('svg')
                             .select('#map')
                             .select('#' + colours[key][i])
@@ -231,7 +333,7 @@ export function bau(data){
             futureOptions = 'bau';
             console.log("bau");
             d3.select('svg').select('#key').remove();
-            updateMap(data);
+            updateMap(data, year);
             //call updateData
 
         })
@@ -245,7 +347,7 @@ export function optimistic(data) {
             futureOptions = 'optimistic';
             console.log("optimistic");
             d3.select('svg').select('#key').remove();
-            updateMap(data);
+            updateMap(data, year);
             //call updateData
 
         })
@@ -259,7 +361,7 @@ export function pessimistic(data) {
             futureOptions = 'pessimistic';
             console.log("pessimistic");
             d3.select('svg').select('#key').remove();
-            updateMap(data);
+            updateMap(data, year);
             //call updateData
 
         })

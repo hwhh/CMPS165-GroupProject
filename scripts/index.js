@@ -117,16 +117,26 @@ Promise.all([
     loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions.csv', sigmoid),
     loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions.csv', sigmoid),
 ]).then(values => {
-    renderMap(water_stress_levels.get('1978-1982'));
+    renderMap(water_stress_levels.get('1978-1982'), '1978-1982');
     createSlider();
+    console.log("here")
+
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d, 5, 9));
         water_stress_bau.push(getAllValuesForCountry(water_stress_levels_bau, d, 0, 4));
         water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d, 0, 4));
         water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d, 0, 4));
     });
-    renderLineChart();
-    create_modal();
+
+    console.log(water_stress_levels)
+    console.log(water_stress_levels_pst)
+
+    Object.keys(water_stress_levels.get('1978-1982')).forEach(function (key) {
+        console.log('\"' + key + '\": {display: false},')
+    });
+
+     //renderLineChart();
+     //create_modal();
 }); 
 
 
