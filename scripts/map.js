@@ -295,7 +295,7 @@ function legend(c){
 }
 
 
-export function bau(data){
+export function bau(data, year){
 
     d3.select('#bau')
         .on("click", function (d) {
@@ -309,7 +309,7 @@ export function bau(data){
 
 }
 
-export function optimistic(data) {
+export function optimistic(data, year) {
 
     d3.select('#optimistic')
         .on("click", function (d) {
@@ -323,7 +323,7 @@ export function optimistic(data) {
 
 }
 
-export function pessimistic(data) {
+export function pessimistic(data, year) {
 
     d3.select('#pessimistic')
         .on("click", function (d) {
