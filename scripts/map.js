@@ -86,7 +86,7 @@ export function renderMap(data, year) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     display_country[country_name].display = true;
-                    updateChart();
+                    updateChart(false);
                     utils.showLineChart();
                 }
             })
@@ -143,7 +143,7 @@ export function updateMap(data, year){
                 let country_name = d.properties.name;
                 console.log("clicked: " + country_name);
                 display_country[country_name].display = true;
-                updateChart();
+                updateChart(false);
                 utils.showLineChart();
             }
         });

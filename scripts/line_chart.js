@@ -264,31 +264,61 @@ function create_domains(data) {
 
 }
 
-export function updateChart() {
+export function updateChart(close) {
     Object.keys(display_country).forEach(function (key) {
         const g = d3.selectAll('#' + key);
-        if (display_country[key].display) {
-            g.select('text')
-                .transition()
-                .duration(1000)
-                .style('opacity', 1);
-            g.select('path').style('opacity', '1');
-            g.select('path').transition()
-                .duration(2000)
-                .attrTween('stroke-dashoffset', tweenDashoffsetOn);
+        if(close){
+            g.style('pointer-events', 'auto');
+        }
+        else {
+            if (display_country[key].display) {
+                g.select('text')
+                    .transition()
+                    .duration(1000)
+                    .style('opacity', 1);
+                g.select('path').style('opacity', '1');
+                g.select('path').transition()
+                    .duration(2000)
+                    .attrTween('stroke-dashoffset', tweenDashoffsetOn);
 
-            g.select('circle').transition()
-                .duration(2000)
-                .attrTween('stroke-dashoffset', tweenDashoffsetOn);
+                g.select('circle').transition()
+                    .duration(2000)
+                    .attrTween('stroke-dashoffset', tweenDashoffsetOn);
 
-            g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
-            d3.select('#line_chart').style('pointer-events', 'auto');
-        } else {
-            g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
-            d3.select('#line_chart').style('pointer-events', 'none');
-            d3.select('#line_chart').select('.back2Map_button').style('pointer-events', 'auto');
-            g.select('text').style('opacity', '0');
-            g.select('path').style('opacity', '0');
+                g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
+                g.style('pointer-events', 'auto');
+            } else {
+                g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
+                g.style('pointer-events', 'none');
+                g.select('text').style('opacity', '0');
+                g.select('path').style('opacity', '0');
+            }
+            /*if (display_country[key].display) {
+                g.select('text')
+                    .transition()
+                    .duration(1000)
+                    .style('opacity', 1);
+                g.select('path').style('opacity', '1');
+                g.select('path').transition()
+                    .duration(2000)
+                    .attrTween('stroke-dashoffset', tweenDashoffsetOn);
+
+                g.select('circle').transition()
+                    .duration(2000)
+                    .attrTween('stroke-dashoffset', tweenDashoffsetOn);
+
+                g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
+                g.style('pointer-events', 'auto');
+                // d3.select('#line_chart').style('pointer-events', 'auto');
+            } else {
+                g.selectAll('circle').style('opacity', '0');
+                g.style('pointer-events', 'none');
+
+                d3.select('#line_chart').style('pointer-events', 'none');
+                d3.select('#line_chart').select('.back2Map_button').style('pointer-events', 'auto');
+                g.select('text').style('opacity', '0');
+                g.select('path').style('opacity', '0');
+            }*/
         }
     });
 }
@@ -313,7 +343,7 @@ export function renderLineChart() {
             Object.keys(display_country).forEach(function (key) {
                 display_country[key].display = false
             });
-            g.style('pointer-events', 'auto');
+            updateChart(true);
             utils.showMap();
         });
 

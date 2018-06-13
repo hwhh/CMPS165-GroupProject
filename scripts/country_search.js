@@ -47,7 +47,7 @@ class Model extends React.Component {
 
     handleCloseModal() {
         this.setState({showModal: false});
-        updateChart()
+        updateChart(false)
     }
 
 
