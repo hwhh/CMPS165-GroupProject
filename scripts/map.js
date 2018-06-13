@@ -175,13 +175,13 @@ function legend(c) {
             var previousElement = d3.select(this);
             for (var key in colours) {
                 if (previousElement.attr("fill") === key) {
-                    previousElement.style("fill", "#ADD8E6");
+                    previousElement.style("fill", "#000080");
                     var i;
                     for (i = 0; i < colours[key].length; i++) {
                         d3.select('svg')
                             .select('#map')
                             .select('#' + colours[key][i])
-                            .style("fill", "#ADD8E6");
+                            .style("fill", "#000080");
                     }
                 }
             }
