@@ -26,11 +26,15 @@ var scale = d3.scaleLinear()
 
 let map;
 
+var div_tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 let colours = {};
 
 export let futureOptions = "bau";
 
-export function renderMap(data) {
+export function renderMap(data, year) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
         console.log(mapData)
         const features = mapData.features;
@@ -64,11 +68,15 @@ export function renderMap(data) {
                 }
             }).on("mouseover", function (d) {
                 let country_name = d.properties.name;
-                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+                if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                     d3.select(this).style("fill", "orange");
+                    toolTip(d, data, year);
+                }
+                    
             })
             .on("mouseout", function (d) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
+                    tooltip_go_invisible();
                     d3.select(this).style("fill", function (d) {
                         let c = color(data[d.properties.name]);
                         return c
@@ -93,7 +101,7 @@ export function renderMap(data) {
 
 }
 
-export function updateMap(data){
+export function updateMap(data, year){
     
     colours={};
     map.transition().duration(1000)
@@ -117,11 +125,14 @@ export function updateMap(data){
 
     map.on("mouseover", function (d) {
             let country_name = d.properties.name;
-            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 d3.select(this).style("fill", "orange");
+                toolTip(d, data, year);
+            }
         })
         .on("mouseout", function (d) {
             if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+                tooltip_go_invisible();
                 d3.select(this).style("fill", function (d) {
                     let c = color(data[d.properties.name]);
                     return c
@@ -140,6 +151,62 @@ export function updateMap(data){
     legend(colours);
     
     
+}
+
+function toolTip(d, data, year){
+    //console.log("Year");
+    //console.log(year);
+    //console.log(utils);
+    console.log("Water_stress_levels");
+    console.log(utils.water_stress_levels);
+    let water_stress_levels = utils.water_stress_levels;
+    let total_water_used = utils.total_water_used;
+    let total_internal_water = utils.total_water_used;
+    
+    let country_name = d.properties.name;
+    let stressLevel = (Math.round(data[country_name] * 100) / 100);
+    let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
+    let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
+    let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
+    //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
+    
+    //console.log(country_value[country_name]);
+    //let val_val = country_value.country_name;
+    
+    console.log("Alfredo's --------");
+    console.log("Country: " + country_name);
+    console.log("Stress Level: " + stressLevel);
+    console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
+    console.log(total_water_used);
+    console.log(total_internal_water);
+    console.log("Year: "+ year);
+    console.log(water_stress_levels);
+    //console.log(country_ttl_available_water);
+    //console.log(data);
+    
+    div_tooltip.transition()//here
+            .duration(200)
+            .style("opacity", .9);
+    div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
+                         '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                         '<br/>'+'<p>'+'Total Water Used'+'</p>'+
+                         '<br/>'+'<p>'+'Total Water Used'+'</p>'+
+                         '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+
+                         '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                         '<br/>'+'<p>'+ country_water_used +" m3" + '</p>' +
+                         '<br/>'+'<p>'+ country_internal_water +" m3" + '</p>' +
+                         '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                         '</div>')
+             .style("left", (20) + "px")
+             .style("top", (height - 30) + "px");
+    
+}
+
+function tooltip_go_invisible(){
+    div_tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.0);
 }
 
 function legend(c){
@@ -232,7 +299,7 @@ export function bau(data){
         futureOptions = 'bau';
         console.log("bau");
         d3.select('svg').select('#key').remove();
-        updateMap(data);
+        updateMap(data, year);
         //call updateData
         
     })
@@ -245,7 +312,7 @@ export function optimistic(data){
         futureOptions = 'optimistic';
         console.log("optimistic");
         d3.select('svg').select('#key').remove();
-        updateMap(data);
+        updateMap(data, year);
         //call updateData
         
     })
@@ -259,7 +326,7 @@ export function pessimistic(data){
         futureOptions = 'pessimistic';
         console.log("pessimistic");
         d3.select('svg').select('#key').remove();
-        updateMap(data);
+        updateMap(data, year);
         //call updateData
         
     })

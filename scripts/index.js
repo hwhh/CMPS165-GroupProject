@@ -106,8 +106,8 @@ Promise.all([
         return val * 100
     }),
 ]).then(values => {
-    // renderMap(water_stress_levels.get('1978-1982'));
-    // createSlider();
+    renderMap(water_stress_levels.get('1978-1982'), '1978-1982');
+    createSlider();
     console.log("here")
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d));
@@ -123,8 +123,8 @@ Promise.all([
         console.log('\"' + key + '\": {display: false},')
     });
 
-    // renderLineChart();
-    // create_modal();
+     //renderLineChart();
+     //create_modal();
 }); 
 
 
