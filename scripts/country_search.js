@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom';
 import * as ReactDOM from "react-dom";
 import ReactModal from "react-modal";
-import {display_country} from "./variables";
+import {display_country, country_contents, contents} from "./variables";
 import {updateChart} from "./line_chart";
 import Checkbox from "react-bootstrap/es/Checkbox";
 import {FormGroup} from "react-bootstrap";
@@ -14,14 +14,11 @@ const button_style = {
 };
 
 
-
 const column = {
     float: 'left',
-    width: '40%',
+    width: '33%',
     padding: '20px'
 };
-
-
 
 
 export function create_modal() {
@@ -121,6 +118,23 @@ class FilteredList extends React.Component {
 
     }
 
+    handleChangeContent(event) {
+        let countries = country_contents[event.target.value].values;
+
+        country_contents[event.target.value].display = !!event.target.checked;
+        countries.forEach(function (val) {
+            display_country[val].display = !!event.target.checked;
+        });
+        // display_country[event.target.value].display = !!event.target.checked;
+        // let dict = this.state.items;
+        // dict[event.target.value] = !!event.target.checked;
+        // this.setState({
+        //     items: dict,
+        //     initialItems: dict
+        // });
+
+    }
+
     render() {
         return (
             <div className="filter-list">
@@ -147,10 +161,24 @@ class FilteredList extends React.Component {
                         {Object.keys(this.state.items).map(function (key) {
                             if (self.state.items[key] === true)
                                 return (<label className="container">{key}
-                                            <input type="checkbox" checked="checked" value={key} onChange={self.handleChange}/>
-                                            <span className="checkmark"/>
-                                        </label>
+                                        <input type="checkbox" checked="checked" value={key}
+                                               onChange={self.handleChange}/>
+                                        <span className="checkmark"/>
+                                    </label>
                                 )
+
+                        })}
+                    </FormGroup>
+
+                    <FormGroup style={column}>
+                        <label>{"Contents"}</label>
+                        {(contents).map(function (key) {
+
+                            return (<label className="container">{key}
+                                    <input defaultChecked={country_contents[key].display} type="checkbox" value={key} onChange={self.handleChangeContent}/>
+                                    <span className="checkmark"/>
+                                </label>
+                            )
 
                         })}
                     </FormGroup>
