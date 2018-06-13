@@ -5,7 +5,6 @@ import {width, height, display_country, current_year_global} from "./variables";
 import {renderLineChart} from "./line_chart";
 import {create_modal} from "./country_search";
 
-
 export let total_internal_water = new Map();
 export let total_external_water = new Map();
 export let total_available_water = new Map();
@@ -36,6 +35,7 @@ export function showLineChart() {
     document.getElementById("pessimistic").disabled = false;
 
     d3.select('svg').select('#map').attr("hidden", true);
+    d3.select('svg').select('.predictedSlider').attr("visibility", "hidden");
     d3.select('svg').select('#slider').attr("hidden", true);
     d3.select('svg').select('#key').attr("hidden", true);
     d3.select('svg').select('.predictedSliderLabel').attr("hidden", true);

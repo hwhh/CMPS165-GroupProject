@@ -248,12 +248,12 @@ function legend(c){
             const previousElement = d3.select(this);
             for (let key in colours) {
                 if (previousElement.attr("fill") === key) {
-                    previousElement.style("fill", "#ADD8E6");
+                    previousElement.style("fill", "#000080");
                     for (let i = 0; i < colours[key].length; i++) {
                         d3.select('svg')
                             .select('#map')
                             .select('#' + colours[key][i])
-                            .style("fill", "#ADD8E6");
+                            .style("fill", "#000080");
                     }
                 }
             }
