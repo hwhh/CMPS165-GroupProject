@@ -134,9 +134,9 @@ function drawLines(g, countries, key) {
             d3.selectAll('.country').select('.line').style('stroke-width', '1px')
 
         }).on("mousemove", function (data) {
-            div.html('Country: ' +data.id + '<br/>' +
-                'Year: ' + utils.formatTime(x.invert(d3.mouse(this)[0])) + '<br/>' +
-                'Value:' + formatDecimal(y.invert(d3.mouse(this)[1] - 2)) + '<br/>'
+            div.html('<b>Country: </b>' +data.id + '<br/>' +
+                '<b>Year:</b> ' + utils.formatTime(x.invert(d3.mouse(this)[0])) + '<br/>' +
+                '<b>Water Stress:</b> ' + formatDecimal(y.invert(d3.mouse(this)[1] - 2)) + '<br/>'
             )
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
@@ -305,10 +305,10 @@ export function renderLineChart() {
 
     g.append("rect")
         .attr("class", "back2Map_button")
-        .attr("transform", "translate(" + 1100 + "," + 0 + ")")
+        .attr("transform", "translate(" + 1150 + "," + 0 + ")")
         .attr('width', 100)
         .attr('height', 50)
-        .attr('fill', 'lightblue')
+        .attr('fill', 'lightgrey')
         .on('click', function () {
             // toggle visibility
             d3.select('svg').select('.predictedSliderLabel').attr("visibility", "visible");
@@ -319,6 +319,11 @@ export function renderLineChart() {
             });
           utils.showMap();
         });
+    
+    g.append("text")
+        .attr("id", "back_button_text")
+        .attr("transform", "translate(" + 1185 + "," + 30 + ")")
+        .text("Back");
 
     create_domains(utils.water_stress);
     drawAxis(g);

@@ -22,6 +22,7 @@ h1 {
     font: 10px sans-serif;
     background: #ddd;
     pointer-events: none;
+    border-radius: 5px;
 }
 
 
@@ -38,7 +39,9 @@ h1 {
     stroke: steelblue;
 }
 
-
+#back_button_text{
+    pointer-events: none;
+}
 
 
 .overlay {
