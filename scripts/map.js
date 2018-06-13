@@ -9,19 +9,27 @@ export const projection = d3.geoMiller()
 export const path = d3.geoPath()
     .projection(projection);
 
-export const color = d3.scaleThreshold()
-    .domain([0, 5])
-    .range(d3.schemeReds[5]);
-
-const xDensity = d3.scaleSqrt()
-    .domain([0, 5])
-    .rangeRound([440, 600]);
-
-var xPos = [440, 480, 520, 560, 600];
-
+//export const color = d3.scaleThreshold()
+//    .domain([0, 5])
+//    .range(d3.schemeReds[5]);
+//
+//const xDensity = d3.scaleSqrt()
+//    .domain([0, 5])
+//    .rangeRound([440, 600]);
+//
+var xPos = [440, 520, 600, 680, 760];
+//
 var scale = d3.scaleLinear()
-                .domain([0,5])
-                .range([440, 640]);
+                .domain([0,500])
+                .range([440, 840]);
+
+export const color = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500])
+    .range(d3.schemeReds[6]);
+
+var xDensity = d3.scaleSqrt()
+    .domain([0, 500])
+    .rangeRound([440, 760]);
 
 
 let map;
@@ -147,7 +155,7 @@ export function updateMap(data){
 function legend(c){
         
     var colours = c;
-    
+
     console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
@@ -169,8 +177,8 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xDensity(d[0]); })
-        .attr("width", function(d) { return xDensity(d[1]) - xDensity(d[0]); })
+        .attr("x", function(d) { console.log(d[0]); return xPos[d[0]/100]; })
+        .attr("width", 80)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
@@ -216,7 +224,7 @@ function legend(c){
 
     //adding the value of the domain in the legend, creating the x axis using the x scale created for the data
     //tick size is 13 so all the values of the domain will appear on page
-    legend.call(d3.axisBottom(xDensity)
+    legend.call(d3.axisBottom(scale)
         .tickSize(13)
         .tickValues(color.domain()))
         .select(".domain")
