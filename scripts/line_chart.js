@@ -287,8 +287,6 @@ export function updateChart() {
             g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
             d3.select('#line_chart').style('pointer-events', 'none');
             d3.select('#line_chart').select('.back2Map_button').style('pointer-events', 'auto');
-            // g.select('.back2Map_button').style('pointer-events', 'auto');
-
             g.select('text').style('opacity', '0');
             g.select('path').style('opacity', '0');
         }
