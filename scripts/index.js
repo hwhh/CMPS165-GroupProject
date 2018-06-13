@@ -40,8 +40,6 @@ export function showLineChart() {
     d3.select('svg').select('.predictedSlider').attr("visibility", "hidden");
     d3.select('svg').select('#slider').attr("hidden", true);
     d3.select('svg').select('#key').attr("hidden", true);
-    d3.select('svg').select('.predictedSliderLabel').attr("hidden", true);
-    d3.select('svg').select('.predicted').attr("hidden", true);
     d3.select('svg').select('#line_chart').attr("hidden", null);
     d3.select('#root').attr("display", "visible");
     // d3.select('svg').select('#line_chart').style('display', 'visible');
