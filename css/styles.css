@@ -168,6 +168,12 @@ div.tooltip_info {
     font: 18px sans-serif;
 }
 
+.predictedSliderLabel{
+    font-family: Helvetica, sans-serif;
+    font-size: 8px!important;
+    fill: red;
+}
+
 .DataSelectorMulti {
     position: absolute;
     left: 0;
