@@ -30,18 +30,18 @@ export const svg = d3.select("body").append("svg")
     .attr('height', height + 50);
 
 export function showLineChart() {
-    d3.select('svg').select('#map').transition().duration(1000).style('display', 'none');
-    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'none');
-    d3.select('svg').select('#key').transition().duration(1000).style('display', 'none');
-    d3.select('svg').select('#line_chart').style('display', 'visible');
+    d3.select('svg').select('#map').attr("hidden", true);
+    d3.select('svg').select('#slider').attr("hidden", true);
+    d3.select('svg').select('#key').attr("hidden", true);
+    d3.select('svg').select('#line_chart').attr("hidden", null);
     // d3.select('svg').select('#line_chart').style('display', 'visible');
 }
 
 export function showMap() {
-    d3.select('svg').select('#map').transition().duration(1000).style('display', 'visible');
-    d3.select('svg').select('#slider').transition().duration(1000).style('display', 'visible');
-    d3.select('svg').select('#key').transition().duration(1000).style('display', 'visible');
-    d3.select('svg').selectAll('g').select('#line_chart').transition().duration(1000).style('display', 'none');
+    d3.select('svg').select('#map').attr("hidden", null);
+    d3.select('svg').select('#slider').attr("hidden", null);
+    d3.select('svg').select('#key').attr("hidden", null);
+    d3.select('svg').select('#line_chart').attr("hidden", true);
 }
 
 
@@ -53,7 +53,6 @@ export function getAllValuesForCountry(map, country, index_1, index_2) {
     });
     return {id: country, display: display_country[country].display, values: values}
 }
-
 
 
 function loadDataset(map, file, func) {
@@ -79,7 +78,7 @@ function loadDataset(map, file, func) {
 
 
 function sigmoid(t) {
-    return t*100
+    return t * 100
     // return 1/(1+Math.pow(Math.E, -t));
 }
 

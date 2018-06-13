@@ -1,7 +1,50 @@
 import * as utils from "./index";
-import {width, height, margin, display_country} from "./variables";
+import {width, height, margin, display_country, country_contents} from "./variables";
 
 const zoom = d3.zoom().scaleExtent([1 / 4, 9]).on('zoom', zoomFunction);
+
+//Add in the
+const color_asia = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemeReds[5]);
+
+const color_north_america = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemeBlues[5]);
+
+const color__south_america = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemeGreens[5]);
+
+const color_africa = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemePurples[5]);
+
+const color_eurpoe = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemeOranges[5]);
+
+const color_ocina = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500, 600])
+    .range(d3.schemePurples[5]);
+
+
+function get_colour_scheme_for_country(country) {
+    let region = country_contents[country];
+    if (region === 'Asia')
+        return color_asia;
+    else if (region === 'Europe')
+        return color_eurpoe;
+    else if (region === 'Oceania')
+        return color_ocina;
+    else if (region === 'North America')
+        return color_north_america;
+    else if (region === 'South America')
+        return color__south_america;
+    else if (region === 'Africa')
+        return color_africa;
+}
+
 
 //Sets axis scales
 const x = d3.scaleTime().range([0, width - 100]),
@@ -257,8 +300,8 @@ export function renderLineChart() {
     const g = utils.svg.append('g')
         .attr('id', 'line_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-        .style('display', 'none');
-        // .call(zoom);
+        .attr("hidden", true);
+    // .call(zoom);
 
     g.append("rect")
         .attr("class", "back2Map_button")
