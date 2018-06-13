@@ -13,11 +13,15 @@ const button_style = {
 };
 
 
+
 const column = {
     float: 'left',
     width: '40%',
-    padding: '5px'
+    padding: '20px'
 };
+
+
+
 
 export function create_modal() {
     const props = {countries: utils.water_stress};
@@ -50,12 +54,12 @@ class Model extends React.Component {
             <div>
                 <button style={button_style} onClick={this.handleOpenModal}>Add countries</button>
                 <ReactModal
-                    // className="Modal"
+                    className="Modal"
                     isOpen={this.state.showModal}
                     contentLabel="Minimal Modal Example"
                     ariaHideApp={false}
                 >
-                    <button onClick={this.handleCloseModal}>Close Modal</button>
+                    <a className="close-classic" onClick={this.handleCloseModal}/>
 
                     <FilteredList/>
 
@@ -94,7 +98,7 @@ class FilteredList extends React.Component {
         let updated = {};
         Object.keys(initialItems).filter(function (item) {
             let res = item.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-            if(res || initialItems[item]) {
+            if (res || initialItems[item]) {
                 updated[item] = initialItems[item];
             }
         });
@@ -130,16 +134,23 @@ class FilteredList extends React.Component {
                         <label>{"Un-Selected"}</label>
                         {Object.keys(this.state.items).map(function (key) {
                             if (self.state.items[key] === false)
-                                return <Checkbox defaultChecked={false} value={key}
-                                                 onChange={self.handleChange}>{key}</Checkbox>
+                                return (<label className="container">{key}
+                                        <input type="checkbox" value={key} onChange={self.handleChange}/>
+                                        <span className="checkmark"/>
+                                    </label>
+                                )
                         })}
                     </FormGroup>
                     <FormGroup style={column}>
                         <label>{"Selected"}</label>
                         {Object.keys(this.state.items).map(function (key) {
                             if (self.state.items[key] === true)
-                                return <Checkbox defaultChecked={true} value={key}
-                                                 onChange={self.handleChange}>{key}</Checkbox>
+                                return (<label className="container">{key}
+                                            <input type="checkbox" checked="checked" value={key} onChange={self.handleChange}/>
+                                            <span className="checkmark"/>
+                                        </label>
+                                )
+
                         })}
                     </FormGroup>
                 </div>
@@ -147,3 +158,5 @@ class FilteredList extends React.Component {
         );
     }
 }
+
+// defaultChecked={true} value={key} onChange={self.handleChange}>{key}

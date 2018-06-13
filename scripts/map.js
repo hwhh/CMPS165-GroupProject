@@ -1,6 +1,6 @@
 import * as utils from "./index";
-import {width, height} from "./variables";
-import {renderLineChart} from "./line_chart";
+import {width, height, display_country} from "./variables";
+import {updateChart} from "./line_chart";
 
 export const projection = d3.geoMiller()
     .scale(150)
@@ -9,19 +9,19 @@ export const projection = d3.geoMiller()
 export const path = d3.geoPath()
     .projection(projection);
 
-export const color = d3.scaleThreshold()
-    .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeReds[5]);
-
-const xDensity = d3.scaleSqrt()
-    .domain([0, 5])
-    .rangeRound([440, 600]);
-
-var xPos = [440, 480, 520, 560, 600];
-
+var xPos = [440, 520, 600, 680, 760];
+//
 var scale = d3.scaleLinear()
-                .domain([0,5])
-                .range([440, 640]);
+                .domain([0,500])
+                .range([440, 840]);
+
+export const color = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500])
+    .range(d3.schemeReds[6]);
+
+var xDensity = d3.scaleSqrt()
+    .domain([0, 500])
+    .rangeRound([440, 760]);
 
 
 let map;
@@ -87,8 +87,9 @@ export function renderMap(data, year) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
                     console.log("clicked: " + country_name);
+                    display_country[country_name].display = true;
+                    updateChart();
                     utils.showLineChart();
-                    renderLineChart(country_name)
                 }
             })
 
@@ -143,10 +144,11 @@ export function updateMap(data, year){
             if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
                 let country_name = d.properties.name;
                 console.log("clicked: " + country_name);
-                utils.show_line_chart();
-                renderLineChart(data)
+                display_country[country_name].display = true;
+                updateChart();
+                utils.showLineChart();
             }
-        })
+        });
 
     legend(colours);
     
@@ -157,49 +159,84 @@ function toolTip(d, data, year){
     //console.log("Year");
     //console.log(year);
     //console.log(utils);
-    console.log("Water_stress_levels");
-    console.log(utils.water_stress_levels);
+    console.log("Data");
+    //console.log(utils.water_stress_levels);
+    console.log(data);
     let water_stress_levels = utils.water_stress_levels;
     let total_water_used = utils.total_water_used;
-    let total_internal_water = utils.total_water_used;
+    let total_internal_water = utils.total_internal_water;
+    let total_external_water = utils.total_external_water
     
-    let country_name = d.properties.name;
-    let stressLevel = (Math.round(data[country_name] * 100) / 100);
-    let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
-    let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
-    let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
-    //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
+    let water_stress_levels_bau = utils.water_stress_levels_bau;
+    let water_stress_levels_pst = utils.water_stress_levels_pst;
+    let water_stress_levels_opt = utils.water_stress_levels_opt;
     
-    //console.log(country_value[country_name]);
-    //let val_val = country_value.country_name;
-    
-    console.log("Alfredo's --------");
-    console.log("Country: " + country_name);
-    console.log("Stress Level: " + stressLevel);
-    console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
-    console.log(total_water_used);
-    console.log(total_internal_water);
-    console.log("Year: "+ year);
+    console.log("Here--------------");
+    console.log(year);
     console.log(water_stress_levels);
-    //console.log(country_ttl_available_water);
-    //console.log(data);
+    console.log(water_stress_levels.get(year));
+    console.log("-------------------");
     
-    div_tooltip.transition()//here
-            .duration(200)
-            .style("opacity", .9);
-    div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
-                         '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
-                         '<br/>'+'<p>'+'Total Water Used'+'</p>'+
-                         '<br/>'+'<p>'+'Total Water Used'+'</p>'+
-                         '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+    if( year != 2020 && year != 2030 && year != 2040){
+    
+        let country_name = d.properties.name;
+        let stressLevel = (Math.round(data[country_name] * 100) / 100);
+        let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
+        let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
+        let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
+        let country_external_water = Math.round(total_external_water.get(year)[country_name] * 100) / 100;
+        //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
 
-                         '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
-                         '<br/>'+'<p>'+ country_water_used +" m3" + '</p>' +
-                         '<br/>'+'<p>'+ country_internal_water +" m3" + '</p>' +
-                         '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
-                         '</div>')
-             .style("left", (20) + "px")
-             .style("top", (height - 30) + "px");
+        //console.log(country_value[country_name]);
+        //let val_val = country_value.country_name;
+
+//        console.log("Alfredo's --------");
+//        console.log("Country: " + country_name);
+//        console.log("Stress Level: " + stressLevel);
+//        console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
+//        console.log(total_water_used);
+//        console.log(total_internal_water);
+//        console.log("Year: "+ year);
+//        console.log(water_stress_levels);
+        
+        //console.log(country_ttl_available_water);
+        //console.log(data);
+
+        div_tooltip.transition()//here
+                .duration(200)
+                .style("opacity", .9);
+        div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
+                             '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                             '<br/>'+'<p>'+'Total Water Used'+'</p>'+
+                             '<br/>'+'<p>'+'Total Internal Water'+'</p>'+
+                             '<br/>'+'<p>'+'Total External Water'+'</p>'+
+                             '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+
+                             '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                             '<br/>'+'<p>'+ country_water_used +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ country_internal_water +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ country_external_water +" m3" + '</p>' +
+                             '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                             '</div>')
+                 .style("left", (20) + "px")
+                 .style("top", (height - 30) + "px");
+    }else{
+        let country_name = d.properties.name;
+        let stressLevel = (Math.round(data[country_name] * 100) / 100);
+        
+        div_tooltip.transition()//here
+                .duration(200)
+                .style("opacity", .9);
+        div_tooltip.html(country_name + '<div class="tooltip_info_box" >' +
+                             '<div class="tooltip_titles" ><p>' + "Stress Level" + '</p>'+
+                             '<br/>'+'<p>'+'Year'+'</p>'+'</div>' +
+
+                             '<div class="tooltip_info" ><p>'+ stressLevel + '</p>'+
+                             '<br/>'+'<p>'+ year + '</p>'+ '</div>' +
+                             '</div>')
+                 .style("left", (20) + "px")
+                 .style("top", (height - 30) + "px");
+    }
     
 }
 
@@ -212,15 +249,12 @@ function tooltip_go_invisible(){
 function legend(c){
         
     var colours = c;
+
+    console.log(colours);
                     //Define legend
     var legend = utils.svg.append("g")
-                            .attr("id", "key")
-                            .attr("transform", "translate(50,550)");
-
-//    var undefinedRect = utils.svg.append("g")
-//                                .attr("id", "undefinedRect")
-//                                .attr("transform", "translate(50,550)");
-
+        .attr("id", "key")
+        .attr("transform", "translate(40,550)");
 
             //Setting up the legend
     legend.selectAll("rect")
@@ -237,8 +271,8 @@ function legend(c){
         .append("rect")
         .attr('id', function(d) { return color(d[0]); })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xPos[d[0]]; })
-        .attr("width", 40)
+        .attr("x", function(d) { console.log(d[0]); return xPos[d[0]/100]; })
+        .attr("width", 80)
         .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
@@ -291,6 +325,7 @@ function legend(c){
         .remove();
     
 }
+
 
 export function bau(data){
     
