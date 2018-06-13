@@ -9,14 +9,6 @@ export const projection = d3.geoMiller()
 export const path = d3.geoPath()
     .projection(projection);
 
-//export const color = d3.scaleThreshold()
-//    .domain([0, 5])
-//    .range(d3.schemeReds[5]);
-//
-//const xDensity = d3.scaleSqrt()
-//    .domain([0, 5])
-//    .rangeRound([440, 600]);
-//
 var xPos = [440, 520, 600, 680, 760];
 //
 var scale = d3.scaleLinear()
@@ -160,7 +152,7 @@ function legend(c){
                     //Define legend
     var legend = utils.svg.append("g")
         .attr("id", "key")
-        .attr("transform", "translate(-30,550)");
+        .attr("transform", "translate(40,550)");
 
             //Setting up the legend
     legend.selectAll("rect")
