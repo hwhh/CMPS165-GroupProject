@@ -16,7 +16,7 @@ const button_style = {
 
 
 const column = {
-    float: 'left',
+    float: 'left
     width: '40%',
     padding: '20px'
 };
