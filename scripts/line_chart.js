@@ -317,6 +317,10 @@ export function renderLineChart() {
           utils.showMap();
         });
 
+
+
+
+
     create_domains(utils.water_stress);
     drawAxis(g);
     drawLines(g, utils.water_stress, '.country');

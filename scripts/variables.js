@@ -3,6 +3,9 @@ export const slider_width = 500, slider_height = 100;
 export const padding = 40;
 export const margin = {top: 20, right: 80, bottom: 30, left: 70};
 
+export let current_year_global = '1978-1982';
+
+
 export const years = {
     1978: '1978-1982',
     1983: '1983-1987',

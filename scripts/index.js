@@ -1,10 +1,11 @@
 import {renderMap} from "./map";
 import {createSlider} from "./slider";
 
-
-import {width, height, display_country} from "./variables";
+import {width, height, display_country, current_year_global} from "./variables";
 import {renderLineChart} from "./line_chart";
 import {create_modal} from "./country_search";
+
+
 
 export let total_internal_water = new Map();
 export let total_external_water = new Map();
@@ -30,17 +31,36 @@ export const svg = d3.select("body").append("svg")
     .attr('height', height + 50);
 
 export function showLineChart() {
+
+    document.getElementById("bau").disabled=false;
+    document.getElementById("optimistic").disabled=false;
+    document.getElementById("pessimistic").disabled=false;
+
     d3.select('svg').select('#map').attr("hidden", true);
     d3.select('svg').select('#slider').attr("hidden", true);
     d3.select('svg').select('#key').attr("hidden", true);
+    d3.select('svg').select('.predictedSliderLabel').attr("hidden", true);
+    d3.select('svg').select('.predicted').attr("hidden", true);
     d3.select('svg').select('#line_chart').attr("hidden", null);
     // d3.select('svg').select('#line_chart').style('display', 'visible');
 }
 
 export function showMap() {
+
+    if(current_year_global.substring(0, 4) === "2020" || current_year_global.substring(0, 4) === "2030" || current_year_global.substring(0, 4) === "2040"){
+        document.getElementById("bau").disabled=false;
+        document.getElementById("optimistic").disabled=false;
+        document.getElementById("pessimistic").disabled=false;
+    }else{
+        document.getElementById("bau").disabled=true;
+        document.getElementById("optimistic").disabled=true;
+        document.getElementById("pessimistic").disabled=true;
+    }
     d3.select('svg').select('#map').attr("hidden", null);
     d3.select('svg').select('#slider').attr("hidden", null);
     d3.select('svg').select('#key').attr("hidden", null);
+    d3.select('svg').select('.predictedSliderLabel').attr("hidden", null);
+    d3.select('svg').select('.predicted').attr("hidden", null);
     d3.select('svg').select('#line_chart').attr("hidden", true);
 }
 

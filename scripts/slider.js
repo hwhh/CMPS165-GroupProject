@@ -1,5 +1,5 @@
 import * as utils from "./index";
-import {width, height, slider_height, slider_width, years, padding} from "./variables";
+import {width, height, slider_height, slider_width, years, padding, current_year_global} from "./variables";
 import {updateMap, futureOptions, bau, optimistic, pessimistic} from "./map";
 
 export function createSlider() {
@@ -12,7 +12,6 @@ export function createSlider() {
     const slider3 = d3.sliderHorizontal()
         .min(d3.min(data3))
         .max(d3.max(data3))
-//        .step(1000 * 60 * 60 * 24 * 365 * 5)
         .width(400)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(data3)
@@ -52,6 +51,7 @@ export function createSlider() {
                 document.getElementById("bau").disabled=true;
                 document.getElementById("optimistic").disabled=true;
                 document.getElementById("pessimistic").disabled=true;
+                current_year_global = current_year;
                 
                 updateMap(utils.water_stress_levels.get(current_year));
                 
