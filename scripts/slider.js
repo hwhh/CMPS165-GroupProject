@@ -61,9 +61,24 @@ export function createSlider() {
 
     utils.svg.append('g')
         .attr('id', 'slider')
-        .attr("transform", "translate(" + ((width / 2) - (slider_width / 2) + padding) + ", " + (height) + ")")
+        .attr("transform", "translate(480" + ", " + (height) + ")")
         .attr('width', slider_width)
         .attr('height', slider_height)
         .call(slider3);
+    
+    utils.svg.append('g').append("text")
+        .attr("class", "predictedSliderLabel")
+        .attr("x", 750)
+        .attr("y", 580)
+        .text("Predicted");
+    
+    utils.svg.append('g').append("line")
+        .attr("class", "predicted")
+        .attr("x1", 750)
+        .attr("x2", 750)
+        .attr("y1", 620)
+        .attr("y2", 580);
+
+    
 }
 

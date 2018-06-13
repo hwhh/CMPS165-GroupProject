@@ -9,19 +9,19 @@ export const projection = d3.geoMiller()
 export const path = d3.geoPath()
     .projection(projection);
 
-export const color = d3.scaleThreshold()
-    .domain([0, 100, 200, 300, 400, 500, 600])
-    .range(d3.schemeReds[5]);
-
-const xDensity = d3.scaleSqrt()
-    .domain([0, 600])
-    .rangeRound([440, 600]);
-
-var xPos = [440, 480, 520, 560, 600];
-
+var xPos = [440, 520, 600, 680, 760];
+//
 var scale = d3.scaleLinear()
-    .domain([0, 600])
-    .range([440, 640]);
+    .domain([0, 500])
+    .range([440, 840]);
+
+export const color = d3.scaleThreshold()
+    .domain([0, 100, 200, 300, 400, 500])
+    .range(d3.schemeReds[6]);
+
+var xDensity = d3.scaleSqrt()
+    .domain([0, 500])
+    .rangeRound([440, 760]);
 
 
 let map;
@@ -36,6 +36,8 @@ export function renderMap(data) {
         map = utils.svg.append('g')
             .attr('id', 'map')
             .attr('class', 'countries')
+            .attr("transform", "translate(50,0)")
+            .style('display', 'block')
             .selectAll('path')
             .data(features)
             .enter()
@@ -148,12 +150,7 @@ function legend(c) {
     //Define legend
     var legend = utils.svg.append("g")
         .attr("id", "key")
-        .attr("transform", "translate(50,550)");
-
-//    var undefinedRect = utils.svg.append("g")
-//                                .attr("id", "undefinedRect")
-//                                .attr("transform", "translate(50,550)");
-
+        .attr("transform", "translate(40,550)");
 
     //Setting up the legend
     legend.selectAll("rect")
@@ -172,13 +169,9 @@ function legend(c) {
             return color(d[0]);
         })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function (d) {
-            return xPos[d[0]];
-        })
-        .attr("width", 40)
-        .attr("fill", function (d) {
-            return color(d[0]);
-        })
+        .attr("x", function(d) { console.log(d[0]); return xPos[d[0]/100]; })
+        .attr("width", 80)
+        .attr("fill", function(d) { return color(d[0]); })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
             for (var key in colours) {
@@ -231,7 +224,8 @@ function legend(c) {
 
 }
 
-export function bau(data) {
+
+export function bau(data){
 
     d3.select('#bau')
         .on("click", function (d) {

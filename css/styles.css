@@ -135,6 +135,12 @@ svg {
     fill: red;
 }
 
+.predictedSliderLabel{
+    font-family: Helvetica, sans-serif;
+    font-size: 8px!important;
+    fill: red;
+}
+
 .DataSelectorMulti {
     position: absolute;
     left: 0;
