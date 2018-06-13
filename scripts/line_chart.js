@@ -311,6 +311,9 @@ export function renderLineChart() {
         .attr('fill', 'lightblue')
         .on('click', function () {
             // toggle visibility
+            d3.select('svg').select('.predictedSliderLabel').attr("visibility", "visible");
+            d3.select('svg').select('.predictedSlider').attr("visibility", "visible");
+            d3.select('#root').attr("display", "hidden");
             Object.keys(display_country).forEach(function (key) {
                 display_country[key].display = false
             });

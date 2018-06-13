@@ -73,7 +73,7 @@ export function createSlider() {
         .text("Predicted");
     
     utils.svg.append('g').append("line")
-        .attr("class", "predicted")
+        .attr("class", "predictedSlider")
         .attr("x1", 750)
         .attr("x2", 750)
         .attr("y1", 620)
