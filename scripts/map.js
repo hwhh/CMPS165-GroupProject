@@ -10,18 +10,18 @@ export const path = d3.geoPath()
     .projection(projection);
 
 export const color = d3.scaleThreshold()
-    .domain([1, 100, 200, 300, 400, 5000])
+    .domain([0, 100, 200, 300, 400, 500, 600])
     .range(d3.schemeReds[5]);
 
 const xDensity = d3.scaleSqrt()
-    .domain([0, 5])
+    .domain([0, 600])
     .rangeRound([440, 600]);
 
 var xPos = [440, 480, 520, 560, 600];
 
 var scale = d3.scaleLinear()
-                .domain([0,5])
-                .range([440, 640]);
+    .domain([0, 600])
+    .range([440, 640]);
 
 
 let map;
@@ -32,7 +32,6 @@ export let futureOptions = "bau";
 
 export function renderMap(data) {
     d3.json('./Data/countries.geojson', function (error, mapData) {
-        console.log(mapData)
         const features = mapData.features;
         map = utils.svg.append('g')
             .attr('id', 'map')
@@ -94,35 +93,35 @@ export function renderMap(data) {
 
 }
 
-export function updateMap(data){
-    
-    colours={};
+export function updateMap(data) {
+
+    colours = {};
     map.transition().duration(1000)
-    .style("fill", function(d) {
-        //Get data value
-        let value = data[d.properties.name];
-        if (value === 0 || value === -1 || value === undefined)
-            return "#ccc";
-        else {
-            let c = color(data[d.properties.name]);
-            let country_names;
-            if(colours[c] === undefined)
-                country_names = [];
-            else
-                country_names = colours[c];
+        .style("fill", function (d) {
+            //Get data value
+            let value = data[d.properties.name];
+            if (value === 0 || value === -1 || value === undefined)
+                return "#ccc";
+            else {
+                let c = color(data[d.properties.name]);
+                let country_names;
+                if (colours[c] === undefined)
+                    country_names = [];
+                else
+                    country_names = colours[c];
                 country_names.push(d.properties.name);
                 colours[c] = country_names;
-            return c
-        }
-     });
+                return c
+            }
+        });
 
     map.on("mouseover", function (d) {
-            let country_name = d.properties.name;
-            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
-                d3.select(this).style("fill", "orange");
-        })
+        let country_name = d.properties.name;
+        if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined)
+            d3.select(this).style("fill", "orange");
+    })
         .on("mouseout", function (d) {
-            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+            if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                 d3.select(this).style("fill", function (d) {
                     let c = color(data[d.properties.name]);
                     return c
@@ -130,7 +129,7 @@ export function updateMap(data){
             }
         })
         .on("click", function (d) {
-            if(data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined){
+            if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                 let country_name = d.properties.name;
                 console.log("clicked: " + country_name);
                 display_country[country_name].display = true;
@@ -140,52 +139,58 @@ export function updateMap(data){
         });
 
     legend(colours);
-    
-    
+
+
 }
 
-function legend(c){
-        
+function legend(c) {
+
     var colours = c;
-                    //Define legend
+    //Define legend
     var legend = utils.svg.append("g")
-                            .attr("id", "key")
-                            .attr("transform", "translate(50,550)");
+        .attr("id", "key")
+        .attr("transform", "translate(50,550)");
 
 //    var undefinedRect = utils.svg.append("g")
 //                                .attr("id", "undefinedRect")
 //                                .attr("transform", "translate(50,550)");
 
 
-            //Setting up the legend
+    //Setting up the legend
     legend.selectAll("rect")
-        .data(color.range().map(function(d) {
-        //mapping the color density value to the domain according to the data
-        //invert extent return all the values in the domain that corresponds the range
-        //looping through the domain, setting the range between each color bar
-          d = color.invertExtent(d);
-          if (d[0] == null) d[0] = xDensity.domain()[0]; //get the first and second value, storing then in the map
-          if (d[1] == null) d[1] = xDensity.domain()[1]; //this gets the range between each tick
-          return d;
+        .data(color.range().map(function (d) {
+            //mapping the color density value to the domain according to the data
+            //invert extent return all the values in the domain that corresponds the range
+            //looping through the domain, setting the range between each color bar
+            d = color.invertExtent(d);
+            if (d[0] == null) d[0] = xDensity.domain()[0]; //get the first and second value, storing then in the map
+            if (d[1] == null) d[1] = xDensity.domain()[1]; //this gets the range between each tick
+            return d;
         }))
         .enter()
         .append("rect")
-        .attr('id', function(d) { return color(d[0]); })
+        .attr('id', function (d) {
+            return color(d[0]);
+        })
         .attr("height", 8) //this creates the color bars between the values
-        .attr("x", function(d) { return xPos[d[0]]; })
+        .attr("x", function (d) {
+            return xPos[d[0]];
+        })
         .attr("width", 40)
-        .attr("fill", function(d) { return color(d[0]); })
+        .attr("fill", function (d) {
+            return color(d[0]);
+        })
         .on("mouseover", function (d) {
             var previousElement = d3.select(this);
-            for( var key in colours){
-                if( previousElement.attr("fill") === key){
+            for (var key in colours) {
+                if (previousElement.attr("fill") === key) {
                     previousElement.style("fill", "#ADD8E6");
                     var i;
-                    for(i = 0; i < colours[key].length; i++){
-                            d3.select('svg')
-                                .select('#map')
-                                .select('#'+colours[key][i])
-                                .style("fill", "#ADD8E6");
+                    for (i = 0; i < colours[key].length; i++) {
+                        d3.select('svg')
+                            .select('#map')
+                            .select('#' + colours[key][i])
+                            .style("fill", "#ADD8E6");
                     }
                 }
             }
@@ -193,15 +198,15 @@ function legend(c){
         })
         .on("mouseout", function (d) {
             var previousElement = d3.select(this);
-            for( var key in colours){
-                if( previousElement.attr("fill") === key){
+            for (var key in colours) {
+                if (previousElement.attr("fill") === key) {
                     previousElement.style("fill", key);
                     var i;
-                    for(i = 0; i < colours[key].length; i++){
-                            d3.select('svg')
-                                .select('#map')
-                                .select('#'+colours[key][i])
-                                .style("fill", key);
+                    for (i = 0; i < colours[key].length; i++) {
+                        d3.select('svg')
+                            .select('#map')
+                            .select('#' + colours[key][i])
+                            .style("fill", key);
                     }
                 }
             }
@@ -224,47 +229,48 @@ function legend(c){
         .tickValues(color.domain()))
         .select(".domain")
         .remove();
-    
+
 }
 
-export function bau(data){
-    
+export function bau(data) {
+
     d3.select('#bau')
-        .on("click", function(d){
-        futureOptions = 'bau';
-        console.log("bau");
-        d3.select('svg').select('#key').remove();
-        updateMap(data);
-        //call updateData
-        
-    })
-    
-}
-export function optimistic(data){
-    
-    d3.select('#optimistic')
-        .on("click", function(d){
-        futureOptions = 'optimistic';
-        console.log("optimistic");
-        d3.select('svg').select('#key').remove();
-        updateMap(data);
-        //call updateData
-        
-    })
-    
+        .on("click", function (d) {
+            futureOptions = 'bau';
+            console.log("bau");
+            d3.select('svg').select('#key').remove();
+            updateMap(data);
+            //call updateData
+
+        })
+
 }
 
-export function pessimistic(data){
-    
+export function optimistic(data) {
+
+    d3.select('#optimistic')
+        .on("click", function (d) {
+            futureOptions = 'optimistic';
+            console.log("optimistic");
+            d3.select('svg').select('#key').remove();
+            updateMap(data);
+            //call updateData
+
+        })
+
+}
+
+export function pessimistic(data) {
+
     d3.select('#pessimistic')
-        .on("click", function(d){
-        futureOptions = 'pessimistic';
-        console.log("pessimistic");
-        d3.select('svg').select('#key').remove();
-        updateMap(data);
-        //call updateData
-        
-    })
-    
+        .on("click", function (d) {
+            futureOptions = 'pessimistic';
+            console.log("pessimistic");
+            d3.select('svg').select('#key').remove();
+            updateMap(data);
+            //call updateData
+
+        })
+
 }
 

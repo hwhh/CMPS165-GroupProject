@@ -77,10 +77,14 @@ function loadDataset(map, file, func) {
     });
 }
 
+
+function sigmoid(t) {
+    return t*100
+    // return 1/(1+Math.pow(Math.E, -t));
+}
+
 Promise.all([
-    loadDataset(water_stress_levels, './Data/stress_levels/water_stress_levels.csv', function (val) {
-        return val * 100
-    }),
+    loadDataset(water_stress_levels, './Data/stress_levels/water_stress_levels.csv', sigmoid),
     loadDataset(total_external_water, './Data/water_use/total_external.csv', function (val) {
         return val
     }),
@@ -90,15 +94,9 @@ Promise.all([
     loadDataset(total_water_used, './Data/water_use/total_withdrawn.csv', function (val) {
         return val
     }),
-    loadDataset(water_stress_levels_bau, './Data/stress_levels/bau_predictions.csv', function (val) {
-        return val * 100
-    }),
-    loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions.csv', function (val) {
-        return val * 100
-    }),
-    loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions.csv', function (val) {
-        return val * 100
-    }),
+    loadDataset(water_stress_levels_bau, './Data/stress_levels/bau_predictions.csv', sigmoid),
+    loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions.csv', sigmoid),
+    loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions.csv', sigmoid),
 ]).then(values => {
     renderMap(water_stress_levels.get('1978-1982'));
     createSlider();
