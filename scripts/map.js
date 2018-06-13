@@ -85,7 +85,6 @@ export function renderMap(data, year) {
             .on("click", function (d) {
                 if (data[d.properties.name] !== 0 && data[d.properties.name] !== -1 && data[d.properties.name] !== undefined) {
                     let country_name = d.properties.name;
-                    console.log("clicked: " + country_name);
                     display_country[country_name].display = true;
                     updateChart();
                     utils.showLineChart();
@@ -157,13 +156,6 @@ export function updateMap(data, year){
 
 
 function toolTip(d, data, year){
-    //console.log("Year");
-    //console.log(year);
-    //console.log(utils);
-    console.log("Data");
-    //console.log(utils.water_stress_levels);
-    console.log(data);
-    let water_stress_levels = utils.water_stress_levels;
     let total_water_used = utils.total_water_used;
     let total_internal_water = utils.total_internal_water;
     let total_external_water = utils.total_external_water;
@@ -172,17 +164,10 @@ function toolTip(d, data, year){
     let water_stress_levels_pst = utils.water_stress_levels_pst;
     let water_stress_levels_opt = utils.water_stress_levels_opt;
 
-    console.log("Here--------------");
-    console.log(year);
-    console.log(water_stress_levels);
-    console.log(water_stress_levels.get(year));
-    console.log("-------------------");
 
-    if( year != 2020 && year != 2030 && year != 2040){
-
+    if( year !== '2020' && year !== '2030' && year !== '2040'){
         let country_name = d.properties.name;
         let stressLevel = (Math.round(data[country_name] * 100) / 100);
-        let country_water_stress = water_stress_levels.get(year)[country_name];// this is how you access the data
         let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
         let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
         let country_external_water = Math.round(total_external_water.get(year)[country_name] * 100) / 100;

@@ -12,7 +12,7 @@ h1 {
     display: none;
 }
 
-.tooltip {
+div.tooltip1 {
     position: absolute;
     text-align: center;
     width: 150px;

@@ -67,8 +67,6 @@ function zoomFunction() {
     d3.select('g').select('.y-axis').call(yAxis.scale(new_yScale));
     d3.select('g').select('.x-axis').call(xAxis.scale(new_xScale));
     //Gets all of the circles on the DOM excluding ones in the key
-
-    console.log(d3.event.transform)
     d3.select('g').selectAll('.country').attr('transform', d3.event.transform)
     d3.select('g').selectAll('.predictedLabel').attr('x', new_xScale(utils.parseTime(2017)))
     d3.select('g').selectAll('.predicted').attr('x1', new_xScale(utils.parseTime(2017))).attr('x2', new_xScale(utils.parseTime(2017)))
@@ -92,7 +90,7 @@ const line = d3.line()
 
 // Define the div for the tooltip
 const div = d3.select("body").append("div")
-    .attr("class", "tooltip")
+    .attr("class", "tooltip1")
     .style("opacity", 0);
 
 
@@ -316,8 +314,6 @@ export function renderLineChart() {
             });
           utils.showMap();
         });
-
-
 
 
 

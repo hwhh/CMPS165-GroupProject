@@ -6,7 +6,6 @@ import {renderLineChart} from "./line_chart";
 import {create_modal} from "./country_search";
 
 
-
 export let total_internal_water = new Map();
 export let total_external_water = new Map();
 export let total_available_water = new Map();
@@ -32,9 +31,9 @@ export const svg = d3.select("body").append("svg")
 
 export function showLineChart() {
 
-    document.getElementById("bau").disabled=false;
-    document.getElementById("optimistic").disabled=false;
-    document.getElementById("pessimistic").disabled=false;
+    document.getElementById("bau").disabled = false;
+    document.getElementById("optimistic").disabled = false;
+    document.getElementById("pessimistic").disabled = false;
 
     d3.select('svg').select('#map').attr("hidden", true);
     d3.select('svg').select('#slider').attr("hidden", true);
@@ -47,14 +46,14 @@ export function showLineChart() {
 
 export function showMap() {
 
-    if(current_year_global.substring(0, 4) === "2020" || current_year_global.substring(0, 4) === "2030" || current_year_global.substring(0, 4) === "2040"){
-        document.getElementById("bau").disabled=false;
-        document.getElementById("optimistic").disabled=false;
-        document.getElementById("pessimistic").disabled=false;
-    }else{
-        document.getElementById("bau").disabled=true;
-        document.getElementById("optimistic").disabled=true;
-        document.getElementById("pessimistic").disabled=true;
+    if (current_year_global.year.substring(0, 4) === "2020" || current_year_global.year.substring(0, 4) === "2030" || current_year_global.year.substring(0, 4) === "2040") {
+        document.getElementById("bau").disabled = false;
+        document.getElementById("optimistic").disabled = false;
+        document.getElementById("pessimistic").disabled = false;
+    } else {
+        document.getElementById("bau").disabled = true;
+        document.getElementById("optimistic").disabled = true;
+        document.getElementById("pessimistic").disabled = true;
     }
     d3.select('svg').select('#map').attr("hidden", null);
     d3.select('svg').select('#slider').attr("hidden", null);
@@ -117,9 +116,7 @@ Promise.all([
     loadDataset(water_stress_levels_opt, './Data/stress_levels/opt_predictions.csv', sigmoid),
     loadDataset(water_stress_levels_pst, './Data/stress_levels/pst_predictions.csv', sigmoid),
 ]).then(values => {
-    renderMap(water_stress_levels.get('1978-1982'), '1978-1982');
-    createSlider();
-    console.log("here")
+
 
     Object.keys(display_country).forEach(function (d) {
         water_stress.push(getAllValuesForCountry(water_stress_levels, d, 5, 9));
@@ -127,16 +124,10 @@ Promise.all([
         water_stress_opt.push(getAllValuesForCountry(water_stress_levels_opt, d, 0, 4));
         water_stress_pst.push(getAllValuesForCountry(water_stress_levels_pst, d, 0, 4));
     });
-
-    console.log(water_stress_levels)
-    console.log(water_stress_levels_pst)
-
-    Object.keys(water_stress_levels.get('1978-1982')).forEach(function (key) {
-        console.log('\"' + key + '\": {display: false},')
-    });
-
-     //renderLineChart();
-     //create_modal();
+    renderMap(water_stress_levels.get('1978-1982'), '1978-1982');
+    createSlider();
+    renderLineChart();
+    create_modal();
 }); 
 
 
