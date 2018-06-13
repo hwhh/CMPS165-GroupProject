@@ -154,7 +154,7 @@ export function updateMap(data, year){
 
 }
 
-function legend(c) {
+
 
 function toolTip(d, data, year){
     //console.log("Year");
@@ -166,7 +166,7 @@ function toolTip(d, data, year){
     let water_stress_levels = utils.water_stress_levels;
     let total_water_used = utils.total_water_used;
     let total_internal_water = utils.total_internal_water;
-    let total_external_water = utils.total_external_water
+    let total_external_water = utils.total_external_water;
 
     let water_stress_levels_bau = utils.water_stress_levels_bau;
     let water_stress_levels_pst = utils.water_stress_levels_pst;
@@ -186,22 +186,6 @@ function toolTip(d, data, year){
         let country_water_used = Math.round(total_water_used.get(year)[country_name] * 100) / 100;
         let country_internal_water = Math.round(total_internal_water.get(year)[country_name] * 100) / 100;
         let country_external_water = Math.round(total_external_water.get(year)[country_name] * 100) / 100;
-        //let country_ttl_available_water = total_available_water.get(year); //[country_name]; // this is how you access the data
-
-        //console.log(country_value[country_name]);
-        //let val_val = country_value.country_name;
-
-//        console.log("Alfredo's --------");
-//        console.log("Country: " + country_name);
-//        console.log("Stress Level: " + stressLevel);
-//        console.log("StressLvl (From water_stress_levels[]): "+ country_water_stress);
-//        console.log(total_water_used);
-//        console.log(total_internal_water);
-//        console.log("Year: "+ year);
-//        console.log(water_stress_levels);
-
-        //console.log(country_ttl_available_water);
-        //console.log(data);
 
         div_tooltip.transition()//here
                 .duration(200)
