@@ -37,7 +37,6 @@ export function renderMap(data) {
             .attr('id', 'map')
             .attr('class', 'countries')
             .attr("transform", "translate(50,0)")
-            .style('display', 'block')
             .selectAll('path')
             .data(features)
             .enter()
