@@ -33,9 +33,9 @@ export function createSlider() {
                 
                 updateMap(utils.water_stress_levels_bau.get(current_year), current_year);
                 
-                bau(utils.water_stress_levels_bau.get(current_year));
-                optimistic(utils.water_stress_levels_opt.get(current_year));
-                pessimistic(utils.water_stress_levels_pst.get(current_year));
+                bau(utils.water_stress_levels_bau.get(current_year), current_year);
+                optimistic(utils.water_stress_levels_opt.get(current_year), current_year);
+                pessimistic(utils.water_stress_levels_pst.get(current_year), current_year);
                 
             
                 
