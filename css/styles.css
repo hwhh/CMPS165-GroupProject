@@ -22,6 +22,7 @@ div.tooltip1 {
     font: 10px sans-serif;
     background: #ddd;
     pointer-events: none;
+    border-radius: 5px;
 }
 
 
@@ -38,7 +39,9 @@ div.tooltip1 {
     stroke: steelblue;
 }
 
-
+#back_button_text{
+    pointer-events: none;
+}
 
 
 .overlay {
@@ -119,6 +122,11 @@ svg {
 }
 
 .predicted {
+    stroke: red;
+    stroke-dasharray: 2, 3;
+}
+
+.predictedSlider {
     stroke: red;
     stroke-dasharray: 2, 3;
 }
