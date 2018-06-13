@@ -9,9 +9,8 @@ import Checkbox from "react-bootstrap/es/Checkbox";
 import {FormGroup} from "react-bootstrap";
 
 const button_style = {
-    transform: 'translate(200, 680)',
-    position: 'relative',
-    visibility: 'hidden'
+    visibility: 'hidden',
+    transform: 'translate(100px, 680px)'
 };
 
 
