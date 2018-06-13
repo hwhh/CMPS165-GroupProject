@@ -192,7 +192,16 @@ function toolTip(d, data, year){
                  .style("top", (height - 30) + "px");
     }else{
         let country_name = d.properties.name;
-        let stressLevel = (Math.round(data[country_name] * 100) / 100);
+        let stressLevel = (Math.round(data[country_name] * 100) / 100); 
+        console.log(water_stress_levels_bau);
+        
+        if( futureOptions === 'bau'){
+            stressLevel = Math.round(water_stress_levels_bau.get(year)[country_name] * 100) / 100;
+        }else if(futureOptions === 'optimistic'){
+            stressLevel = Math.round(water_stress_levels_opt.get(year)[country_name] * 100) / 100;
+        }else if(futureOptions === 'pessimistic'){
+            stressLevel = Math.round(water_stress_levels_pst.get(year)[country_name] * 100) / 100;
+        }
 
         div_tooltip.transition()//here
                 .duration(200)
