@@ -56,7 +56,9 @@ const xAxis = d3.axisBottom(x).tickPadding(2);
 const yAxis = d3.axisLeft(y).tickFormat(d3.format(",.2f")).tickValues([0.00001, 0.0078125, 0.015625, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 500]);
 
 const formatDecimal = d3.format(".3f"),
-        bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    bisectDate = d3.bisector(function (d) {
+        return d.date;
+    }).left;
 
 
 function zoomFunction() {
@@ -70,10 +72,8 @@ function zoomFunction() {
     d3.select('g').selectAll('.country').attr('transform', d3.event.transform)
     d3.select('g').selectAll('.predictedLabel').attr('x', new_xScale(utils.parseTime(2017)))
     d3.select('g').selectAll('.predicted').attr('x1', new_xScale(utils.parseTime(2017))).attr('x2', new_xScale(utils.parseTime(2017)))
-    d3.select('g').selectAll('circle').filter('.dot').attr('r', (4/d3.event.transform.k))
+    d3.select('g').selectAll('circle').filter('.dot').attr('r', (4 / d3.event.transform.k))
 }
-
-
 
 
 //Line generator, where the lives are curved
@@ -132,7 +132,7 @@ function drawLines(g, countries, key) {
             d3.selectAll('.country').select('.line').style('stroke-width', '1px')
 
         }).on("mousemove", function (data) {
-            div.html('Country: ' +data.id + '<br/>' +
+            div.html('Country: ' + data.id + '<br/>' +
                 'Year: ' + utils.formatTime(x.invert(d3.mouse(this)[0])) + '<br/>' +
                 'Value:' + formatDecimal(y.invert(d3.mouse(this)[1] - 2)) + '<br/>'
             )
@@ -282,10 +282,13 @@ export function updateChart() {
                 .attrTween('stroke-dashoffset', tweenDashoffsetOn);
 
             g.selectAll('circle').style('opacity', '1').style('pointer-events', 'auto');
-            g.style('pointer-events', 'auto');
+            d3.select('#line_chart').style('pointer-events', 'auto');
         } else {
             g.selectAll('circle').style('opacity', '0').style('pointer-events', 'none');
-            g.style('pointer-events', 'none');
+            d3.select('#line_chart').style('pointer-events', 'none');
+            d3.select('#line_chart').select('.back2Map_button').style('pointer-events', 'auto');
+            // g.select('.back2Map_button').style('pointer-events', 'auto');
+
             g.select('text').style('opacity', '0');
             g.select('path').style('opacity', '0');
         }
@@ -312,9 +315,9 @@ export function renderLineChart() {
             Object.keys(display_country).forEach(function (key) {
                 display_country[key].display = false
             });
-          utils.showMap();
+            g.style('pointer-events', 'auto');
+            utils.showMap();
         });
-
 
 
     create_domains(utils.water_stress);
