@@ -41,14 +41,7 @@ export function showLineChart() {
     d3.select('svg').select('.predictedSliderLabel').attr("hidden", true);
     d3.select('svg').select('.predicted').attr("hidden", true);
     d3.select('svg').select('#line_chart').attr("hidden", null);
-    d3.select('#root').select('#react-code').select('#add_button').attr("hidden", null);
-
-
-    document.getElementById('add_button').style.visibility = 'visible';
-
-    // d3.select('#root').select('#react-code').select('#add_button').attr('visibility', 'show');
-    // d3.select('svg').select('#line_chart').style('display', 'visible');
-}
+    document.getElementById('add_button').style.visibility = 'visible';}
 
 
 
