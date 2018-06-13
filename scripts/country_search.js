@@ -9,7 +9,8 @@ import Checkbox from "react-bootstrap/es/Checkbox";
 import {FormGroup} from "react-bootstrap";
 
 const button_style = {
-    transform: 'translate(100px, 680px)',
+    transform: 'translate(200, 680)',
+    position: 'relative'
 };
 
 
@@ -52,7 +53,7 @@ class Model extends React.Component {
     render() {
         return (
             <div>
-                <button style={button_style} onClick={this.handleOpenModal}>Add countries</button>
+                <button id="add_button" style={button_style} onClick={this.handleOpenModal}>Add countries</button>
                 <ReactModal
                     className="Modal"
                     isOpen={this.state.showModal}

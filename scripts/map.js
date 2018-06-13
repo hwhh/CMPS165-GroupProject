@@ -37,6 +37,7 @@ export function renderMap(data) {
         map = utils.svg.append('g')
             .attr('id', 'map')
             .attr('class', 'countries')
+            .attr("transform", "translate(50,0)")
             .style('display', 'block')
             .selectAll('path')
             .data(features)
