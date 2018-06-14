@@ -1,17 +1,16 @@
 
-Add new website layout
 
 Add ribion charts -- Alfredo
-
-style the tool tip
 fix the mouse over for the predicted lines / Zoom on mouse over
 Add interactive Legend for line chart
-Add the back to map button
-Add zoom for charts
 
 
 
 ///DONE
+Add new website layout
+Add the back to map button
+Add zoom for charts
+style the tool tip
 Fix line chart - Henry
 Make sure its colour blind friendly -- Alfredo
 Add radio buttons pes, op, bas - Hailey

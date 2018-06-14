@@ -173,7 +173,6 @@ class FilteredList extends React.Component {
                     <FormGroup style={column}>
                         <label>{"Contents"}</label>
                         {(contents).map(function (key) {
-
                             return (<label className="container">{key}
                                     <input defaultChecked={country_contents[key].display} type="checkbox" value={key} onChange={self.handleChangeContent}/>
                                     <span className="checkmark"/>
