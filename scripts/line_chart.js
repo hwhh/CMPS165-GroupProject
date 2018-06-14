@@ -60,6 +60,19 @@ const formatDecimal = d3.format(".3f"),
         return d.date;
     }).left;
 
+// Legend vars for line chart
+var countries_showing = [];
+var colors_for_countries = [];
+var ordinal = d3.scaleOrdinal()
+  .domain(countries_showing)
+  .range(colors_for_countries);
+
+var linechart_legend;
+var legendOrdinal;
+var dont_show_these_countries = [];
+
+
+
 
 function zoomFunction() {
     //Returns a copy of the continuous scales x and y whose domain is transformed.
@@ -149,6 +162,9 @@ function drawLines(g, countries, key) {
         })
         .attr('fill', 'none')
         .style('stroke', function (d) {
+            //console.log(d);
+            countries_showing.push(d.id);
+            colors_for_countries.push(z(d.id));
             return z(d.id)
         });
 
@@ -265,8 +281,12 @@ function create_domains(data) {
 }
 
 export function updateChart(close) {
+    dont_show_these_countries = [];
     Object.keys(display_country).forEach(function (key) {
         const g = d3.selectAll('#' + key);
+//        console.log(display_country[key]);
+//        console.log("country");
+//        console.log(key);
         if(close){
             g.style('pointer-events', 'auto');
         }
@@ -292,6 +312,9 @@ export function updateChart(close) {
                 g.style('pointer-events', 'none');
                 g.select('text').style('opacity', '0');
                 g.select('path').style('opacity', '0');
+                
+                dont_show_these_countries.push(key);
+                
             }
             /*if (display_country[key].display) {
                 g.select('text')
@@ -320,7 +343,26 @@ export function updateChart(close) {
                 g.select('path').style('opacity', '0');
             }*/
         }
+        
     });
+    ordinal.domain(countries_showing).range(colors_for_countries);
+    legendOrdinal = d3.legendColor()
+                        .shape("path", d3.symbol().type(d3.symbolSquare).size(150)())
+                        .shapePadding(10)
+                        //use cellFilter to hide the "e" cell
+                        .cellFilter(function(d){ 
+                                        //console.log(d.label);
+                                        //return d.label !== "Mexico" && d.label !== "US";
+                                        for(let i = 0; i < dont_show_these_countries.length; i++){
+                                            if(!(d.label != dont_show_these_countries[i]) ){
+                                                return false;
+                                            }
+                                        }
+                                        return true;
+                        })
+                        .scale(ordinal);
+    linechart_legend.call(legendOrdinal);
+    console.log("updateChart Called");
 }
 
 
@@ -354,6 +396,18 @@ export function renderLineChart() {
         .attr("id", "back_button_text")
         .attr("transform", "translate(" + 1185 + "," + 30 + ")")
         .text("Back");
+    
+    // Legend
+    linechart_legend = g.append('g')
+                        .attr("class", "legendOrdinal")
+                        .attr("transform", "translate(1130,150)");
+    legendOrdinal = d3.legendColor()
+                        .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
+                        .shapePadding(10)
+                        //use cellFilter to hide the "e" cell
+                        //.cellFilter(function(d){ return d.label !== "e" })
+                        .scale(ordinal);
+    linechart_legend.call(legendOrdinal);
 
     create_domains(utils.water_stress);
     drawAxis(g);
