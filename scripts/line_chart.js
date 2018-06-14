@@ -400,7 +400,7 @@ export function renderLineChart() {
     // Legend
     linechart_legend = g.append('g')
                         .attr("class", "legendOrdinal")
-                        .attr("transform", "translate(1130,150)");
+                        .attr("transform", "translate(1120,100)");
     legendOrdinal = d3.legendColor()
                         .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
                         .shapePadding(10)

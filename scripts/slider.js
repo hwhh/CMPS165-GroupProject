@@ -31,6 +31,8 @@ export function createSlider() {
                 document.getElementById("optimistic").disabled=false;
                 document.getElementById("pessimistic").disabled=false;
                 
+                current_year_global.year = current_year;
+                
                 updateMap(utils.water_stress_levels_bau.get(current_year), current_year);
                 
                 bau(utils.water_stress_levels_bau.get(current_year), current_year);
