@@ -29,10 +29,10 @@ export const svg = d3.select("body").append("svg")
     .attr('height', height + 50);
 
 export function showLineChart() {
-
-    document.getElementById("bau").disabled = false;
-    document.getElementById("optimistic").disabled = false;
-    document.getElementById("pessimistic").disabled = false;
+    
+    document.getElementById("bau").disabled = true;
+    document.getElementById("optimistic").disabled = true;
+    document.getElementById("pessimistic").disabled = true;
     
     d3.select('svg').select('#map').attr("hidden", true);
     d3.select('svg').select('.predictedSliderLabel').attr("visibility", "hidden");
@@ -50,10 +50,7 @@ export function showLineChart() {
 //    d3.select('svg').select('.predicted').attr("hidden", true);
 //    d3.select('svg').select('#line_chart').attr("hidden", null);
     document.getElementById('add_button').style.visibility = 'visible';
-    document.getElementById("bau").disabled = true;
-    document.getElementById("optimistic").disabled = true;
-    document.getElementById("pessimistic").disabled = true;
-
+   
 }
 
 
