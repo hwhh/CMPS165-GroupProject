@@ -5,3 +5,6 @@ package-lock.json
 .DS_Store
 .DataSetsOld/
 dist/bundle.js
+
+.*
+dist/
